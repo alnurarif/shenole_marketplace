@@ -6,6 +6,7 @@ use Shenole_project\models\Staff;
 use Shenole_project\repositories\StaffRepository;
 use Shenole_project\helpers\UserHelper;
 use Shenole_project\utils\RandomStringGenerator;
+use Shenole_project\helpers\MyHelpers;
 
 $isStaffLoggedIn = UserHelper::isUserLoggedIn($_SESSION, 'staff', new StaffRepository);
 if($isStaffLoggedIn){

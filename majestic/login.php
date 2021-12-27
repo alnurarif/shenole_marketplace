@@ -6,6 +6,7 @@ use Shenole_project\models\Majestic;
 use Shenole_project\repositories\MajesticRepository;
 use Shenole_project\helpers\UserHelper;
 use Shenole_project\utils\RandomStringGenerator;
+use Shenole_project\helpers\MyHelpers;
 
 $isMajesticLoggedIn = UserHelper::isUserLoggedIn($_SESSION, 'majestic', new MajesticRepository);
 if($isMajesticLoggedIn){

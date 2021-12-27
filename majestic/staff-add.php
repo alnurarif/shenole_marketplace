@@ -10,6 +10,7 @@ use Shenole_project\helpers\Validator;
 use Shenole_project\utils\RandomStringGenerator;
 use Shenole_project\helpers\UserHelper;
 use Shenole_project\repositories\MajesticRepository;
+use Shenole_project\helpers\MyHelpers;
 
 $isMajesticLoggedIn = UserHelper::isUserLoggedIn($_SESSION, 'majestic', new MajesticRepository);
 
@@ -105,21 +106,15 @@ foreach($states as $state){
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Market Place</title>
-	<link rel="stylesheet" href="../css/style.css">
-</head>
+<?php MyHelpers::includeWithVariables('../layouts/head_section.php', [], $print = true); ?>
 <body>
-	<div class="fix full div_mid">
-		<?php include('layouts/majestic_panel_head.php'); ?>
-		
-		<div class="fix full">
-			<?php include('layouts/majestic_panel_left_menu.php'); ?>	
-			
-			<div class="fix floatleft eighty_percent pt_10 pr_10 pb_10 pl_10 border_box">
-				<div class="fix full">
+	<div class="genesis-container">
+		<?php 
+		MyHelpers::includeWithVariables('../layouts/top_nav.php', ['isMajesticLoggedIn' => $isMajesticLoggedIn], $print = true);
+		?>
+		<div class="main-body-content">
+            <section>
+                <div class="content-container-center">
 					<div class="fix half floatleft"><h1 class="fs_30 lh_40 font_bold text_dark_ash mb_10 pl_5 pr_5">Add Staff</h1></div>
 					<div class="fix half floatleft"><a class="display_inline_block lh_30 pl_16 pr_16 bg_very_light_ash2 text_dark_ash font_bold cursor_pointer mb_10 floatright mt_5" href="staff-listing.php">View Staff</a></div>
 
@@ -259,7 +254,7 @@ foreach($states as $state){
 						</div>
 					</div>
 				</div>
-			</div>
+			</section>
 		</div>
 	</div>
 	<script src="../js/jquery.min.js"></script>

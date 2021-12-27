@@ -54,11 +54,11 @@ if($_POST){
 
 }
 $vendor = Vendor::get();
-echo "<pre>";
-foreach($vendor as $v_single){
-	var_dump($v_single);
-}
-die;
+// echo "<pre>";
+// foreach($vendor as $v_single){
+// 	var_dump($v_single);
+// }
+// die;
 // var_dump();
 ?>
 
