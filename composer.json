@@ -1,0 +1,22 @@
+{
+    "name": "alnurarif/shenole_project",
+    "description": "It's a marketplace project",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Shenole_project\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Mohammad Al-Nur Sarwer Arif",
+            "email": "alnurarif@yahoo.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "illuminate/database": "8.x-dev",
+        "gumlet/php-image-resize": "dev-master"
+    }
+}
