@@ -10,6 +10,7 @@ if(strpos($_SERVER['HTTP_HOST'], 'cassis')!==false) {
 define('LOCAL_FOLDER', '/upwork_projects/shenole_project/');
 // define('LOCAL_FOLDER', '/');
 
+define('ADMIN', 'admin/');
 define('MAJESTIC', 'majestic/');
 define('STAFF', 'staff/');
 define('CLIENT', 'clients/');
@@ -31,11 +32,13 @@ define('SITE_DOMAIN', preg_replace("/^(.*\.)?([^.]*\..*)$/", "$2", $_SERVER['HTT
 define('SITE_LINK', SITE_SERVER . '' . LOCAL_FOLDER);
 define('SITE_LINK_DEFAULT', $protocol . '://www.' . SITE_DOMAIN . '/');
 define('SITE_ROOT', rtrim($_SERVER['DOCUMENT_ROOT'], "/") . '' . LOCAL_FOLDER);
+define('SITE_ROOT_ADMIN', rtrim($_SERVER['DOCUMENT_ROOT'], "/") . '' . LOCAL_FOLDER . ADMIN);
 define('SITE_ROOT_MAJESTIC', rtrim($_SERVER['DOCUMENT_ROOT'], "/") . '' . LOCAL_FOLDER . MAJESTIC);
 define('SITE_ROOT_STAFF', rtrim($_SERVER['DOCUMENT_ROOT'], "/") . '' . LOCAL_FOLDER . STAFF);
 define('SITE_ROOT_CLIENT', rtrim($_SERVER['DOCUMENT_ROOT'], "/") . '' . LOCAL_FOLDER . CLIENT);
 define('SITE_ROOT_VENDOR', rtrim($_SERVER['DOCUMENT_ROOT'], "/") . '' . LOCAL_FOLDER . VENDOR);
 define('SITE_ROOT_KNOWLEDGEBASE', rtrim($_SERVER['DOCUMENT_ROOT'], "/") . '' . LOCAL_FOLDER . KNOWLEDGEBASE);
+define('SITE_LINK_ADMIN', SITE_SERVER . '' . LOCAL_FOLDER . ADMIN);
 define('SITE_LINK_MAJESTIC', SITE_SERVER . '' . LOCAL_FOLDER . MAJESTIC);
 define('SITE_LINK_STAFF', SITE_SERVER . '' . LOCAL_FOLDER . STAFF);
 define('SITE_LINK_CLIENT', SITE_SERVER . '' . LOCAL_FOLDER . CLIENT);

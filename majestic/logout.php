@@ -22,5 +22,5 @@ if(!$found){
 
 $_SESSION['logged_in_as'] = $before_login_session_array;
 
-header("Location: ".SITE_LINK_MAJESTIC."login.php");
+header("Location: ".SITE_LINK_ADMIN."login.php");
 exit();

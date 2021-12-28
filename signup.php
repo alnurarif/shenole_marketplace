@@ -14,6 +14,8 @@ use Shenole_project\helpers\MyHelpers;
 
 $isClientLoggedIn = UserHelper::isUserLoggedIn($_SESSION, 'client', new ClientRepository);
 $isVendorLoggedIn = UserHelper::isUserLoggedIn($_SESSION, 'vendor', new VendorRepository);
+$isStaffLoggedIn = UserHelper::isUserLoggedIn($_SESSION, 'staff', new StaffRepository);
+$isMajesticLoggedIn = UserHelper::isUserLoggedIn($_SESSION, 'majestic', new MajesticRepository);
 
 
 $client_errors = [
@@ -143,7 +145,7 @@ if(isset($_POST['vendor_signup'])){
 <body>
 	<div class="genesis-container">
 		<?php 
-		MyHelpers::includeWithVariables('./layouts/top_nav.php', ['isClientLoggedIn' => $isClientLoggedIn, 'isVendorLoggedIn' => $isVendorLoggedIn], $print = true);
+		MyHelpers::includeWithVariables('./layouts/top_nav.php', ['isClientLoggedIn' => $isClientLoggedIn, 'isVendorLoggedIn' => $isVendorLoggedIn, 'isStaffLoggedIn' => $isStaffLoggedIn, 'isMajesticLoggedIn' => $isMajesticLoggedIn], $print = true);
 		?>
 		<div class="fix full container dual-signup-container">
 			<div class="fix ninty_five_percent div_mid mt_160">

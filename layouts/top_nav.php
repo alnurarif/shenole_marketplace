@@ -13,6 +13,7 @@ if(isset($isMajesticLoggedIn) && $isMajesticLoggedIn){
     $show_login_sign_up = false;
 }
 ?>
+
 <nav class="main-nav-desktop-02">
     <div class="nav-container-center">
         <div class="nav-logo-container-desktop">
@@ -29,6 +30,23 @@ if(isset($isMajesticLoggedIn) && $isMajesticLoggedIn){
                 <?php if($show_login_sign_up){ ?>
                 <li class="nav-li-desktop"><a href="<?php echo SITE_LINK; ?>signup.php" class="nav-link-desktop">Sign Up</a></li>
                 <li class="nav-li-desktop"><a href="<?php echo SITE_LINK; ?>login.php" class="nav-link-desktop">Login</a></li>
+                <?php }else{ ?>
+                    <?php if(isset($isMajesticLoggedIn) && $isMajesticLoggedIn){ ?>
+                        <li class="nav-li-desktop"><a href="<?php echo SITE_LINK_MAJESTIC; ?>logout.php" class="nav-link-desktop">Logout</a></li>
+                    <?php } ?>
+
+                    <?php if(((isset($isMajesticLoggedIn) && !$isMajesticLoggedIn) || !isset($isMajesticLoggedIn)) && isset($isVendorLoggedIn) && $isVendorLoggedIn){ ?>
+                        <li class="nav-li-desktop"><a href="<?php echo SITE_LINK_VENDOR; ?>logout.php" class="nav-link-desktop">Logout</a></li>
+                    <?php } ?>
+
+                    <?php if(((isset($isMajesticLoggedIn) && !$isMajesticLoggedIn) || !isset($isMajesticLoggedIn)) && isset($isClientLoggedIn) && $isClientLoggedIn){ ?>
+                        <li class="nav-li-desktop"><a href="<?php echo SITE_LINK_CLIENT; ?>logout.php" class="nav-link-desktop">Logout</a></li>
+                    <?php } ?>
+
+                    <?php if(((isset($isMajesticLoggedIn) && !$isMajesticLoggedIn) || !isset($isMajesticLoggedIn)) && isset($isStaffLoggedIn) && $isStaffLoggedIn){ ?>
+                        <li class="nav-li-desktop"><a href="<?php echo SITE_LINK_STAFF; ?>logout.php" class="nav-link-desktop">Logout</a></li>
+                    <?php } ?>
+
                 <?php } ?>
                 <!-- I would like this 1 link to only be visible if a staff or majestic user is not logged in. It should never be visible for client or vendor users -->
                 <!-- <li class="nav-li-desktop"><a href="<?php echo SITE_LINK; ?>login.php" class="nav-link-desktop">Login</a></li> -->
@@ -60,7 +78,7 @@ if(isset($isMajesticLoggedIn) && $isMajesticLoggedIn){
 <?php } ?>
 
 <!-- this is vendor admin nav -->
-<?php if(isset($isVendorLoggedIn) && $isVendorLoggedIn){ ?>
+<?php if((isset($isMajesticLoggedIn) && !$isMajesticLoggedIn || !isset($isMajesticLoggedIn)) && isset($isVendorLoggedIn) && $isVendorLoggedIn){ ?>
 <nav class="admin-nav-desktop-02" id="vendor-admin-nav">
     <div class="nav-container-center">
         <div class="nav-admin-link-container-desktop">
@@ -80,7 +98,7 @@ if(isset($isMajesticLoggedIn) && $isMajesticLoggedIn){
 <?php } ?>
 
 <!-- this is client admin nav -->
-<?php if(isset($isClientLoggedIn) && $isClientLoggedIn){ ?>
+<?php if((isset($isMajesticLoggedIn) && !$isMajesticLoggedIn || !isset($isMajesticLoggedIn)) && isset($isClientLoggedIn) && $isClientLoggedIn){ ?>
 <nav class="admin-nav-desktop-02" id="client-admin-nav">
     <div class="nav-container-center">
         <div class="nav-admin-link-container-desktop">
@@ -100,7 +118,7 @@ if(isset($isMajesticLoggedIn) && $isMajesticLoggedIn){
 
 
 <!-- thi is staff admin nav -->
-<?php if(isset($isStaffLoggedIn) && $isStaffLoggedIn){ ?>
+<?php if((isset($isMajesticLoggedIn) && !$isMajesticLoggedIn || !isset($isMajesticLoggedIn)) && isset($isStaffLoggedIn) && $isStaffLoggedIn){ ?>
 <nav class="admin-nav-desktop-02" id="staff-admin-nav">
     <div class="nav-container-center">
         <div class="nav-admin-link-container-desktop">
