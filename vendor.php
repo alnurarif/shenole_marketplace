@@ -192,6 +192,9 @@ $isMajesticLoggedIn = UserHelper::isUserLoggedIn($_SESSION, 'majestic', new Maje
                 </div>
             </section>
         </div>
+        <?php 
+        MyHelpers::includeWithVariables('./layouts/footer.php', [], $print = true);
+        ?>
 	</div>
 	<script src="<?php echo SITE_LINK; ?>js/jquery.min.js"></script>
 	<script src="<?php echo SITE_LINK; ?>js/pages/vendor.js"></script>

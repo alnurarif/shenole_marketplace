@@ -29,6 +29,9 @@ $isMajesticLoggedIn = UserHelper::isUserLoggedIn($_SESSION, 'majestic', new Maje
 		?>
 		<div class="fix full container dual-signup-container">
 		</div>
+		<?php 
+		MyHelpers::includeWithVariables('./layouts/footer.php', [], $print = true);
+		?>
 	</div>
 </body>
 </html>

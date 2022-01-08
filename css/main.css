@@ -3,44 +3,44 @@ html, body, div, span, applet, object, iframe, table, caption, tbody, tfoot, the
 del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, 
 h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, 
 dl, dt, dd, ol, ul, li, fieldset, form, label, legend {
-	vertical-align: baseline;
-	font-family: inherit;
-	font-weight: inherit;
-	font-style: inherit;
-	font-size: 100%;
-	outline: 0;
-	padding: 0;
-	margin: 0;
-	border: 0;
-	}
+    vertical-align: baseline;
+    font-family: inherit;
+    font-weight: inherit;
+    font-style: inherit;
+    font-size: 100%;
+    outline: 0;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    }
 /* remember to define focus styles! */
 :focus {
-	outline: 0;
-	}
+    outline: 0;
+    }
 body {
-	background: white;
-	line-height: 1;
-	color: black;
-	}
+    background: white;
+    line-height: 1;
+    color: black;
+    }
 ol, ul {
-	list-style: none;
-	}
+    list-style: none;
+    }
 /* tables still need cellspacing="0" in the markup */
 table {
-	border-collapse: separate;
-	border-spacing: 0;
-	}
+    border-collapse: separate;
+    border-spacing: 0;
+    }
 caption, th, td {
-	font-weight: normal;
-	text-align: left;
-	}
+    font-weight: normal;
+    text-align: left;
+    }
 /* remove possible quote marks (") from <q> & <blockquote> */
 blockquote:before, blockquote:after, q:before, q:after {
-	content: "";
-	}
+    content: "";
+    }
 blockquote, q {
-	quotes: "" "";
-	}
+    quotes: "" "";
+    }
 
 /* GLOBAL CSS VARIABLES */
 :root {
@@ -126,6 +126,9 @@ p {
 }
 .white-text {
     color: #ffffff;
+}
+.secondary-text {
+    color: var(--secondary);
 }
 .button-link-text {
     text-decoration: none;
@@ -245,6 +248,12 @@ html {
     width: 1150px;
     margin: 0rem auto;
 }
+.wysiwyg-container {
+    margin-bottom: 2rem;
+}
+.margin-auto {
+    margin: auto;
+}
 nav.main-nav-desktop-01 {
     display: flex;
     justify-content: space-between;
@@ -277,6 +286,15 @@ nav.admin-nav-desktop-02 {
     box-sizing: border-box;
     background-color: var(--primary);
     box-shadow: var(--shadow-small);
+}
+ul.date-ul {
+    list-style-type: none;
+    margin: 0rem;
+    padding: 0rem;
+}
+li.date-li {
+    display: inline-block;
+    padding: 0rem 1rem;
 }
 section {
     padding: 6rem 1rem 4.6rem 1rem;
@@ -344,7 +362,7 @@ section {
 .listing-content-container {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     padding: 2rem 0rem;
 }
 .listing-card {
@@ -354,14 +372,21 @@ section {
     padding: 12px;
     border-radius: 0.25rem;
     box-shadow: 0px 1px 13px rgb(0 0 0 / 10%);
-    margin-bottom: 2rem;
+    margin: 0rem 6.75px 2rem 6.75px;
 }
 .listing-card-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 250px;
     height: 250px;
     background-color: #333333;
     margin-bottom: 14px;
     border-radius: 0.25rem;
+}
+#listing-image {
+    width: 250px;
+    max-height: 250px;
 }
 .listing-card-vendor-name-container {
     height: 36px;
@@ -460,6 +485,60 @@ section {
 footer {
     padding: 2rem 1rem;
     background-color: var(--primary);
+}
+.footer-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.footer-logo-container {
+    width: 340px;
+    height: 100px;
+}
+.footer-logo-container img {
+    border-radius: 4px;
+}
+.footer-main-link-container {
+    width: 460px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.footer-link-container {
+    color: var(--ternary) !important;
+}
+.footer-social-media-container {
+    width: 340px;
+    height: 100px;
+    display: flex;
+    justify-content: right;
+}
+.social-media {
+    width: 142px;
+    height: 30px;
+    display: flex;
+    justify-content: space-between;
+}
+.social-media img {
+    width: 30px;
+}
+.footer-ul-01 {
+    list-style-type: none;
+}
+.footer-ul-01 li {
+    padding: 5px 0px;
+}
+.footer-ul-01 li a {
+    text-decoration: none;
+    color: var(--ternary);
+    font-size: 0.8rem;
+}
+.copyright-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding-top: 2rem;
+    text-align: center;
 }
 
 /* FORMS */
@@ -691,6 +770,9 @@ option {
 #starting-fee {
     margin-left: 8px;
 }
+#service-price {
+    margin-left: 8px;
+}
 /* SETTINGS */
 .list-container {
     width: 360px;
@@ -709,6 +791,10 @@ option {
     align-items: center;
     padding: 0.5rem 0rem;
     border-bottom: 1px solid #d9d9d9;
+}
+.full-width-textarea {
+    width: 100%;
+    height: 200px;
 }
 
 @media all and (max-width: 1199px) {

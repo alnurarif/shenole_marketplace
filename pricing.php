@@ -49,6 +49,9 @@ $membership04 = 0;
 				</div>
 			</div>
 		</div>
+		<?php 
+        MyHelpers::includeWithVariables('./layouts/footer.php', [], $print = true);
+        ?>
 	</div>
 </body>
 </html>

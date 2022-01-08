@@ -23,37 +23,46 @@ $errors = [
 	'profile_pic' => '',
 ];
 if($_POST){
-	if($_FILES['profile_pic']['name'] == ''){
-		$errors['profile_pic'] = '';
-	}else{
-		$size = $_FILES['profile_pic']['size'];
-		
-		list($width, $height, $type, $attr) = getimagesize($_FILES['profile_pic']['tmp_name']);
-		
-		if($width > 766 && $height != 511){
-			$errors['profile_pic'] = "Dimention must be 766px x 511px";
-		}
-		if($size > 80000){
-			$errors['profile_pic'] = "Maximum 80kb is allowed";
-		}
-		
-	}
+    if(isset($_POST['update_vendor_description'])){
+        $vendor = Vendor::where('login_token',$login_token)->first();
+        $vendor->vendor_description = $_POST['description_with_html_tags'];
+        $vendor->save();
+    }
+    if(isset($_POST['operation_add_update_overview'])){
+    	if($_FILES['profile_pic']['name'] == ''){
+    		$errors['profile_pic'] = '';
+    	}else{
+    		$size = $_FILES['profile_pic']['size'];
+    		
+    		list($width, $height, $type, $attr) = getimagesize($_FILES['profile_pic']['tmp_name']);
+    		
+    		if($width > 766 && $height != 511){
+    			$errors['profile_pic'] = "Dimention must be 766px x 511px";
+    		}
+    		if($size > 80000){
+    			$errors['profile_pic'] = "Maximum 80kb is allowed";
+    		}
+    		
+    	}
 
-	if($errors['errors_number'] == 0){
-		$imageObject = new ImageResize($_FILES['profile_pic']['tmp_name']);
-		$imageUploaderObject = new ImageUploader($_FILES['profile_pic'], $imageObject);
-		$imageUploaderObject->setRoot(SITE_ROOT);
-		$imageUploaderObject->setPath('images/vendors/');
-		$imageUploaderObject->setLevel('../');
-		$image_name = $imageUploaderObject->imageUpload();
+    	if($errors['errors_number'] == 0){
+    		$imageObject = new ImageResize($_FILES['profile_pic']['tmp_name']);
+    		$imageUploaderObject = new ImageUploader($_FILES['profile_pic'], $imageObject);
+    		$imageUploaderObject->setRoot(SITE_ROOT);
+    		$imageUploaderObject->setPath('images/vendors/');
+    		$imageUploaderObject->setLevel('../');
+    		$image_name = $imageUploaderObject->imageUpload();
 
-		$vendor = Vendor::where('login_token',$login_token)->first();
-		$vendor->profile_photo = $image_name;
-		$vendor->save();
-	}
+    		$vendor = Vendor::where('login_token',$login_token)->first();
+    		$vendor->profile_photo = $image_name;
+    		$vendor->save();
+    	}
+
+    }
 
 }
-$vendor = Vendor::get();
+$vendor = Vendor::where('login_token',$login_token)->first();
+// $vendor = Vendor::get();
 // echo "<pre>";
 // foreach($vendor as $v_single){
 // 	var_dump($v_single);
@@ -65,6 +74,7 @@ $vendor = Vendor::get();
 <!DOCTYPE html>
 <html lang="en">
 <?php MyHelpers::includeWithVariables('../layouts/head_section.php', [], $print = true); ?>
+
 <body>
 	<div class="genesis-container">
 		<?php 
@@ -98,6 +108,7 @@ $vendor = Vendor::get();
                             <h2>Overview</h2>
                             <div class="vendor-profile-header-container">
                                 <form method="post" class="full-width-form" enctype="multipart/form-data">
+                                    <input type="hidden" name="operation_add_update_overview" value="1"/>
                                     <div class="edit-vendor-profile-main-photo">
     
                                     </div>
@@ -783,7 +794,24 @@ $vendor = Vendor::get();
                         </div>
                         <div class="profile-section" id="description">
                             <h2>Description</h2>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                            <form method="post" class="full-width-form">
+                                <input type="hidden" name="update_vendor_description" value="1">
+                                <span id="vendor-description-character-countdown">2000</span> characters left
+                                <div class="wysiwyg-container">
+                                    <input type="hidden" name="description_with_html_tags" id="description_with_html_tags" value="<?php echo $vendor->vendor_description; ?>"/>
+                                    <textarea class="full-width-textarea" id="description_textarea"><?php echo str_replace('</p>',PHP_EOL,str_replace('<p>','',$vendor->vendor_description)); ?></textarea>
+
+                                </div>
+                                <div class="spacer-20"></div>
+                                <div class="article-container" id="vendor-description">
+                                    <!-- Start 2000 Character Limit -->
+                                    <?php echo $vendor->vendor_description; ?>
+                                    <!-- End 2000 Character Limit -->
+                                </div>
+                                <div class="form-submit-container">
+                                    <button type="submit" class="button-01 white-text" id="vendor-description-submit">Submit</button>
+                                </div>
+                            </form>
                         </div>
                         <div class="profile-section" id="services">
                             <h2>Services</h2>
@@ -880,10 +908,14 @@ $vendor = Vendor::get();
                 </div>
             </section>
         </div> 
+        <?php 
+        MyHelpers::includeWithVariables('../layouts/footer.php', [], $print = true);
+        ?>
     </div>
 
 
 	<script src="<?php echo SITE_LINK; ?>js/jquery.min.js"></script>
 	<script src="<?php echo SITE_LINK; ?>js/pages/vendors/edit-profile.js"></script>
+    
 </body>
 </html>

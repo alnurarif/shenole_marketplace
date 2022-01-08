@@ -81,6 +81,9 @@ foreach($staff as $staff){
 				</div>
 			</section>
 		</div>
+		<?php 
+        MyHelpers::includeWithVariables('../layouts/footer.php', [], $print = true);
+        ?>
 	</div>
 	<script src="../js/jquery.min.js"></script>
 	<script src="../js/pages/index_page.js"></script>

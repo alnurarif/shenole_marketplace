@@ -106,6 +106,9 @@ if(isset($_POST['forgot_password'])){
 				</div>
 			</div>
 		</div>
+		<?php 
+		MyHelpers::includeWithVariables('./layouts/footer.php', [], $print = true);
+		?>
 	</div>
 </body>
 </html>
