@@ -2,7 +2,7 @@
     <div class="content-container-center">
         <div class="footer-content">
             <div class="footer-logo-container">
-                <a href="/"><img src="./images/main-images/footer-logo.jpg" alt="Company logo in the footer of the website."></a>
+                <a href="/"><img src="images/footer-logo.jpg" alt="Company logo in the footer of the website."></a>
             </div>
             <div class="footer-main-link-container">
                 <div class="footer-link-container">
@@ -30,15 +30,15 @@
             </div>
             <div class="footer-social-media-container">
                 <div class="social-media">
-                    <a href=""><img src="./images/icons/facebook-icon.png" alt="Facebook icon."></a>
-                    <a href=""><img src="./images/icons/instagram-icon.png" alt="Instagram icon."></a>
-                    <a href=""><img src="./images/icons/youtube-icon.png" alt="Youtube icon."></a>
+                    <a href=""><img src="images/facebook-icon.png" alt="Facebook icon."></a>
+                    <a href=""><img src="images/instagram-icon.png" alt="Instagram icon."></a>
+                    <a href=""><img src="images/youtube-icon.png" alt="Youtube icon."></a>
                 </div>
             </div>
         </div>
         <div class="copyright-container">
-            <h5 class="white-text">&copy; Event One Stop, Inc 2022. All rights reserved.</h5>
-            <h5 class="white-text">Event One Stop, Inc is a holding of AlylaCorp.</h5>
+            <h5 class="white-text">&copy; AlylaTech, Inc 2022. All rights reserved.</h5>
+            <h5 class="white-text">Event One Stop is a property of AlylaTech.</h5>
         </div>
     </div>
-</footer>
+</footer> 

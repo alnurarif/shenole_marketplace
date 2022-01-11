@@ -130,8 +130,15 @@ p {
 .secondary-text {
     color: var(--secondary);
 }
+.primary-selection {
+    color: var(--go-button);
+    font-weight: 700;
+}
 .button-link-text {
     text-decoration: none;
+}
+.location-list-text {
+    padding: 0.3rem 0rem;
 }
 .callout {
     padding: 1.8rem 3rem;
@@ -146,6 +153,17 @@ p {
     font-weight: 700;
     font-size: 1.2rem;
     margin: 3.6rem auto;
+}
+.primary-location {
+    background-color: var(--go-button);
+    color: var(--ternary);
+    padding: 1.25rem 0.8rem;
+    border-radius: 4px;
+}
+.aux-location {
+    background-color: var(--secondary);
+    padding: 1.25rem 0.8rem;
+    border-radius: 4px;
 }
 
 /* COLOR CLASSES */
@@ -785,16 +803,28 @@ option {
     border: 1px solid #d9d9d9;
     border-radius: 4px;
 }
+.list-container-tall {
+    width: 360px;
+    max-height: 355px;
+    overflow-y: auto;
+    box-sizing: border-box;
+    background-color: var(--ternary);
+    padding: 1rem 1.5rem;
+    font-size: 0.75rem;
+    border: 1px solid #d9d9d9;
+    border-radius: 4px;
+}
 .category-li {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     padding: 0.5rem 0rem;
     border-bottom: 1px solid #d9d9d9;
 }
 .full-width-textarea {
     width: 100%;
     height: 200px;
+}
+.multi-button-container {
+    display: flex;
+    justify-content: space-between;
 }
 
 @media all and (max-width: 1199px) {

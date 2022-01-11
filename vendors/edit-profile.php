@@ -173,598 +173,356 @@ $vendor = Vendor::where('login_token',$login_token)->first();
                                     </div>
                                     <h3>Categories</h3>    
                                     <div class="form-input-container">
-                                        <div>
-                                            <label for="travel-distance" class="input-label">Primary Category</label>
-                                            <div class="spacer-10px"></div>
+                                        <div class="form-input-search">
                                             <div>
-                                                <select name="category-01" id="category-01" class="search-input">
-                                                    <option value="" class="select-option-01">Select Category</option>
-                                                    <option value="" class="select-option-01"></option>
-                                                </select>
+                                                <label for="street-address1-01" class="input-label">Location Street Address 1</label>
+                                                <div class="spacer-10px"></div>
+                                                <div>
+                                                    <input type="text" class="search-input" placeholder="Street Address 1">
+                                                </div>
+                                                <div class="spacer-10px"></div>
+                                                <div class="spacer-10px"></div>
+                                                <label for="street-address2-01" class="input-label">Location Street Address 2</label>
+                                                <div class="spacer-10px"></div>
+                                                <div>
+                                                    <input type="text" class="search-input" placeholder="Street Address 2">
+                                                </div>
+                                                <div class="spacer-10px"></div>
+                                                <div class="spacer-10px"></div>
+                                                <span class="input-label">Location City/State/Zip</span>
+                                                <div class="spacer-10px"></div>
+                                                <div>
+                                                    <input type="text" class="search-input" placeholder="City">
+                                                </div>
+                                                <div class="spacer-10px"></div>
+                                                <div class="profile-state-zip">
+                                                    <div>
+                                                        <select name="state-01" class="search-input-mini">
+                                                            <option value="" class="select-option-01">State</option>
+                                                            <option value="" class="select-option-01"></option>
+                                                        </select>
+                                                    </div>
+                                                    <div>
+                                                        <div>
+                                                            <input type="text" class="search-input-mini" placeholder="Zip">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="spacer-10px"></div>
+                                                <div class="spacer-10px"></div>
+                                                <label for="phone-01" class="input-label">Phone Number</label>
+                                                <div class="spacer-10px"></div>
+                                                <div>
+                                                    <input type="tel" class="search-input" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="example: 123-456-7890">
+                                                </div>
+                                                <div class="spacer-10px"></div>
+                                                <div class="spacer-10px"></div>
                                             </div>
-                                            <div class="spacer-10px"></div>
-                                            <div class="spacer-10px"></div>
-                                        </div>
-                                        <div>
-                                            <label for="travel-distance" class="input-label">Category 2</label>
-                                            <div class="spacer-10px"></div>
-                                            <div>
-                                                <select name="category-02" id="category-02" class="search-input">
-                                                    <option value="" class="select-option-01">Select Category</option>
-                                                    <option value="" class="select-option-01"></option>
-                                                </select>
+                                            <div class="form-submit-container">
+                                                <a href="" class="button-03 button-link-text white-text">Add Location</a>
                                             </div>
-                                            <div class="spacer-10px"></div>
-                                            <div class="spacer-10px"></div>
                                         </div>
-                                        <div>
-                                            <label for="travel-distance" class="input-label">Category 3</label>
+                                        <div class="form-input-search">
+                                            <label for="location" class="input-label">Location List &nbsp;&nbsp;<i>(Primary is in green)</i></label>
                                             <div class="spacer-10px"></div>
-                                            <div>
-                                                <select name="category-03" id="category-03" class="search-input">
-                                                    <option value="" class="select-option-01">Select Category</option>
-                                                    <option value="" class="select-option-01"></option>
-                                                </select>
+                                            <div class="list-container-tall">
+                                                <ul class="category-ul">
+                                                    <li class="category-li">
+                                                        <div class="primary-location">
+                                                            <span class="location-list-text">123 Example Street</span><br>
+                                                            <span class="location-list-text">Suite 5</span><br>
+                                                            <span class="location-list-text">Tampa, FL</span><br>
+                                                            <span class="location-list-text">11223</span><br>
+                                                            <div class="spacer-10px"></div>
+                                                            <div class="spacer-10px"></div>
+                                                            <span class="location-list-text-phone">123-456-7890</span>
+                                                        </div>
+                                                        <br>
+                                                        <div>
+                                                            <label for="only-city-01" class="input-label">Only Show The City And State
+                                                            </label>
+                                                            <div class="spacer-10px"></div>
+                                                            <input type="checkbox" name="only-city-01">
+                                                            <div class="spacer-10px"></div>
+                                                            <div class="spacer-10px"></div>
+                                                        </div>
+                                                        <div>
+                                                            <label for="show-phone-01" class="input-label">Show The Phone Number</label>
+                                                            <div class="spacer-10px"></div>
+                                                            <input type="checkbox" name="only-city-01">
+                                                            <div class="spacer-10px"></div>
+                                                            <div class="spacer-10px"></div>
+                                                        </div>
+                                                        <div class="multi-button-container">
+                                                            <button class="small-button primary white-text">Make Primary</button>
+                                                            <button class="small-button primary white-text">Delete</button>
+                                                        </div>
+                                                    </li>
+                                                    <li class="category-li">
+                                                        <div class="aux-location">
+                                                            <span class="location-list-text">Orlando, FL</span><br>
+                                                        </div>
+                                                        <br>
+                                                        <div>
+                                                            <label for="only-city-01" class="input-label">Only Show The City And State
+                                                            </label>
+                                                            <div class="spacer-10px"></div>
+                                                            <input type="checkbox" name="only-city-01">
+                                                            <div class="spacer-10px"></div>
+                                                            <div class="spacer-10px"></div>
+                                                        </div>
+                                                        <div>
+                                                            <label for="show-phone-01" class="input-label">Show The Phone Number</label>
+                                                            <div class="spacer-10px"></div>
+                                                            <input type="checkbox" name="only-city-01">
+                                                            <div class="spacer-10px"></div>
+                                                            <div class="spacer-10px"></div>
+                                                        </div>
+                                                        <div class="multi-button-container">
+                                                            <button class="small-button primary white-text">Make Primary</button>
+                                                            <button class="small-button primary white-text">Delete</button>
+                                                        </div>
+                                                    </li>
+                                                    <li class="category-li">
+                                                        <div class="aux-location">
+                                                            <span class="location-list-text">Miami, FL</span><br>
+                                                            <div class="spacer-10px"></div>
+                                                            <div class="spacer-10px"></div>
+                                                            <span class="location-list-text-phone">123-456-7890</span>
+                                                        </div>
+                                                        <br>
+                                                        <div>
+                                                            <label for="only-city-01" class="input-label">Only Show The City And State
+                                                            </label>
+                                                            <div class="spacer-10px"></div>
+                                                            <input type="checkbox" name="only-city-01">
+                                                            <div class="spacer-10px"></div>
+                                                            <div class="spacer-10px"></div>
+                                                        </div>
+                                                        <div>
+                                                            <label for="show-phone-01" class="input-label">Show The Phone Number</label>
+                                                            <div class="spacer-10px"></div>
+                                                            <input type="checkbox" name="only-city-01">
+                                                            <div class="spacer-10px"></div>
+                                                            <div class="spacer-10px"></div>
+                                                        </div>
+                                                        <div class="multi-button-container">
+                                                            <button class="small-button primary white-text">Make Primary</button>
+                                                            <button class="small-button primary white-text">Delete</button>
+                                                        </div>
+                                                    </li>
+                                                    <li class="category-li">
+                                                        <div class="aux-location">
+                                                            <span class="location-list-text">098 Main Avenue</span><br>
+                                                            <span class="location-list-text">Tampa, FL</span><br>
+                                                            <span class="location-list-text">11223</span><br>
+                                                        </div>
+                                                        <br>
+                                                        <div>
+                                                            <label for="only-city-01" class="input-label">Only Show The City And State
+                                                            </label>
+                                                            <div class="spacer-10px"></div>
+                                                            <input type="checkbox" name="only-city-01">
+                                                            <div class="spacer-10px"></div>
+                                                            <div class="spacer-10px"></div>
+                                                        </div>
+                                                        <div>
+                                                            <label for="show-phone-01" class="input-label">Show The Phone Number</label>
+                                                            <div class="spacer-10px"></div>
+                                                            <input type="checkbox" name="only-city-01">
+                                                            <div class="spacer-10px"></div>
+                                                            <div class="spacer-10px"></div>
+                                                        </div>
+                                                        <div class="multi-button-container">
+                                                            <button class="small-button primary white-text">Make Primary</button>
+                                                            <button class="small-button primary white-text">Delete</button>
+                                                        </div>
+                                                    </li>
+                                                </ul>
                                             </div>
-                                            <div class="spacer-10px"></div>
-                                            <div class="spacer-10px"></div>
                                         </div>
+                                        
                                     </div>
-                                    <div class="form-input-container">
-                                        <div>
-                                            <label for="travel-distance" class="input-label">Category 4</label>
-                                            <div class="spacer-10px"></div>
-                                            <div>
-                                                <select name="category-04" id="category-04" class="search-input">
-                                                    <option value="" class="select-option-01">Select Category</option>
-                                                    <option value="" class="select-option-01"></option>
-                                                </select>
-                                            </div>
-                                            <div class="spacer-10px"></div>
-                                            <div class="spacer-10px"></div>
-                                        </div>
-                                        <div>
-                                            <label for="travel-distance" class="input-label">Category 5</label>
-                                            <div class="spacer-10px"></div>
-                                            <div>
-                                                <select name="category-05" id="category-05" class="search-input">
-                                                    <option value="" class="select-option-01">Select Category</option>
-                                                    <option value="" class="select-option-01"></option>
-                                                </select>
-                                            </div>
-                                            <div class="spacer-10px"></div>
-                                            <div class="spacer-10px"></div>
-                                        </div>
-                                        <div>
-                                            <label for="travel-distance" class="input-label">Category 6</label>
-                                            <div class="spacer-10px"></div>
-                                            <div>
-                                                <select name="category-02" id="category-02" class="search-input">
-                                                    <option value="" class="select-option-01">Select Category</option>
-                                                    <option value="" class="select-option-01"></option>
-                                                </select>
-                                            </div>
-                                            <div class="spacer-10px"></div>
-                                            <div class="spacer-10px"></div>
-                                        </div>
-                                    </div>
-                                    <div class="form-input-container">
-                                        <div>
-                                            <label for="travel-distance" class="input-label">Category 7</label>
-                                            <div class="spacer-10px"></div>
-                                            <div>
-                                                <select name="category-07" id="category-07" class="search-input">
-                                                    <option value="" class="select-option-01">Select Category</option>
-                                                    <option value="" class="select-option-01"></option>
-                                                </select>
-                                            </div>
-                                            <div class="spacer-10px"></div>
-                                            <div class="spacer-10px"></div>
-                                        </div>
-                                        <div>
-                                            <label for="travel-distance" class="input-label">Category 8</label>
-                                            <div class="spacer-10px"></div>
-                                            <div>
-                                                <select name="category-08" id="category-08" class="search-input">
-                                                    <option value="" class="select-option-01">Select Category</option>
-                                                    <option value="" class="select-option-01"></option>
-                                                </select>
-                                            </div>
-                                            <div class="spacer-10px"></div>
-                                            <div class="spacer-10px"></div>
-                                        </div>
-                                        <div>
-                                            <label for="travel-distance" class="input-label">Category 9</label>
-                                            <div class="spacer-10px"></div>
-                                            <div>
-                                                <select name="category-09" id="category-09" class="search-input">
-                                                    <option value="" class="select-option-01">Select Category</option>
-                                                    <option value="" class="select-option-01"></option>
-                                                </select>
-                                            </div>
-                                            <div class="spacer-10px"></div>
-                                            <div class="spacer-10px"></div>
-                                        </div>
-                                    </div>
+                                    <div class="spacer-10px"></div>
+                                    <div class="spacer-10px"></div>
                                     <h3>Locations</h3> 
                                     <div class="form-input-container">
-                                        <!-- LOCATION 1 -->
-                                        <div>
-                                            <label for="street-address1-01" class="input-label">Primary Location Street Address 1</label>
-                                            <div class="spacer-10px"></div>
+                                        <div class="form-input-search">
                                             <div>
-                                                <input type="text" id="street-address1-01" class="search-input" placeholder="Street Address 1">
-                                            </div>
-                                            <div class="spacer-10px"></div>
-                                            <div class="spacer-10px"></div>
-                                            <label for="street-address2-01" class="input-label">Primary Location Street Address 2</label>
-                                            <div class="spacer-10px"></div>
-                                            <div>
-                                                <input type="text" id="street-address2-01" class="search-input" placeholder="Street Address 2">
-                                            </div>
-                                            <div class="spacer-10px"></div>
-                                            <div class="spacer-10px"></div>
-                                            <span class="input-label">Primary Location City/State/Zip</span>
-                                            <div class="spacer-10px"></div>
-                                            <div>
-                                                <input type="text" id="city-01" class="search-input" placeholder="City">
-                                            </div>
-                                            <div class="spacer-10px"></div>
-                                            <div class="profile-state-zip">
+                                                <label for="street-address1-01" class="input-label">Location Street Address 1</label>
+                                                <div class="spacer-10px"></div>
                                                 <div>
-                                                    <select name="state-01" id="state-01" class="search-input-mini">
-                                                        <option value="" class="select-option-01">State</option>
-                                                        <option value="" class="select-option-01"></option>
-                                                    </select>
+                                                    <input type="text" class="search-input" placeholder="Street Address 1">
                                                 </div>
+                                                <div class="spacer-10px"></div>
+                                                <div class="spacer-10px"></div>
+                                                <label for="street-address2-01" class="input-label">Location Street Address 2</label>
+                                                <div class="spacer-10px"></div>
                                                 <div>
+                                                    <input type="text" class="search-input" placeholder="Street Address 2">
+                                                </div>
+                                                <div class="spacer-10px"></div>
+                                                <div class="spacer-10px"></div>
+                                                <span class="input-label">Location City/State/Zip</span>
+                                                <div class="spacer-10px"></div>
+                                                <div>
+                                                    <input type="text" class="search-input" placeholder="City">
+                                                </div>
+                                                <div class="spacer-10px"></div>
+                                                <div class="profile-state-zip">
                                                     <div>
-                                                        <input type="text" id="zip-01" class="search-input-mini" placeholder="Zip">
+                                                        <select name="state-01" class="search-input-mini">
+                                                            <option value="" class="select-option-01">State</option>
+                                                            <option value="" class="select-option-01"></option>
+                                                        </select>
+                                                    </div>
+                                                    <div>
+                                                        <div>
+                                                            <input type="text" class="search-input-mini" placeholder="Zip">
+                                                        </div>
                                                     </div>
                                                 </div>
+                                                <div class="spacer-10px"></div>
+                                                <div class="spacer-10px"></div>
+                                                <label for="phone-01" class="input-label">Phone Number</label>
+                                                <div class="spacer-10px"></div>
+                                                <div>
+                                                    <input type="tel" class="search-input" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="example: 123-456-7890">
+                                                </div>
+                                                <div class="spacer-10px"></div>
+                                                <div class="spacer-10px"></div>
                                             </div>
-                                            <div class="spacer-10px"></div>
-                                            <div class="spacer-10px"></div>
-                                            <label for="phone-01" class="input-label">Primary Phone Number</label>
-                                            <div class="spacer-10px"></div>
-                                            <div>
-                                                <input type="tel" id="phone-01" class="search-input" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="example: 123-456-7890">
-                                            </div>
-                                            <div class="spacer-10px"></div>
-                                            <div class="spacer-10px"></div>
-                                            <div>
-                                                <label for="only-city-01" class="input-label">Only Show The City</label>
-                                                <div class="spacer-10px"></div>
-                                                <input type="checkbox" name="only-city-01" id="only-city-01">
-                                                <div class="spacer-10px"></div>
-                                                <div class="spacer-10px"></div>
+                                            <div class="form-submit-container">
+                                                <a href="" class="button-03 button-link-text white-text">Add Location</a>
                                             </div>
                                         </div>
-                                        <!-- LOCATION 2 -->
-                                        <div>
-                                            <label for="street-address1-02" class="input-label">Location #2 Street Address 1</label>
+                                        <div class="form-input-search">
+                                            <label for="location" class="input-label">Location List &nbsp;&nbsp;<i>(Primary is in green)</i></label>
                                             <div class="spacer-10px"></div>
-                                            <div>
-                                                <input type="text" id="street-address1-02" class="search-input" placeholder="Street Address 1">
-                                            </div>
-                                            <div class="spacer-10px"></div>
-                                            <div class="spacer-10px"></div>
-                                            <label for="street-address2-02" class="input-label">Location #2 Street Address 2</label>
-                                            <div class="spacer-10px"></div>
-                                            <div>
-                                                <input type="text" id="street-address2-02" class="search-input" placeholder="Street Address 2">
-                                            </div>
-                                            <div class="spacer-10px"></div>
-                                            <div class="spacer-10px"></div>
-                                            <span class="input-label">Location #2 City/State/Zip</span>
-                                            <div class="spacer-10px"></div>
-                                            <div>
-                                                <input type="text" id="city-02" class="search-input" placeholder="City">
-                                            </div>
-                                            <div class="spacer-10px"></div>
-                                            <div class="profile-state-zip">
-                                                <div>
-                                                    <select name="state-02" id="state-02" class="search-input-mini">
-                                                        <option value="" class="select-option-01">State</option>
-                                                        <option value="" class="select-option-01"></option>
-                                                    </select>
-                                                </div>
-                                                <div>
-                                                    <div>
-                                                        <input type="text" id="zip-02" class="search-input-mini" placeholder="Zip">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="spacer-10px"></div>
-                                            <div class="spacer-10px"></div>
-                                            <label for="phone-02" class="input-label">Location #2 Phone Number</label>
-                                            <div class="spacer-10px"></div>
-                                            <div>
-                                                <input type="tel" id="phone-02" class="search-input" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="example: 123-456-7890">
-                                            </div>
-                                            <div class="spacer-10px"></div>
-                                            <div class="spacer-10px"></div>
-                                            <div>
-                                                <label for="only-city-02" class="input-label">Only Show The City</label>
-                                                <div class="spacer-10px"></div>
-                                                <input type="checkbox" name="only-city-02" id="only-city-02">
-                                                <div class="spacer-10px"></div>
-                                                <div class="spacer-10px"></div>
+                                            <div class="list-container-tall">
+                                                <ul class="category-ul">
+                                                    <li class="category-li">
+                                                        <div class="primary-location">
+                                                            <span class="location-list-text">123 Example Street</span><br>
+                                                            <span class="location-list-text">Suite 5</span><br>
+                                                            <span class="location-list-text">Tampa, FL</span><br>
+                                                            <span class="location-list-text">11223</span><br>
+                                                            <div class="spacer-10px"></div>
+                                                            <div class="spacer-10px"></div>
+                                                            <span class="location-list-text-phone">123-456-7890</span>
+                                                        </div>
+                                                        <br>
+                                                        <div>
+                                                            <label for="only-city-01" class="input-label">Only Show The City And State
+                                                            </label>
+                                                            <div class="spacer-10px"></div>
+                                                            <input type="checkbox" name="only-city-01">
+                                                            <div class="spacer-10px"></div>
+                                                            <div class="spacer-10px"></div>
+                                                        </div>
+                                                        <div>
+                                                            <label for="show-phone-01" class="input-label">Show The Phone Number</label>
+                                                            <div class="spacer-10px"></div>
+                                                            <input type="checkbox" name="only-city-01">
+                                                            <div class="spacer-10px"></div>
+                                                            <div class="spacer-10px"></div>
+                                                        </div>
+                                                        <div class="multi-button-container">
+                                                            <button class="small-button primary white-text">Make Primary</button>
+                                                            <button class="small-button primary white-text">Delete</button>
+                                                        </div>
+                                                    </li>
+                                                    <li class="category-li">
+                                                        <div class="aux-location">
+                                                            <span class="location-list-text">Orlando, FL</span><br>
+                                                        </div>
+                                                        <br>
+                                                        <div>
+                                                            <label for="only-city-01" class="input-label">Only Show The City And State
+                                                            </label>
+                                                            <div class="spacer-10px"></div>
+                                                            <input type="checkbox" name="only-city-01">
+                                                            <div class="spacer-10px"></div>
+                                                            <div class="spacer-10px"></div>
+                                                        </div>
+                                                        <div>
+                                                            <label for="show-phone-01" class="input-label">Show The Phone Number</label>
+                                                            <div class="spacer-10px"></div>
+                                                            <input type="checkbox" name="only-city-01">
+                                                            <div class="spacer-10px"></div>
+                                                            <div class="spacer-10px"></div>
+                                                        </div>
+                                                        <div class="multi-button-container">
+                                                            <button class="small-button primary white-text">Make Primary</button>
+                                                            <button class="small-button primary white-text">Delete</button>
+                                                        </div>
+                                                    </li>
+                                                    <li class="category-li">
+                                                        <div class="aux-location">
+                                                            <span class="location-list-text">Miami, FL</span><br>
+                                                            <div class="spacer-10px"></div>
+                                                            <div class="spacer-10px"></div>
+                                                            <span class="location-list-text-phone">123-456-7890</span>
+                                                        </div>
+                                                        <br>
+                                                        <div>
+                                                            <label for="only-city-01" class="input-label">Only Show The City And State
+                                                            </label>
+                                                            <div class="spacer-10px"></div>
+                                                            <input type="checkbox" name="only-city-01">
+                                                            <div class="spacer-10px"></div>
+                                                            <div class="spacer-10px"></div>
+                                                        </div>
+                                                        <div>
+                                                            <label for="show-phone-01" class="input-label">Show The Phone Number</label>
+                                                            <div class="spacer-10px"></div>
+                                                            <input type="checkbox" name="only-city-01">
+                                                            <div class="spacer-10px"></div>
+                                                            <div class="spacer-10px"></div>
+                                                        </div>
+                                                        <div class="multi-button-container">
+                                                            <button class="small-button primary white-text">Make Primary</button>
+                                                            <button class="small-button primary white-text">Delete</button>
+                                                        </div>
+                                                    </li>
+                                                    <li class="category-li">
+                                                        <div class="aux-location">
+                                                            <span class="location-list-text">098 Main Avenue</span><br>
+                                                            <span class="location-list-text">Tampa, FL</span><br>
+                                                            <span class="location-list-text">11223</span><br>
+                                                        </div>
+                                                        <br>
+                                                        <div>
+                                                            <label for="only-city-01" class="input-label">Only Show The City And State
+                                                            </label>
+                                                            <div class="spacer-10px"></div>
+                                                            <input type="checkbox" name="only-city-01">
+                                                            <div class="spacer-10px"></div>
+                                                            <div class="spacer-10px"></div>
+                                                        </div>
+                                                        <div>
+                                                            <label for="show-phone-01" class="input-label">Show The Phone Number</label>
+                                                            <div class="spacer-10px"></div>
+                                                            <input type="checkbox" name="only-city-01">
+                                                            <div class="spacer-10px"></div>
+                                                            <div class="spacer-10px"></div>
+                                                        </div>
+                                                        <div class="multi-button-container">
+                                                            <button class="small-button primary white-text">Make Primary</button>
+                                                            <button class="small-button primary white-text">Delete</button>
+                                                        </div>
+                                                    </li>
+                                                </ul>
                                             </div>
                                         </div>
-                                        <!-- LOCATION 3 -->
-                                        <div>
-                                            <label for="street-address1-03" class="input-label">Location #3 Street Address 1</label>
-                                            <div class="spacer-10px"></div>
-                                            <div>
-                                                <input type="text" id="street-address1-03" class="search-input" placeholder="Street Address 1">
-                                            </div>
-                                            <div class="spacer-10px"></div>
-                                            <div class="spacer-10px"></div>
-                                            <label for="street-address2-03" class="input-label">Location #3 Street Address 2</label>
-                                            <div class="spacer-10px"></div>
-                                            <div>
-                                                <input type="text" id="street-address2-03" class="search-input" placeholder="Street Address 2">
-                                            </div>
-                                            <div class="spacer-10px"></div>
-                                            <div class="spacer-10px"></div>
-                                            <span class="input-label">Location #3 City/State/Zip</span>
-                                            <div class="spacer-10px"></div>
-                                            <div>
-                                                <input type="text" id="city-03" class="search-input" placeholder="City">
-                                            </div>
-                                            <div class="spacer-10px"></div>
-                                            <div class="profile-state-zip">
-                                                <div>
-                                                    <select name="state-03" id="state-03" class="search-input-mini">
-                                                        <option value="" class="select-option-01">State</option>
-                                                        <option value="" class="select-option-01"></option>
-                                                    </select>
-                                                </div>
-                                                <div>
-                                                    <div>
-                                                        <input type="text" id="zip-03" class="search-input-mini" placeholder="Zip">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="spacer-10px"></div>
-                                            <div class="spacer-10px"></div>
-                                            <label for="phone-03" class="input-label">Location #3 Phone Number</label>
-                                            <div class="spacer-10px"></div>
-                                            <div>
-                                                <input type="tel" id="phone-03" class="search-input" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="example: 123-456-7890">
-                                            </div>
-                                            <div class="spacer-10px"></div>
-                                            <div class="spacer-10px"></div>
-                                            <div>
-                                                <label for="only-city-03" class="input-label">Only Show The City</label>
-                                                <div class="spacer-10px"></div>
-                                                <input type="checkbox" name="only-city-03" id="only-city-03">
-                                                <div class="spacer-10px"></div>
-                                                <div class="spacer-10px"></div>
-                                            </div>
-                                        </div>
+                                        
                                     </div>
-                                    <div class="form-input-container">
-                                        <!-- LOCATION 4 -->
-                                        <div>
-                                            <label for="street-address1-04" class="input-label">Location #4 Street Address 1</label>
-                                            <div class="spacer-10px"></div>
-                                            <div>
-                                                <input type="text" id="street-address1-04" class="search-input" placeholder="Street Address 1">
-                                            </div>
-                                            <div class="spacer-10px"></div>
-                                            <div class="spacer-10px"></div>
-                                            <label for="street-address2-04" class="input-label">Location #4 Street Address 2</label>
-                                            <div class="spacer-10px"></div>
-                                            <div>
-                                                <input type="text" id="street-address2-04" class="search-input" placeholder="Street Address 2">
-                                            </div>
-                                            <div class="spacer-10px"></div>
-                                            <div class="spacer-10px"></div>
-                                            <span class="input-label">Location #4 City/State/Zip</span>
-                                            <div class="spacer-10px"></div>
-                                            <div>
-                                                <input type="text" id="city-04" class="search-input" placeholder="City">
-                                            </div>
-                                            <div class="spacer-10px"></div>
-                                            <div class="profile-state-zip">
-                                                <div>
-                                                    <select name="state-04" id="state-04" class="search-input-mini">
-                                                        <option value="" class="select-option-01">State</option>
-                                                        <option value="" class="select-option-01"></option>
-                                                    </select>
-                                                </div>
-                                                <div>
-                                                    <div>
-                                                        <input type="text" id="zip-04" class="search-input-mini" placeholder="Zip">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="spacer-10px"></div>
-                                            <div class="spacer-10px"></div>
-                                            <label for="phone-04" class="input-label">Location #4 Phone Number</label>
-                                            <div class="spacer-10px"></div>
-                                            <div>
-                                                <input type="tel" id="phone-04" class="search-input" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="example: 123-456-7890">
-                                            </div>
-                                            <div class="spacer-10px"></div>
-                                            <div class="spacer-10px"></div>
-                                            <div>
-                                                <label for="only-city-04" class="input-label">Only Show The City</label>
-                                                <div class="spacer-10px"></div>
-                                                <input type="checkbox" name="only-city-04" id="only-city-04">
-                                                <div class="spacer-10px"></div>
-                                                <div class="spacer-10px"></div>
-                                            </div>
-                                        </div>
-                                        <!-- LOCATION 5 -->
-                                        <div>
-                                            <label for="street-address1-05" class="input-label">Location #5 Street Address 1</label>
-                                            <div class="spacer-10px"></div>
-                                            <div>
-                                                <input type="text" id="street-address1-05" class="search-input" placeholder="Street Address 1">
-                                            </div>
-                                            <div class="spacer-10px"></div>
-                                            <div class="spacer-10px"></div>
-                                            <label for="street-address2-05" class="input-label">Location #5 Street Address 2</label>
-                                            <div class="spacer-10px"></div>
-                                            <div>
-                                                <input type="text" id="street-address2-05" class="search-input" placeholder="Street Address 2">
-                                            </div>
-                                            <div class="spacer-10px"></div>
-                                            <div class="spacer-10px"></div>
-                                            <span class="input-label">Location #5 City/State/Zip</span>
-                                            <div class="spacer-10px"></div>
-                                            <div>
-                                                <input type="text" id="city-05" class="search-input" placeholder="City">
-                                            </div>
-                                            <div class="spacer-10px"></div>
-                                            <div class="profile-state-zip">
-                                                <div>
-                                                    <select name="state-05" id="state-05" class="search-input-mini">
-                                                        <option value="" class="select-option-01">State</option>
-                                                        <option value="" class="select-option-01"></option>
-                                                    </select>
-                                                </div>
-                                                <div>
-                                                    <div>
-                                                        <input type="text" id="zip-05" class="search-input-mini" placeholder="Zip">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="spacer-10px"></div>
-                                            <div class="spacer-10px"></div>
-                                            <label for="phone-05" class="input-label">Location #5 Phone Number</label>
-                                            <div class="spacer-10px"></div>
-                                            <div>
-                                                <input type="tel" id="phone-05" class="search-input" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="example: 123-456-7890">
-                                            </div>
-                                            <div class="spacer-10px"></div>
-                                            <div class="spacer-10px"></div>
-                                            <div>
-                                                <label for="only-city-05" class="input-label">Only Show The City</label>
-                                                <div class="spacer-10px"></div>
-                                                <input type="checkbox" name="only-city-05" id="only-city-05">
-                                                <div class="spacer-10px"></div>
-                                                <div class="spacer-10px"></div>
-                                            </div>
-                                        </div>
-                                        <!-- LOCATION 6 -->
-                                        <div>
-                                            <label for="street-address1-06" class="input-label">Location #6 Street Address 1</label>
-                                            <div class="spacer-10px"></div>
-                                            <div>
-                                                <input type="text" id="street-address1-06" class="search-input" placeholder="Street Address 1">
-                                            </div>
-                                            <div class="spacer-10px"></div>
-                                            <div class="spacer-10px"></div>
-                                            <label for="street-address2-06" class="input-label">Location #6 Street Address 2</label>
-                                            <div class="spacer-10px"></div>
-                                            <div>
-                                                <input type="text" id="street-address2-06" class="search-input" placeholder="Street Address 2">
-                                            </div>
-                                            <div class="spacer-10px"></div>
-                                            <div class="spacer-10px"></div>
-                                            <span class="input-label">Location #6 City/State/Zip</span>
-                                            <div class="spacer-10px"></div>
-                                            <div>
-                                                <input type="text" id="city-06" class="search-input" placeholder="City">
-                                            </div>
-                                            <div class="spacer-10px"></div>
-                                            <div class="profile-state-zip">
-                                                <div>
-                                                    <select name="state-06" id="state-06" class="search-input-mini">
-                                                        <option value="" class="select-option-01">State</option>
-                                                        <option value="" class="select-option-01"></option>
-                                                    </select>
-                                                </div>
-                                                <div>
-                                                    <div>
-                                                        <input type="text" id="zip-06" class="search-input-mini" placeholder="Zip">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="spacer-10px"></div>
-                                            <div class="spacer-10px"></div>
-                                            <label for="phone-06" class="input-label">Location #6 Phone Number</label>
-                                            <div class="spacer-10px"></div>
-                                            <div>
-                                                <input type="tel" id="phone-06" class="search-input" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="example: 123-456-7890">
-                                            </div>
-                                            <div class="spacer-10px"></div>
-                                            <div class="spacer-10px"></div>
-                                            <div>
-                                                <label for="only-city-06" class="input-label">Only Show The City</label>
-                                                <div class="spacer-10px"></div>
-                                                <input type="checkbox" name="only-city-06" id="only-city-06">
-                                                <div class="spacer-10px"></div>
-                                                <div class="spacer-10px"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-input-container">
-                                        <!-- LOCATION 7 -->
-                                        <div>
-                                            <label for="street-address1-07" class="input-label">Location #7 Street Address 1</label>
-                                            <div class="spacer-10px"></div>
-                                            <div>
-                                                <input type="text" id="street-address1-07" class="search-input" placeholder="Street Address 1">
-                                            </div>
-                                            <div class="spacer-10px"></div>
-                                            <div class="spacer-10px"></div>
-                                            <label for="street-address2-07" class="input-label">Location #7 Street Address 2</label>
-                                            <div class="spacer-10px"></div>
-                                            <div>
-                                                <input type="text" id="street-address2-07" class="search-input" placeholder="Street Address 2">
-                                            </div>
-                                            <div class="spacer-10px"></div>
-                                            <div class="spacer-10px"></div>
-                                            <span class="input-label">Location #7 City/State/Zip</span>
-                                            <div class="spacer-10px"></div>
-                                            <div>
-                                                <input type="text" id="city-07" class="search-input" placeholder="City">
-                                            </div>
-                                            <div class="spacer-10px"></div>
-                                            <div class="profile-state-zip">
-                                                <div>
-                                                    <select name="state-07" id="state-07" class="search-input-mini">
-                                                        <option value="" class="select-option-01">State</option>
-                                                        <option value="" class="select-option-01"></option>
-                                                    </select>
-                                                </div>
-                                                <div>
-                                                    <div>
-                                                        <input type="text" id="zip-07" class="search-input-mini" placeholder="Zip">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="spacer-10px"></div>
-                                            <div class="spacer-10px"></div>
-                                            <label for="phone-07" class="input-label">Location #7 Phone Number</label>
-                                            <div class="spacer-10px"></div>
-                                            <div>
-                                                <input type="tel" id="phone-07" class="search-input" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="example: 123-456-7890">
-                                            </div>
-                                            <div class="spacer-10px"></div>
-                                            <div class="spacer-10px"></div>
-                                            <div>
-                                                <label for="only-city-07" class="input-label">Only Show The City</label>
-                                                <div class="spacer-10px"></div>
-                                                <input type="checkbox" name="only-city-07" id="only-city-07">
-                                                <div class="spacer-10px"></div>
-                                                <div class="spacer-10px"></div>
-                                            </div>
-                                        </div>
-                                        <!-- LOCATION 8 -->
-                                        <div>
-                                            <label for="street-address1-08" class="input-label">Location #8 Street Address 1</label>
-                                            <div class="spacer-10px"></div>
-                                            <div>
-                                                <input type="text" id="street-address1-08" class="search-input" placeholder="Street Address 1">
-                                            </div>
-                                            <div class="spacer-10px"></div>
-                                            <div class="spacer-10px"></div>
-                                            <label for="street-address2-08" class="input-label">Location #8 Street Address 2</label>
-                                            <div class="spacer-10px"></div>
-                                            <div>
-                                                <input type="text" id="street-address2-08" class="search-input" placeholder="Street Address 2">
-                                            </div>
-                                            <div class="spacer-10px"></div>
-                                            <div class="spacer-10px"></div>
-                                            <span class="input-label">Location #8 City/State/Zip</span>
-                                            <div class="spacer-10px"></div>
-                                            <div>
-                                                <input type="text" id="city-08" class="search-input" placeholder="City">
-                                            </div>
-                                            <div class="spacer-10px"></div>
-                                            <div class="profile-state-zip">
-                                                <div>
-                                                    <select name="state-08" id="state-08" class="search-input-mini">
-                                                        <option value="" class="select-option-01">State</option>
-                                                        <option value="" class="select-option-01"></option>
-                                                    </select>
-                                                </div>
-                                                <div>
-                                                    <div>
-                                                        <input type="text" id="zip-08" class="search-input-mini" placeholder="Zip">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="spacer-10px"></div>
-                                            <div class="spacer-10px"></div>
-                                            <label for="phone-08" class="input-label">Location #8 Phone Number</label>
-                                            <div class="spacer-10px"></div>
-                                            <div>
-                                                <input type="tel" id="phone-08" class="search-input" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="example: 123-456-7890">
-                                            </div>
-                                            <div class="spacer-10px"></div>
-                                            <div class="spacer-10px"></div>
-                                            <div>
-                                                <label for="only-city-08" class="input-label">Only Show The City</label>
-                                                <div class="spacer-10px"></div>
-                                                <input type="checkbox" name="only-city-08" id="only-city-08">
-                                                <div class="spacer-10px"></div>
-                                                <div class="spacer-10px"></div>
-                                            </div>
-                                        </div>
-                                        <!-- LOCATION 9 -->
-                                        <div>
-                                            <label for="street-address1-09" class="input-label">Location #9 Street Address 1</label>
-                                            <div class="spacer-10px"></div>
-                                            <div>
-                                                <input type="text" id="street-address1-09" class="search-input" placeholder="Street Address 1">
-                                            </div>
-                                            <div class="spacer-10px"></div>
-                                            <div class="spacer-10px"></div>
-                                            <label for="street-address2-09" class="input-label">Location #9 Street Address 2</label>
-                                            <div class="spacer-10px"></div>
-                                            <div>
-                                                <input type="text" id="street-address2-09" class="search-input" placeholder="Street Address 2">
-                                            </div>
-                                            <div class="spacer-10px"></div>
-                                            <div class="spacer-10px"></div>
-                                            <span class="input-label">Location #9 City/State/Zip</span>
-                                            <div class="spacer-10px"></div>
-                                            <div>
-                                                <input type="text" id="city-09" class="search-input" placeholder="City">
-                                            </div>
-                                            <div class="spacer-10px"></div>
-                                            <div class="profile-state-zip">
-                                                <div>
-                                                    <select name="state-09" id="state-09" class="search-input-mini">
-                                                        <option value="" class="select-option-01">State</option>
-                                                        <option value="" class="select-option-01"></option>
-                                                    </select>
-                                                </div>
-                                                <div>
-                                                    <div>
-                                                        <input type="text" id="zip-09" class="search-input-mini" placeholder="Zip">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="spacer-10px"></div>
-                                            <div class="spacer-10px"></div>
-                                            <label for="phone-09" class="input-label">Location #9 Phone Number</label>
-                                            <div class="spacer-10px"></div>
-                                            <div>
-                                                <input type="tel" id="phone-09" class="search-input" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="example: 123-456-7890">
-                                            </div>
-                                            <div class="spacer-10px"></div>
-                                            <div class="spacer-10px"></div>
-                                            <div>
-                                                <label for="only-city-09" class="input-label">Only Show The City</label>
-                                                <div class="spacer-10px"></div>
-                                                <input type="checkbox" name="only-city-09" id="only-city-09">
-                                                <div class="spacer-10px"></div>
-                                                <div class="spacer-10px"></div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <div class="spacer-10px"></div>
+                                    <div class="spacer-10px"></div>
                                     <h3>Keywords</h3>
                                     <div class="form-input-container">
                                         <div class="form-input-search">
-                                            <label for="keywords" class="input-label">Enter Comma Separated Keywords (70 character limit...aprx 10 words)</label>
+                                            <label for="keywords" class="input-label">Enter Comma Separated Keywords<br>(70 character limit...aprx 10 words)</label>
                                             <div class="spacer-10px"></div>
                                             <div>
                                                 <input type="text" id="keyword-vendor-search" class="search-input" placeholder="example: party band, caterer, photographer">
@@ -779,15 +537,15 @@ $vendor = Vendor::where('login_token',$login_token)->first();
                                             <div class="spacer-10px"></div>
                                             <div class="list-container">
                                                 <ul class="category-ul">
-                                                    <li class="category-li"><div>Jazz</div><div><button class="small-button primary white-text">Delete</button></div></li>
-                                                    <li class="category-li"><div>Blues</div><div><button class="small-button primary white-text">Delete</button></div></li>
-                                                    <li class="category-li"><div>Funk</div><div><button class="small-button primary white-text">Delete</button></div></li>
+                                                    <li class="category-li"><div>Jazz</div><br><div><button class="small-button primary white-text">Delete</button></div></li>
+                                                    <li class="category-li"><div>Blues</div><br><div><button class="small-button primary white-text">Delete</button></div></li>
+                                                    <li class="category-li"><div>Funk</div><br><div><button class="small-button primary white-text">Delete</button></div></li>
                                                 </ul>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="form-submit-container">
-                                        <input type="submit" class="button-01 white-text" id="vendor-overview-submit" value="Submit"/>
+                                        <imput type="button" class="button-01 white-text" id="vendor-overview-submit">Submit</imput>
                                     </div>
                                 </form>
                             </div>
