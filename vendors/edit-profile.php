@@ -174,174 +174,31 @@ $vendor = Vendor::where('login_token',$login_token)->first();
                                     <h3>Categories</h3>    
                                     <div class="form-input-container">
                                         <div class="form-input-search">
+                                            <label for="category" class="input-label">Primary Category</label>
+                                            <div class="spacer-10px"></div>
                                             <div>
-                                                <label for="street-address1-01" class="input-label">Location Street Address 1</label>
-                                                <div class="spacer-10px"></div>
-                                                <div>
-                                                    <input type="text" class="search-input" placeholder="Street Address 1">
-                                                </div>
-                                                <div class="spacer-10px"></div>
-                                                <div class="spacer-10px"></div>
-                                                <label for="street-address2-01" class="input-label">Location Street Address 2</label>
-                                                <div class="spacer-10px"></div>
-                                                <div>
-                                                    <input type="text" class="search-input" placeholder="Street Address 2">
-                                                </div>
-                                                <div class="spacer-10px"></div>
-                                                <div class="spacer-10px"></div>
-                                                <span class="input-label">Location City/State/Zip</span>
-                                                <div class="spacer-10px"></div>
-                                                <div>
-                                                    <input type="text" class="search-input" placeholder="City">
-                                                </div>
-                                                <div class="spacer-10px"></div>
-                                                <div class="profile-state-zip">
-                                                    <div>
-                                                        <select name="state-01" class="search-input-mini">
-                                                            <option value="" class="select-option-01">State</option>
-                                                            <option value="" class="select-option-01"></option>
-                                                        </select>
-                                                    </div>
-                                                    <div>
-                                                        <div>
-                                                            <input type="text" class="search-input-mini" placeholder="Zip">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="spacer-10px"></div>
-                                                <div class="spacer-10px"></div>
-                                                <label for="phone-01" class="input-label">Phone Number</label>
-                                                <div class="spacer-10px"></div>
-                                                <div>
-                                                    <input type="tel" class="search-input" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="example: 123-456-7890">
-                                                </div>
-                                                <div class="spacer-10px"></div>
-                                                <div class="spacer-10px"></div>
+                                                <select name="category" id="category" class="search-input">
+                                                    <option value="" class="select-option-01">Select Category</option>
+                                                    <option value="" class="select-option-01"></option>
+                                                </select>
                                             </div>
+                                            <div class="spacer-10px"></div>
+                                            <div class="spacer-10px"></div>
                                             <div class="form-submit-container">
-                                                <a href="" class="button-03 button-link-text white-text">Add Location</a>
+                                                <a href="" class="button-03 button-link-text white-text">Add Category</a>
                                             </div>
                                         </div>
                                         <div class="form-input-search">
-                                            <label for="location" class="input-label">Location List &nbsp;&nbsp;<i>(Primary is in green)</i></label>
+                                            <label for="location" class="input-label">Category List &nbsp;&nbsp;<i>(Primary is in green)</i></label>
                                             <div class="spacer-10px"></div>
-                                            <div class="list-container-tall">
+                                            <div class="list-container">
                                                 <ul class="category-ul">
-                                                    <li class="category-li">
-                                                        <div class="primary-location">
-                                                            <span class="location-list-text">123 Example Street</span><br>
-                                                            <span class="location-list-text">Suite 5</span><br>
-                                                            <span class="location-list-text">Tampa, FL</span><br>
-                                                            <span class="location-list-text">11223</span><br>
-                                                            <div class="spacer-10px"></div>
-                                                            <div class="spacer-10px"></div>
-                                                            <span class="location-list-text-phone">123-456-7890</span>
-                                                        </div>
-                                                        <br>
-                                                        <div>
-                                                            <label for="only-city-01" class="input-label">Only Show The City And State
-                                                            </label>
-                                                            <div class="spacer-10px"></div>
-                                                            <input type="checkbox" name="only-city-01">
-                                                            <div class="spacer-10px"></div>
-                                                            <div class="spacer-10px"></div>
-                                                        </div>
-                                                        <div>
-                                                            <label for="show-phone-01" class="input-label">Show The Phone Number</label>
-                                                            <div class="spacer-10px"></div>
-                                                            <input type="checkbox" name="only-city-01">
-                                                            <div class="spacer-10px"></div>
-                                                            <div class="spacer-10px"></div>
-                                                        </div>
-                                                        <div class="multi-button-container">
-                                                            <button class="small-button primary white-text">Make Primary</button>
-                                                            <button class="small-button primary white-text">Delete</button>
-                                                        </div>
-                                                    </li>
-                                                    <li class="category-li">
-                                                        <div class="aux-location">
-                                                            <span class="location-list-text">Orlando, FL</span><br>
-                                                        </div>
-                                                        <br>
-                                                        <div>
-                                                            <label for="only-city-01" class="input-label">Only Show The City And State
-                                                            </label>
-                                                            <div class="spacer-10px"></div>
-                                                            <input type="checkbox" name="only-city-01">
-                                                            <div class="spacer-10px"></div>
-                                                            <div class="spacer-10px"></div>
-                                                        </div>
-                                                        <div>
-                                                            <label for="show-phone-01" class="input-label">Show The Phone Number</label>
-                                                            <div class="spacer-10px"></div>
-                                                            <input type="checkbox" name="only-city-01">
-                                                            <div class="spacer-10px"></div>
-                                                            <div class="spacer-10px"></div>
-                                                        </div>
-                                                        <div class="multi-button-container">
-                                                            <button class="small-button primary white-text">Make Primary</button>
-                                                            <button class="small-button primary white-text">Delete</button>
-                                                        </div>
-                                                    </li>
-                                                    <li class="category-li">
-                                                        <div class="aux-location">
-                                                            <span class="location-list-text">Miami, FL</span><br>
-                                                            <div class="spacer-10px"></div>
-                                                            <div class="spacer-10px"></div>
-                                                            <span class="location-list-text-phone">123-456-7890</span>
-                                                        </div>
-                                                        <br>
-                                                        <div>
-                                                            <label for="only-city-01" class="input-label">Only Show The City And State
-                                                            </label>
-                                                            <div class="spacer-10px"></div>
-                                                            <input type="checkbox" name="only-city-01">
-                                                            <div class="spacer-10px"></div>
-                                                            <div class="spacer-10px"></div>
-                                                        </div>
-                                                        <div>
-                                                            <label for="show-phone-01" class="input-label">Show The Phone Number</label>
-                                                            <div class="spacer-10px"></div>
-                                                            <input type="checkbox" name="only-city-01">
-                                                            <div class="spacer-10px"></div>
-                                                            <div class="spacer-10px"></div>
-                                                        </div>
-                                                        <div class="multi-button-container">
-                                                            <button class="small-button primary white-text">Make Primary</button>
-                                                            <button class="small-button primary white-text">Delete</button>
-                                                        </div>
-                                                    </li>
-                                                    <li class="category-li">
-                                                        <div class="aux-location">
-                                                            <span class="location-list-text">098 Main Avenue</span><br>
-                                                            <span class="location-list-text">Tampa, FL</span><br>
-                                                            <span class="location-list-text">11223</span><br>
-                                                        </div>
-                                                        <br>
-                                                        <div>
-                                                            <label for="only-city-01" class="input-label">Only Show The City And State
-                                                            </label>
-                                                            <div class="spacer-10px"></div>
-                                                            <input type="checkbox" name="only-city-01">
-                                                            <div class="spacer-10px"></div>
-                                                            <div class="spacer-10px"></div>
-                                                        </div>
-                                                        <div>
-                                                            <label for="show-phone-01" class="input-label">Show The Phone Number</label>
-                                                            <div class="spacer-10px"></div>
-                                                            <input type="checkbox" name="only-city-01">
-                                                            <div class="spacer-10px"></div>
-                                                            <div class="spacer-10px"></div>
-                                                        </div>
-                                                        <div class="multi-button-container">
-                                                            <button class="small-button primary white-text">Make Primary</button>
-                                                            <button class="small-button primary white-text">Delete</button>
-                                                        </div>
-                                                    </li>
+                                                    <li class="category-li"><div class="primary-selection">Cateror</div><br><div class="multi-button-container"><button class="small-button primary white-text">Delete</button></div></li>
+                                                    <li class="category-li"><div>Musician</div><br><div class="multi-button-container"><button class="small-button primary white-text">Make Primary</button><button class="small-button primary white-text">Delete</button></div></li>
+                                                    <li class="category-li"><div>Photographer</div><br><div class="multi-button-container"><button class="small-button primary white-text">Make Primary</button><button class="small-button primary white-text">Delete</button></div></li>
                                                 </ul>
                                             </div>
                                         </div>
-                                        
                                     </div>
                                     <div class="spacer-10px"></div>
                                     <div class="spacer-10px"></div>
