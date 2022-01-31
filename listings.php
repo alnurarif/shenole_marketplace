@@ -19,7 +19,7 @@ $isMajesticLoggedIn = UserHelper::isUserLoggedIn($_SESSION, 'majestic', new Maje
 
 // $vendors = Vendor::get();
 $total_vendor = Vendor::count();
-$show_in_list = 1;
+$show_in_list = 12;
 if(isset($_GET['page'])){
     $skip = $show_in_list*($_GET['page']-1);
     $vendors = ($_GET['page'] == 1) ? Vendor::take($show_in_list)->get() : Vendor::take($show_in_list)->skip($skip)->get();

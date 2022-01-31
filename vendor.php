@@ -51,7 +51,7 @@ if($_GET['vendor_uuid']){
                     <div class="vendor-profile-container">
                         <div class="vendor-profile-header-container">
                             <div class="vendor-profile-main-photo">
-                                <img src="<?php echo SITE_LINK;?>images/vendors/<?php echo $vendor->profile_photo; ?>" alt="profile photo">
+                                <img class="full h_full" src="<?php echo SITE_LINK;?>images/vendors/<?php echo $vendor->profile_photo; ?>" alt="profile photo">
                             </div>
                             <div class="vendor-profile-main-overview">
                                 <div class="profile-header-title">
