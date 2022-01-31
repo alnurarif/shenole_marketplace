@@ -1,17 +1,16 @@
 <?php
 
 namespace Shenole_project\models;
-use Shenole_project\models\Vendor_category;
-use Shenole_project\models\Vendor_location;
+use Shenole_project\models\State;
 use Illuminate\Database\Eloquent\Model;
 
-class Vendor extends Model{
+class Vendor_location extends Model{
     /**
     * The database table used by the model.
     *
     * @var string
     */
-    // protected $table = "customers";
+    protected $table = "vendor_locations";
     /**
     * The attributes that are mass assignable.
     *
@@ -22,10 +21,7 @@ class Vendor extends Model{
     //     'body', 
     //     'created_by'
     // ];
-    public function categories(){
-        return $this->hasMany(Vendor_category::class);
-    }
-    public function locations(){
-        return $this->hasMany(Vendor_location::class);
+    public function state(){
+        return $this->belongsTo(State::class,'location_state','id');
     }
 }

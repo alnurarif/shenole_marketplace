@@ -17,7 +17,16 @@ $isVendorLoggedIn = UserHelper::isUserLoggedIn($_SESSION, 'vendor', new VendorRe
 $isStaffLoggedIn = UserHelper::isUserLoggedIn($_SESSION, 'staff', new StaffRepository);
 $isMajesticLoggedIn = UserHelper::isUserLoggedIn($_SESSION, 'majestic', new MajesticRepository);
 
-
+if($_GET['vendor_uuid']){
+    $vendor = Vendor::where('uuid',$_GET['vendor_uuid'])->with('categories','locations','locations.state')->first();
+    if(empty($vendor)){
+        header("Location: ".SITE_LINK."listings.php");
+        exit();    
+    }
+}else{
+    header("Location: ".SITE_LINK."listings.php");
+    exit();
+}
 
 ?>
 <!DOCTYPE html>
@@ -29,25 +38,27 @@ $isMajesticLoggedIn = UserHelper::isUserLoggedIn($_SESSION, 'majestic', new Maje
 		MyHelpers::includeWithVariables('./layouts/top_nav.php', ['isClientLoggedIn' => $isClientLoggedIn, 'isVendorLoggedIn' => $isVendorLoggedIn, 'isStaffLoggedIn' => $isStaffLoggedIn, 'isMajesticLoggedIn' => $isMajesticLoggedIn], $print = true);
 		?>
 		<div class="main-body-content">
-            <section>
-                <div class="ad-space-type01-desktop">
-
+            <section class="section-type-01">
+                <div class="ad-space-container-160">
+                    <div class="ad-space-type01-desktop">
+                        <!-- Ad Space (160 x 600) -->
+                    </div>
+                    <div class="ad-space-type01-desktop">
+                        <!-- Ad Space (160 x 600) -->
+                    </div>
                 </div>
-                <!-- <div class="ad-space-type01-mobile">
-
-                </div> -->
                 <div class="content-container-center">
                     <div class="vendor-profile-container">
                         <div class="vendor-profile-header-container">
                             <div class="vendor-profile-main-photo">
-    
+                                <img src="<?php echo SITE_LINK;?>images/vendors/<?php echo $vendor->profile_photo; ?>" alt="profile photo">
                             </div>
                             <div class="vendor-profile-main-overview">
                                 <div class="profile-header-title">
-                                    Vendor's Name Here And It May Be A Long Name
+                                    <?php echo $vendor->company_name; ?>
                                 </div>
                                 <div class="profile-sub-header">
-                                    <h4>Musician from Tampa, FL</h4>
+                                    <h4><?php echo $vendor->categories[0]->category->name?> from <?php echo $vendor->locations[0]->location_city; ?>, <?php echo $vendor->locations[0]->state->short_name; ?></h4>
                                 </div>
                                 <div class="profile-header-reviews">
                                     <div class="profile-header-star-container">
@@ -63,16 +74,16 @@ $isMajesticLoggedIn = UserHelper::isUserLoggedIn($_SESSION, 'majestic', new Maje
                                 </div>
                                 <div class="profile-header-icon-description-container">
                                     <img src="<?php echo SITE_LINK; ?>images/maps-and-flags.png" alt="Travel range." class="icon-primary">
-                                    <div class="overview-icon-text">Will travel up to 50 miles.</div>
+                                    <div class="overview-icon-text">Will travel up to <?php echo $vendor->travel_distance; ?> miles.</div>
                                 </div>
                                 <div class="profile-header-icon-description-container">
                                     <img src="<?php echo SITE_LINK; ?>images/money.png" alt="Travel range." class="icon-primary">
-                                    <div class="overview-icon-text">Starting at $300 per event.</div>
+                                    <div class="overview-icon-text">Starting at $<?php echo $vendor->starting_fee; ?> per event.</div>
                                 </div>
                                 <hr class="divider">
-                                <a href="" class="button-link-text">
+                                <a href="tel:<?php echo $vendor->locations[0]->location_phone; ?>" class="button-link-text">
                                     <div class="button-02">
-                                        Call (863) 482-9988
+                                        Call <?php echo $vendor->locations[0]->location_phone; ?>
                                     </div>
                                 </a>
                                 <div class="spacer-1rem"></div>
@@ -100,7 +111,23 @@ $isMajesticLoggedIn = UserHelper::isUserLoggedIn($_SESSION, 'majestic', new Maje
                         </div>
                         <div class="profile-section" id="description">
                             <h2>Description</h2>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                            <?php echo $vendor->vendor_description; ?>
+
+                            <h3>Contact Information</h3>
+                            <div class="multicolumn-container">
+                            <?php foreach($vendor->locations as $key=>$single_location){ ?>
+                                <div class="profile-contact-info" id="<?php echo ($key == 0) ? 'primary-loction' : 'location-'.($key+1); ?>">
+                                    <h4 class="primary-text"><?php echo ($key == 0) ? 'Primary Location' : 'Location #'.($key+1); ?></h4>
+                                    <ul class="profile-location-ul">
+                                        <li class="profile-location-li"><?php echo $single_location->street_address_1; ?></li>
+                                        <li class="profile-location-li"><?php echo $single_location->street_address_2; ?></li>
+                                        <li class="profile-location-li"><?php echo $single_location->location_city; ?>, <?php echo $single_location->state->short_name; ?></li>
+                                        <li class="profile-location-li-zip"><?php echo $single_location->location_zip_code; ?></li>
+                                        <li class="profile-location-li"><a href="tel:<?php echo $single_location->location_phone; ?>" class="button-01 primary"><?php echo $single_location->location_phone; ?></a></li>
+                                    </ul>
+                                </div>
+                            <?php } ?>
+                            </div>
                         </div>
                         <div class="profile-section" id="services">
                             <h2>Services</h2>
@@ -187,8 +214,13 @@ $isMajesticLoggedIn = UserHelper::isUserLoggedIn($_SESSION, 'majestic', new Maje
                 <!-- <div class="ad-space-type01-mobile">
 
                 </div> -->
-                <div class="ad-space-type01-desktop">
-                    
+                <div class="ad-space-container-160">
+                    <div class="ad-space-type01-desktop">
+                        <!-- Ad Space (160 x 600) -->
+                    </div>
+                    <div class="ad-space-type01-desktop">
+                        <!-- Ad Space (160 x 600) -->
+                    </div>
                 </div>
             </section>
         </div>

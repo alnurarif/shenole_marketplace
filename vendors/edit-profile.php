@@ -1,13 +1,16 @@
 <?php
 session_start();
 require "../start.php";
-use Shenole_project\helpers\Validator;
-use Shenole_project\models\Vendor;
+use Shenole_project\repositories\VendorRepository;
 use Shenole_project\utils\RandomStringGenerator;
+use Shenole_project\models\Vendor_location;
+use Shenole_project\models\Vendor_category;
 use Shenole_project\utils\ImageUploader;
 use Shenole_project\helpers\UserHelper;
-use Shenole_project\repositories\VendorRepository;
 use Shenole_project\helpers\MyHelpers;
+use Shenole_project\helpers\Validator;
+use Shenole_project\models\Category;
+use Shenole_project\models\Vendor;
 use Shenole_project\models\State;
 use \Gumlet\ImageResize;
 
@@ -23,6 +26,9 @@ $errors = [
 	'profile_pic' => '',
 ];
 if($_POST){
+    // echo "<pre>";
+    // var_dump($_POST);
+    // exit;
     if(isset($_POST['update_vendor_description'])){
         $vendor = Vendor::where('login_token',$login_token)->first();
         $vendor->vendor_description = $_POST['description_with_html_tags'];
@@ -46,24 +52,64 @@ if($_POST){
     	}
 
     	if($errors['errors_number'] == 0){
-    		$imageObject = new ImageResize($_FILES['profile_pic']['tmp_name']);
-    		$imageUploaderObject = new ImageUploader($_FILES['profile_pic'], $imageObject);
-    		$imageUploaderObject->setRoot(SITE_ROOT);
-    		$imageUploaderObject->setPath('images/vendors/');
-    		$imageUploaderObject->setLevel('../');
-    		$image_name = $imageUploaderObject->imageUpload();
+            if($_FILES['profile_pic']['name'] != ''){
+                $imageObject = new ImageResize($_FILES['profile_pic']['tmp_name']);
+                $imageUploaderObject = new ImageUploader($_FILES['profile_pic'], $imageObject);
+                $imageUploaderObject->setRoot(SITE_ROOT);
+                $imageUploaderObject->setPath('images/vendors/');
+                $imageUploaderObject->setLevel('../');
+                $image_name = $imageUploaderObject->imageUpload();
+            }
+            $vendor_categories = (isset($_POST['vendor_categories'])) ? $_POST['vendor_categories'] : null ;
+            $vendor_locations = (isset($_POST['vendor_locations'])) ? $_POST['vendor_locations'] : null ;
+            
+            
 
     		$vendor = Vendor::where('login_token',$login_token)->first();
-    		$vendor->profile_photo = $image_name;
+    		if($_FILES['profile_pic']['name'] != '') $vendor->profile_photo = $image_name;
+    		$vendor->company_name = trim($_POST['company_name']);
+    		$vendor->travel_distance = trim($_POST['travel_distance']);
+    		$vendor->starting_fee = trim($_POST['starting_fee']);
+    		$vendor->keywords = trim($_POST['keywords']);
+
     		$vendor->save();
-    	}
+
+            Vendor_category::where('vendor_id',$vendor->id)->delete();
+            foreach($vendor_categories as $key=>$single_category){
+                $vendor_category = new Vendor_category;
+                $vendor_category->vendor_id = $vendor->id;
+                $vendor_category->category_id = $single_category;
+                $vendor_category->is_primary = ($key == 0) ? 1 : 0;
+                $vendor_category->save();
+            }
+            Vendor_location::where('vendor_id',$vendor->id)->delete();
+            foreach($vendor_locations as $key=>$single_location){
+                $location_array = explode('|||',$single_location);
+                $vendor_location = new Vendor_location;
+                $vendor_location->vendor_id = $vendor->id;
+                $vendor_location->street_address_1 = $location_array[0];
+                $vendor_location->street_address_2 =$location_array[1];
+                $vendor_location->location_city = $location_array[2];
+                $vendor_location->location_state = $location_array[3];
+                $vendor_location->location_zip_code = $location_array[4];
+                $vendor_location->location_phone = $location_array[5];
+                $vendor_location->city_state_only = $location_array[6];
+                $vendor_location->is_phone_number_visible = $location_array[7];
+                $vendor_location->is_primary = ($key == 0) ? 1 : 0;
+                $vendor_location->save();
+            }
+        }
 
     }
 
 }
-$vendor = Vendor::where('login_token',$login_token)->first();
+$vendor = Vendor::where('login_token',$login_token)->with('categories','locations','locations.state')->first();
+$categories = Category::get();
+$states = State::get();
+
 // $vendor = Vendor::get();
 // echo "<pre>";
+// var_dump($vendor);exit;
 // foreach($vendor as $v_single){
 // 	var_dump($v_single);
 // }
@@ -131,7 +177,7 @@ $vendor = Vendor::where('login_token',$login_token)->first();
                                             <label for="company-name" class="input-label">Company Name</label>
                                             <div class="spacer-10px"></div>
                                             <div>
-                                                <input type="text" id="company-name" class="search-input" placeholder="Company Name">
+                                                <input type="text" name="company_name" value="<?php echo (isset($vendor->company_name)) ? $vendor->company_name : ''; ?>" id="company-name" class="search-input" placeholder="Company Name">
                                             </div>
                                             <div class="spacer-10px"></div>
                                             <div class="spacer-10px"></div>
@@ -140,24 +186,24 @@ $vendor = Vendor::where('login_token',$login_token)->first();
                                             <label for="travel-distance" class="input-label">What's The Farthest You Will Travel</label>
                                             <div class="spacer-10px"></div>
                                             <div>
-                                                <select name="travel-distance" id="travel-distance" class="search-input">
-                                                    <option value="not-applicable" class="select-option-01">Not Applicable</option>
-                                                    <option value="5-miles" class="select-option-01">5 miles</option>
-                                                    <option value="10-miles" class="select-option-01">10 miles</option>
-                                                    <option value="15-miles" class="select-option-01">15 miles</option>
-                                                    <option value="25-miles" class="select-option-01">25 miles</option>
-                                                    <option value="50-miles" class="select-option-01">50 miles</option>
-                                                    <option value="75-miles" class="select-option-01">75 miles</option>
-                                                    <option value="100-miles" class="select-option-01">100 miles</option>
-                                                    <option value="150-miles" class="select-option-01">150 miles</option>
-                                                    <option value="200-miles" class="select-option-01">200 miles</option>
-                                                    <option value="300-miles" class="select-option-01">300 miles</option>
-                                                    <option value="400-miles" class="select-option-01">400 miles</option>
-                                                    <option value="500-miles" class="select-option-01">500 miles</option>
-                                                    <option value="750-miles" class="select-option-01">750 miles</option>
-                                                    <option value="1000-miles" class="select-option-01">1,000 miles</option>
-                                                    <option value="continental-us" class="select-option-01">Continental US</option>
-                                                    <option value="50-states" class="select-option-01">All 50 States</option>
+                                                <select name="travel_distance" id="travel-distance" class="search-input">
+                                                    <option value="not-applicable" class="select-option-01" <?php echo (isset($vendor->travel_distance) && $vendor->travel_distance == "not-applicable") ? 'selected' : '' ; ?>>Not Applicable</option>
+                                                    <option value="5" class="select-option-01" <?php echo (isset($vendor->travel_distance) && $vendor->travel_distance == "5") ? 'selected' : '' ; ?>>5 miles</option>
+                                                    <option value="10" class="select-option-01" <?php echo (isset($vendor->travel_distance) && $vendor->travel_distance == "10") ? 'selected' : '' ; ?>>10 miles</option>
+                                                    <option value="15" class="select-option-01" <?php echo (isset($vendor->travel_distance) && $vendor->travel_distance == "15") ? 'selected' : '' ; ?>>15 miles</option>
+                                                    <option value="25" class="select-option-01" <?php echo (isset($vendor->travel_distance) && $vendor->travel_distance == "25") ? 'selected' : '' ; ?>>25 miles</option>
+                                                    <option value="50" class="select-option-01" <?php echo (isset($vendor->travel_distance) && $vendor->travel_distance == "50") ? 'selected' : '' ; ?>>50 miles</option>
+                                                    <option value="75" class="select-option-01" <?php echo (isset($vendor->travel_distance) && $vendor->travel_distance == "75") ? 'selected' : '' ; ?>>75 miles</option>
+                                                    <option value="100" class="select-option-01" <?php echo (isset($vendor->travel_distance) && $vendor->travel_distance == "100") ? 'selected' : '' ; ?>>100 miles</option>
+                                                    <option value="150" class="select-option-01" <?php echo (isset($vendor->travel_distance) && $vendor->travel_distance == "150") ? 'selected' : '' ; ?>>150 miles</option>
+                                                    <option value="200" class="select-option-01" <?php echo (isset($vendor->travel_distance) && $vendor->travel_distance == "200") ? 'selected' : '' ; ?>>200 miles</option>
+                                                    <option value="300" class="select-option-01" <?php echo (isset($vendor->travel_distance) && $vendor->travel_distance == "300") ? 'selected' : '' ; ?>>300 miles</option>
+                                                    <option value="400" class="select-option-01" <?php echo (isset($vendor->travel_distance) && $vendor->travel_distance == "400") ? 'selected' : '' ; ?>>400 miles</option>
+                                                    <option value="500" class="select-option-01" <?php echo (isset($vendor->travel_distance) && $vendor->travel_distance == "500") ? 'selected' : '' ; ?>>500 miles</option>
+                                                    <option value="750" class="select-option-01" <?php echo (isset($vendor->travel_distance) && $vendor->travel_distance == "750") ? 'selected' : '' ; ?>>750 miles</option>
+                                                    <option value="1000" class="select-option-01" <?php echo (isset($vendor->travel_distance) && $vendor->travel_distance == "1000") ? 'selected' : '' ; ?>>1,000 miles</option>
+                                                    <option value="continental-us" class="select-option-01" <?php echo (isset($vendor->travel_distance) && $vendor->travel_distance == "continental-us") ? 'selected' : '' ; ?>>Continental US</option>
+                                                    <option value="50-states" class="select-option-01" <?php echo (isset($vendor->travel_distance) && $vendor->travel_distance == "50-states") ? 'selected' : '' ; ?>>All 50 States</option>
                                                 </select>
                                             </div>
                                             <div class="spacer-10px"></div>
@@ -167,7 +213,7 @@ $vendor = Vendor::where('login_token',$login_token)->first();
                                             <label for="location" class="input-label">What's Your Starting Fee</label>
                                             <div class="spacer-10px"></div>
                                             <div class="flex-container">
-                                                <b>$</b><input type="text" id="starting-fee" class="search-input" placeholder="example: 300.00">
+                                                <b>$</b><input type="text" name="starting_fee" value="<?php echo (isset($vendor->starting_fee)) ? $vendor->starting_fee : ''; ?>" id="starting-fee" class="search-input" placeholder="example: 300.00">
                                             </div>
                                         </div>
                                     </div>
@@ -178,24 +224,40 @@ $vendor = Vendor::where('login_token',$login_token)->first();
                                             <div class="spacer-10px"></div>
                                             <div>
                                                 <select name="category" id="category" class="search-input">
-                                                    <option value="" class="select-option-01">Select Category</option>
-                                                    <option value="" class="select-option-01"></option>
+                                                    <?php foreach($categories as $single_category){ ?>
+                                                        <option value="<?php echo $single_category->id; ?>" class="select-option-01"><?php echo $single_category->name; ?></option>
+                                                    <?php } ?>
+                                                    
                                                 </select>
+                                            </div>
+                                            <div id="hidden_category_input" class="display_none">
+                                                <?php foreach($vendor->categories as $key=>$single_category){ ?>
+                                                    <input type="hidden" value="<?php echo $single_category->category_id; ?>" name="vendor_categories[]" id="vendor_category_input_<?php echo $key+1; ?>">
+                                                <?php } ?>    
                                             </div>
                                             <div class="spacer-10px"></div>
                                             <div class="spacer-10px"></div>
                                             <div class="form-submit-container">
-                                                <a href="" class="button-03 button-link-text white-text">Add Category</a>
+                                                <button type="button" id="add_category_button" class="button-03 button-link-text white-text cursor_pointer">Add Category</button>
                                             </div>
                                         </div>
                                         <div class="form-input-search">
                                             <label for="location" class="input-label">Category List &nbsp;&nbsp;<i>(Primary is in green)</i></label>
                                             <div class="spacer-10px"></div>
                                             <div class="list-container">
-                                                <ul class="category-ul">
-                                                    <li class="category-li"><div class="primary-selection">Cateror</div><br><div class="multi-button-container"><button class="small-button primary white-text">Delete</button></div></li>
-                                                    <li class="category-li"><div>Musician</div><br><div class="multi-button-container"><button class="small-button primary white-text">Make Primary</button><button class="small-button primary white-text">Delete</button></div></li>
-                                                    <li class="category-li"><div>Photographer</div><br><div class="multi-button-container"><button class="small-button primary white-text">Make Primary</button><button class="small-button primary white-text">Delete</button></div></li>
+                                                <ul class="category-ul" id="added_category_list">
+                                                    <?php foreach($vendor->categories as $key=>$single_category){ ?>
+                                                        <li class="category-li single_added_category" id="single_vendor_category_<?php echo $key+1;?>">
+                                                            <div <?php echo ($key== 0) ? 'class="primary-selection"': ''; ?>><?php echo $single_category->category->name;?></div>
+                                                            <br>
+                                                            <div class="multi-button-container">
+                                                                <?php if($key != 0){ ?>
+                                                                <button type="button" class="small-button primary white-text make_primary_from_list" id="make_primary_category_<?php echo $key+1;?>">Make Primary</button>
+                                                                <?php } ?>
+                                                                <button type="button" class="small-button primary white-text delete_category_from_list" id="delete_vendor_category_<?php echo $key+1;?>">Delete</button>
+                                                            </div>
+                                                        </li>
+                                                    <?php } ?>
                                                 </ul>
                                             </div>
                                         </div>
@@ -209,33 +271,34 @@ $vendor = Vendor::where('login_token',$login_token)->first();
                                                 <label for="street-address1-01" class="input-label">Location Street Address 1</label>
                                                 <div class="spacer-10px"></div>
                                                 <div>
-                                                    <input type="text" class="search-input" placeholder="Street Address 1">
+                                                    <input type="text" class="search-input" placeholder="Street Address 1" id="location_street_address_1">
                                                 </div>
                                                 <div class="spacer-10px"></div>
                                                 <div class="spacer-10px"></div>
                                                 <label for="street-address2-01" class="input-label">Location Street Address 2</label>
                                                 <div class="spacer-10px"></div>
                                                 <div>
-                                                    <input type="text" class="search-input" placeholder="Street Address 2">
+                                                    <input type="text" class="search-input" placeholder="Street Address 2" id="location_street_address_2">
                                                 </div>
                                                 <div class="spacer-10px"></div>
                                                 <div class="spacer-10px"></div>
                                                 <span class="input-label">Location City/State/Zip</span>
                                                 <div class="spacer-10px"></div>
                                                 <div>
-                                                    <input type="text" class="search-input" placeholder="City">
+                                                    <input type="text" class="search-input" placeholder="City" id="location_city">
                                                 </div>
                                                 <div class="spacer-10px"></div>
                                                 <div class="profile-state-zip">
                                                     <div>
-                                                        <select name="state-01" class="search-input-mini">
-                                                            <option value="" class="select-option-01">State</option>
-                                                            <option value="" class="select-option-01"></option>
+                                                        <select name="state-01" class="search-input-mini" id="location_state">
+                                                        <?php foreach($states as $single_state){ ?>
+                                                            <option value="<?php echo $single_state->id; ?>" class="select-option-01"><?php echo $single_state->short_name; ?></option>
+                                                        <?php } ?>
                                                         </select>
                                                     </div>
                                                     <div>
                                                         <div>
-                                                            <input type="text" class="search-input-mini" placeholder="Zip">
+                                                            <input type="text" class="search-input-mini" placeholder="Zip" id="location_zip">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -244,131 +307,76 @@ $vendor = Vendor::where('login_token',$login_token)->first();
                                                 <label for="phone-01" class="input-label">Phone Number</label>
                                                 <div class="spacer-10px"></div>
                                                 <div>
-                                                    <input type="tel" class="search-input" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="example: 123-456-7890">
+                                                    <input type="tel" class="search-input" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="example: 123-456-7890" id="location_phone_number">
                                                 </div>
                                                 <div class="spacer-10px"></div>
                                                 <div class="spacer-10px"></div>
                                             </div>
+                                            <div id="hidden_location_input" class="display_none">
+                                                <?php foreach($vendor->locations as $key=>$single_location){ ?>
+                                                    <?php $full_location_joined = $single_location->street_address_1.'|||'.$single_location->street_address_2.'|||'.$single_location->location_city.'|||'.$single_location->location_state.'|||'.$single_location->location_zip_code.'|||'.$single_location->location_phone.'|||'.$single_location->city_state_only.'|||'.$single_location->is_phone_number_visible; ?>
+                                                    <input type="hidden" value="<?php echo $full_location_joined; ?>" name="vendor_locations[]" id="vendor_location_input_<?php echo $key+1; ?>">
+                                                <?php } ?>  
+                                            </div>
                                             <div class="form-submit-container">
-                                                <a href="" class="button-03 button-link-text white-text">Add Location</a>
+                                                <button type="button" class="button-03 button-link-text white-text cursor_pointer" id="add_location_to_list">Add Location</button>
                                             </div>
                                         </div>
                                         <div class="form-input-search">
                                             <label for="location" class="input-label">Location List &nbsp;&nbsp;<i>(Primary is in green)</i></label>
                                             <div class="spacer-10px"></div>
                                             <div class="list-container-tall">
-                                                <ul class="category-ul">
-                                                    <li class="category-li">
+                                                <ul class="category-ul" id="added_location_list">
+                                                <?php foreach($vendor->locations as $key=>$single_location){ ?>
+
+                                                <li class="category-li single_added_location" id="single_vendor_location_<?php echo $key+1; ?>">
+                                                    <?php if($key == 0){ ?>
                                                         <div class="primary-location">
-                                                            <span class="location-list-text">123 Example Street</span><br>
-                                                            <span class="location-list-text">Suite 5</span><br>
-                                                            <span class="location-list-text">Tampa, FL</span><br>
-                                                            <span class="location-list-text">11223</span><br>
-                                                            <div class="spacer-10px"></div>
-                                                            <div class="spacer-10px"></div>
-                                                            <span class="location-list-text-phone">123-456-7890</span>
-                                                        </div>
-                                                        <br>
-                                                        <div>
-                                                            <label for="only-city-01" class="input-label">Only Show The City And State
-                                                            </label>
-                                                            <div class="spacer-10px"></div>
-                                                            <input type="checkbox" name="only-city-01">
-                                                            <div class="spacer-10px"></div>
-                                                            <div class="spacer-10px"></div>
-                                                        </div>
-                                                        <div>
-                                                            <label for="show-phone-01" class="input-label">Show The Phone Number</label>
-                                                            <div class="spacer-10px"></div>
-                                                            <input type="checkbox" name="only-city-01">
-                                                            <div class="spacer-10px"></div>
-                                                            <div class="spacer-10px"></div>
-                                                        </div>
-                                                        <div class="multi-button-container">
-                                                            <button class="small-button primary white-text">Make Primary</button>
-                                                            <button class="small-button primary white-text">Delete</button>
-                                                        </div>
-                                                    </li>
-                                                    <li class="category-li">
+                                                    <?php }else{ ?>
                                                         <div class="aux-location">
-                                                            <span class="location-list-text">Orlando, FL</span><br>
+                                                    <?php } ?>
+                                                        <div class="display_none location_object">
+                                                            <span class="location_street_address_1"><?php echo $single_location->street_address_1; ?></span>
+                                                            <span class="location_street_address_2"><?php echo $single_location->street_address_2; ?></span>
+                                                            <span class="location_city"><?php echo $single_location->location_city; ?></span>
+                                                            <span class="location_state_id"><?php echo $single_location->location_state; ?>}</span>
+                                                            <span class="location_state_name"><?php echo $single_location->state->short_name; ?></span>
+                                                            <span class="location_zip"><?php echo $single_location->location_zip_code; ?></span>
+                                                            <span class="location_phone_number"><?php echo $single_location->location_phone; ?></span>
                                                         </div>
-                                                        <br>
-                                                        <div>
-                                                            <label for="only-city-01" class="input-label">Only Show The City And State
-                                                            </label>
-                                                            <div class="spacer-10px"></div>
-                                                            <input type="checkbox" name="only-city-01">
-                                                            <div class="spacer-10px"></div>
-                                                            <div class="spacer-10px"></div>
-                                                        </div>
-                                                        <div>
-                                                            <label for="show-phone-01" class="input-label">Show The Phone Number</label>
-                                                            <div class="spacer-10px"></div>
-                                                            <input type="checkbox" name="only-city-01">
-                                                            <div class="spacer-10px"></div>
-                                                            <div class="spacer-10px"></div>
-                                                        </div>
-                                                        <div class="multi-button-container">
-                                                            <button class="small-button primary white-text">Make Primary</button>
-                                                            <button class="small-button primary white-text">Delete</button>
-                                                        </div>
-                                                    </li>
-                                                    <li class="category-li">
-                                                        <div class="aux-location">
-                                                            <span class="location-list-text">Miami, FL</span><br>
-                                                            <div class="spacer-10px"></div>
-                                                            <div class="spacer-10px"></div>
-                                                            <span class="location-list-text-phone">123-456-7890</span>
-                                                        </div>
-                                                        <br>
-                                                        <div>
-                                                            <label for="only-city-01" class="input-label">Only Show The City And State
-                                                            </label>
-                                                            <div class="spacer-10px"></div>
-                                                            <input type="checkbox" name="only-city-01">
-                                                            <div class="spacer-10px"></div>
-                                                            <div class="spacer-10px"></div>
-                                                        </div>
-                                                        <div>
-                                                            <label for="show-phone-01" class="input-label">Show The Phone Number</label>
-                                                            <div class="spacer-10px"></div>
-                                                            <input type="checkbox" name="only-city-01">
-                                                            <div class="spacer-10px"></div>
-                                                            <div class="spacer-10px"></div>
-                                                        </div>
-                                                        <div class="multi-button-container">
-                                                            <button class="small-button primary white-text">Make Primary</button>
-                                                            <button class="small-button primary white-text">Delete</button>
-                                                        </div>
-                                                    </li>
-                                                    <li class="category-li">
-                                                        <div class="aux-location">
-                                                            <span class="location-list-text">098 Main Avenue</span><br>
-                                                            <span class="location-list-text">Tampa, FL</span><br>
-                                                            <span class="location-list-text">11223</span><br>
-                                                        </div>
-                                                        <br>
-                                                        <div>
-                                                            <label for="only-city-01" class="input-label">Only Show The City And State
-                                                            </label>
-                                                            <div class="spacer-10px"></div>
-                                                            <input type="checkbox" name="only-city-01">
-                                                            <div class="spacer-10px"></div>
-                                                            <div class="spacer-10px"></div>
-                                                        </div>
-                                                        <div>
-                                                            <label for="show-phone-01" class="input-label">Show The Phone Number</label>
-                                                            <div class="spacer-10px"></div>
-                                                            <input type="checkbox" name="only-city-01">
-                                                            <div class="spacer-10px"></div>
-                                                            <div class="spacer-10px"></div>
-                                                        </div>
-                                                        <div class="multi-button-container">
-                                                            <button class="small-button primary white-text">Make Primary</button>
-                                                            <button class="small-button primary white-text">Delete</button>
-                                                        </div>
-                                                    </li>
+                                                        <span class="location-list-text street_address_1 <?php echo ($single_location->city_state_only == 1) ? 'display_none' : ''; ?>"><?php echo $single_location->street_address_1; ?></span><br>
+                                                        <span class="location-list-text street_address_2 <?php echo ($single_location->city_state_only == 1) ? 'display_none' : ''; ?>"><?php echo $single_location->street_address_2; ?></span><br>
+                                                        <span class="location-list-text city_state_name"><?php echo $single_location->location_city; ?>, <?php echo $single_location->state->short_name; ?></span><br>
+                                                        <span class="location-list-text zip <?php echo ($single_location->city_state_only == 1) ? 'display_none' : ''; ?>"><?php echo $single_location->location_zip_code; ?></span><br>
+                                                        <div class="spacer-10px"></div>
+                                                        <div class="spacer-10px"></div>
+                                                        <span class="location-list-text-phone phone_number <?php echo ($single_location->is_phone_number_visible == 0) ? 'display_none' : ''; ?>"><?php echo $single_location->location_phone; ?></span>
+                                                    </div>
+                                                    <br>
+                                                    <div>
+                                                        <label for="only-city-01" class="input-label">Only Show The City And State
+                                                        </label>
+                                                        <div class="spacer-10px"></div>
+                                                        <input type="checkbox" name="only-city-01" class="show_city_and_state" id="only_show_city_and_state_<?php echo $key+1; ?>" <?php echo ($single_location->city_state_only == 1) ? 'checked' : ''; ?>>
+                                                        <div class="spacer-10px"></div>
+                                                        <div class="spacer-10px"></div>
+                                                    </div>
+                                                    <div>
+                                                        <label for="show-phone-01" class="input-label">Show The Phone Number</label>
+                                                        <div class="spacer-10px"></div>
+                                                        <input type="checkbox" name="only-city-01" class="show_the_phone_number" id="show_the_phone_number_<?php echo $key+1; ?>" <?php echo ($single_location->is_phone_number_visible == 1) ? 'checked' : ''; ?>>
+                                                        <div class="spacer-10px"></div>
+                                                        <div class="spacer-10px"></div>
+                                                    </div>
+                                                    <div class="multi-button-container">
+                                                        <?php if($key != 0){ ?>
+                                                        <button type="button" class="small-button primary white-text make_primary_from_location_list" id="make_primary_location_<?php echo $key+1; ?>">Make Primary</button>
+                                                        <?php } ?>
+                                                        <button type="button" class="small-button primary white-text delete_location_from_list" id="delete_vendor_location_<?php echo $key+1; ?>">Delete</button>
+                                                    </div>
+                                                </li>
+
+                                                    <?php } ?>  
                                                 </ul>
                                             </div>
                                         </div>
@@ -382,27 +390,36 @@ $vendor = Vendor::where('login_token',$login_token)->first();
                                             <label for="keywords" class="input-label">Enter Comma Separated Keywords<br>(70 character limit...aprx 10 words)</label>
                                             <div class="spacer-10px"></div>
                                             <div>
-                                                <input type="text" id="keyword-vendor-search" class="search-input" placeholder="example: party band, caterer, photographer">
+                                                <input value="<?php echo $vendor->keywords; ?>" type="text" id="keyword-vendor-search" name="keywords" class="search-input" placeholder="example: party band, caterer, photographer">
                                             </div>
                                             <div class="spacer-10px"></div>
                                             <div class="form-submit-container">
-                                                <a href="" class="button-03 button-link-text white-text">Add Keywords</a>
+                                                <!-- <a href="" class="button-03 button-link-text white-text">Add Keywords</a> -->
                                             </div>
                                         </div>
                                         <div class="form-input-search">
                                             <label for="location" class="input-label">Keyword List</label>
                                             <div class="spacer-10px"></div>
                                             <div class="list-container">
-                                                <ul class="category-ul">
-                                                    <li class="category-li"><div>Jazz</div><br><div><button class="small-button primary white-text">Delete</button></div></li>
-                                                    <li class="category-li"><div>Blues</div><br><div><button class="small-button primary white-text">Delete</button></div></li>
-                                                    <li class="category-li"><div>Funk</div><br><div><button class="small-button primary white-text">Delete</button></div></li>
+                                                <ul class="category-ul" id="keyword_list">
+                                                <?php 
+                                                    $keywords = explode(',',$vendor->keywords);
+                                                    foreach($keywords as $key=>$single_keyword){
+                                                ?>
+                                                <li class="category-li" id="keyword_${index+1}">
+                                                    <div><?php echo $single_keyword; ?></div>
+                                                    <br>
+                                                    <div>
+                                                        <button type="button" class="small-button primary white-text keyword_delete" id="keyword_delete_<?php echo $key+1; ?>">Delete</button>
+                                                    </div>
+                                                </li>
+                                                <?php } ?>
                                                 </ul>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="form-submit-container">
-                                        <imput type="button" class="button-01 white-text" id="vendor-overview-submit">Submit</imput>
+                                        <button type="submit" class="button-01 white-text" id="vendor-overview-submit">Submit</button>
                                     </div>
                                 </form>
                             </div>

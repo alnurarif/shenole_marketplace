@@ -17,6 +17,18 @@ $isVendorLoggedIn = UserHelper::isUserLoggedIn($_SESSION, 'vendor', new VendorRe
 $isStaffLoggedIn = UserHelper::isUserLoggedIn($_SESSION, 'staff', new StaffRepository);
 $isMajesticLoggedIn = UserHelper::isUserLoggedIn($_SESSION, 'majestic', new MajesticRepository);
 
+// $vendors = Vendor::get();
+$total_vendor = Vendor::count();
+$show_in_list = 1;
+if(isset($_GET['page'])){
+    $skip = $show_in_list*($_GET['page']-1);
+    $vendors = ($_GET['page'] == 1) ? Vendor::take($show_in_list)->get() : Vendor::take($show_in_list)->skip($skip)->get();
+}else{
+    $vendors = Vendor::take($show_in_list)->get();
+}
+
+$total_pagination_button = $total_vendor / $show_in_list;
+$total_pagination_button = ceil($total_pagination_button);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -115,42 +127,44 @@ $isMajesticLoggedIn = UserHelper::isUserLoggedIn($_SESSION, 'majestic', new Maje
                         </form>
                     </div>
                     <div class="listing-content-container">
-                        <article class="listing-card">
-                            <div class="listing-card-image">
-                                <img class="listing-image" src= alt=>
-                            </div>
-                            <div class="listing-card-vendor-name-container">
-                                <h3 class="listing-card-vendor-name">
-                                    <a href="" class="listing-card-vendor-name-link">Vendor's Name Here And It May Be A Long Name</a>
-                                </h3>
-                            </div>
-                            <div class="listing-card-vendor-rating-container">
-                                <!-- <div class="listing-card-star-rating">
-                                    <img class="review-star-full-small" src="./images/icons/star.png" alt="Review star">
-                                    <img class="review-star-full-small" src="./images/icons/star.png" alt="Review star">
-                                    <img class="review-star-full-small" src="./images/icons/star.png" alt="Review star">
-                                    <img class="review-star-full-small" src="./images/icons/star.png" alt="Review star">
-                                    <img class="review-star-full-small" src="./images/icons/star.png" alt="Review star">
+                        <?php foreach($vendors as $single_vendor){?>
+                            <article class="listing-card">
+                                <div class="listing-card-image">
+                                    <img class="full h_full" src="<?php echo SITE_LINK; ?>images/vendors/<?php echo $single_vendor->profile_photo; ?>" class="listing-image" alt="profile_photo"/>
                                 </div>
-                                <div class="listing-card-review-info">
-                                    <span class="review-star-count">5</span>
-                                    <span class="review-counter">(1)</span>
-                                </div> -->
-                                <div class="listing-card-review-info margin-auto">
-                                    <span class="review-star-count secondary-text">No Rating Yet</span>
+                                <div class="listing-card-vendor-name-container">
+                                    <h3 class="listing-card-vendor-name">
+                                        <a href="<?php echo SITE_LINK; ?>vendor.php?vendor_uuid=<?php echo $single_vendor->uuid ?>" class="listing-card-vendor-name-link"><?php echo $single_vendor->company_name; ?></a>
+                                    </h3>
                                 </div>
-                            </div>
-                            <ul class="listing-card-ul-01">
-                                <li class="listing-card-li-01"><img class="listing-card-li-icon" src="./images/icons/maps-and-flags.png">Tampa, FL</li>
-                                <li class="listing-card-li-01"><img class="listing-card-li-icon" src="./images/icons/user.png">Musician</li>
-                            </ul>
-                            <div class="listing-card-text-box">
-                                <p class="listing-card-description-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magnaw...</p>
-                            </div>
-                            <div class="listing-card-footer">
-                                <a href="" class="button-03 button-link-text white-text">Find Out More</a>
-                            </div>
-                        </article>
+                                <div class="listing-card-vendor-rating-container">
+                                    <!-- <div class="listing-card-star-rating">
+                                        <img class="review-star-full-small" src="./images/icons/star.png" alt="Review star">
+                                        <img class="review-star-full-small" src="./images/icons/star.png" alt="Review star">
+                                        <img class="review-star-full-small" src="./images/icons/star.png" alt="Review star">
+                                        <img class="review-star-full-small" src="./images/icons/star.png" alt="Review star">
+                                        <img class="review-star-full-small" src="./images/icons/star.png" alt="Review star">
+                                    </div>
+                                    <div class="listing-card-review-info">
+                                        <span class="review-star-count">5</span>
+                                        <span class="review-counter">(1)</span>
+                                    </div> -->
+                                    <div class="listing-card-review-info margin-auto">
+                                        <span class="review-star-count secondary-text">No Rating Yet</span>
+                                    </div>
+                                </div>
+                                <ul class="listing-card-ul-01">
+                                    <li class="listing-card-li-01"><img class="listing-card-li-icon" src="<?php echo SITE_LINK; ?>images/maps-and-flags.png"><?php echo $single_vendor->locations[0]->location_city; ?>, <?php echo $single_vendor->locations[0]->state->short_name; ?></li>
+                                    <li class="listing-card-li-01"><img class="listing-card-li-icon" src="<?php echo SITE_LINK; ?>images/user.png"><?php echo $single_vendor->categories[0]->category->name?></li>
+                                </ul>
+                                <div class="listing-card-text-box">
+                                    <p class="listing-card-description-text"><?php echo substr(str_replace("</p>"," ",str_replace("<p>"," ",$single_vendor->vendor_description)),0,100); ?>...</p>
+                                </div>
+                                <div class="listing-card-footer">
+                                    <a href="<?php echo SITE_LINK; ?>vendor.php?vendor_uuid=<?php echo $single_vendor->uuid ?>" class="button-03 button-link-text white-text">Find Out More</a>
+                                </div>
+                            </article>
+                        <?php } ?>
                     </div>
                 </div>
                 <!-- <div class="ad-space-type01-mobile">
@@ -166,8 +180,15 @@ $isMajesticLoggedIn = UserHelper::isUserLoggedIn($_SESSION, 'majestic', new Maje
                 </div>
             </section>
             <div class="pagination-container">
-                <div class="pagination-link-current">1</div>
-                <a href="" class="white-text"><div class="pagination-link">2</div></a>
+                <?php for($i=1; $i <= $total_pagination_button; $i++){ ?>
+                    <?php if(isset($_GET['page']) && $_GET['page'] == $i){ ?>
+                        <div class="pagination-link-current"><?php echo $i; ?></div>
+                    <?php }else{ ?>
+                        <a href="<?php echo SITE_LINK;?>listings.php?page=<?php echo $i; ?>" class="white-text mr_10"><div class="pagination-link"><?php echo $i; ?></div></a>
+                    <?php } ?>
+                <?php } ?>
+                <!-- <div class="pagination-link-current">1</div> -->
+                <!-- <a href="" class="white-text"><div class="pagination-link">2</div></a> -->
             </div>
         </div>
         <?php 
