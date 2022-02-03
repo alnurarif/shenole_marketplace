@@ -293,6 +293,15 @@ $(document).ready(function(){
 		}
 		
 	});
+
+	$('#profile-photo').on('change',function(e){
+		console.log(e.target.files[0]);
+		var fr = new FileReader();
+		fr.onload = function(){
+			$('#active_profile_picture').attr('src',fr.result);
+		}
+		fr.readAsDataURL(e.target.files[0]);
+	});
 });
 function recreate_to_update_primary(primary_index, added_category_list, added_category_inputs){
 	let first_element_to_show = '';

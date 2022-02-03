@@ -44,15 +44,22 @@ if($_POST){
     		
     		if($width > 766 && $height != 511){
     			$errors['profile_pic'] = "Dimention must be 766px x 511px";
-    		}
+                $errors['errors_number'] ++;
+            }
     		if($size > 80000){
     			$errors['profile_pic'] = "Maximum 80kb is allowed";
+                $errors['errors_number'] ++;
     		}
     		
     	}
 
     	if($errors['errors_number'] == 0){
+            $vendor = Vendor::where('login_token',$login_token)->first();
             if($_FILES['profile_pic']['name'] != ''){
+                if (file_exists(SITE_ROOT.'images/vendors/'.$vendor->profile_photo)) {
+                    chmod(SITE_ROOT.'images/vendors/'.$vendor->profile_photo, 0644);
+                    unlink(SITE_ROOT.'images/vendors/'.$vendor->profile_photo);
+                } 
                 $imageObject = new ImageResize($_FILES['profile_pic']['tmp_name']);
                 $imageUploaderObject = new ImageUploader($_FILES['profile_pic'], $imageObject);
                 $imageUploaderObject->setRoot(SITE_ROOT);
@@ -65,7 +72,6 @@ if($_POST){
             
             
 
-    		$vendor = Vendor::where('login_token',$login_token)->first();
     		if($_FILES['profile_pic']['name'] != '') $vendor->profile_photo = $image_name;
     		$vendor->company_name = trim($_POST['company_name']);
     		$vendor->travel_distance = trim($_POST['travel_distance']);
@@ -156,7 +162,7 @@ $states = State::get();
                                 <form method="post" class="full-width-form" enctype="multipart/form-data">
                                     <input type="hidden" name="operation_add_update_overview" value="1"/>
                                     <div class="edit-vendor-profile-main-photo">
-    
+                                        <img class="full h_full" src="<?php echo SITE_LINK; ?><?php echo ($vendor->profile_photo == "" || $vendor->profile_photo == null) ? "/images/no_image.jpg" : "/images/vendors/".$vendor->profile_photo;  ?>" alt="profile_picture" id="active_profile_picture"/>
                                     </div>
                                     <h3>Profile Photo Upload</h3>
                                     <div>
