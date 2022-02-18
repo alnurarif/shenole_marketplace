@@ -24,6 +24,28 @@ $login_token = UserHelper::getLoginTokenByUserType($_SESSION, 'vendor');
 $errors = [
 	'errors_number' => 0,
 	'profile_pic' => '',
+    'vendor_categories' => '',
+    'vendor_locations' => '',
+    'keywords' => ''
+];
+$travel_limit_array = [
+    "not-applicable" => 'Not Applicable',
+    "5" => '5 miles',
+    "10" => '10 miles',
+    "15" => '15 miles',
+    "25" => '25 miles',
+    "50" => '50 miles',
+    "75" => '75 miles',
+    "100" => '100 miles',
+    "150" => '150 miles',
+    "200" => '200 miles',
+    "300" => '300 miles',
+    "400" => '400 miles',
+    "500" => '500 miles',
+    "750" => '750 miles',
+    "1000" => '1,000 miles',
+    "continental-us" => 'Continental US',
+    "50-states" => 'All 50 States'
 ];
 if($_POST){
     // echo "<pre>";
@@ -35,7 +57,10 @@ if($_POST){
         $vendor->save();
     }
     if(isset($_POST['operation_add_update_overview'])){
-    	if($_FILES['profile_pic']['name'] == ''){
+    	$vendor = Vendor::where('login_token',$login_token)->first();
+        $vendor_categories = (isset($_POST['vendor_categories'])) ? $_POST['vendor_categories'] : null ;
+        $vendor_locations = (isset($_POST['vendor_locations'])) ? $_POST['vendor_locations'] : null ;
+        if($_FILES['profile_pic']['name'] == ''){
     		$errors['profile_pic'] = '';
     	}else{
     		$size = $_FILES['profile_pic']['size'];
@@ -51,10 +76,23 @@ if($_POST){
                 $errors['errors_number'] ++;
     		}
     		
-    	}
+    	
+        }
+        if($vendor->vendor_membership_level->number_of_service_categories < count($vendor_categories)){
+            $errors['vendor_categories'] = "Your category list number exceed your package limit";
+            $errors['errors_number']++;
+        }
+        if($vendor->vendor_membership_level->number_of_locations < count($vendor_locations)){
+            $errors['vendor_locations'] = "Your location list number exceed your package limit";
+            $errors['errors_number']++;
+        }
+        if(strlen($_POST['keywords']) > $vendor->vendor_membership_level->keyword_char_limit){
+            $errors['keywords'] = "Your keywords characters number exceed your package limit";
+            $errors['errors_number']++;
+        }
 
     	if($errors['errors_number'] == 0){
-            $vendor = Vendor::where('login_token',$login_token)->first();
+            
             if($_FILES['profile_pic']['name'] != ''){
                 if (file_exists(SITE_ROOT.'images/vendors/'.$vendor->profile_photo)) {
                     chmod(SITE_ROOT.'images/vendors/'.$vendor->profile_photo, 0644);
@@ -67,8 +105,7 @@ if($_POST){
                 $imageUploaderObject->setLevel('../');
                 $image_name = $imageUploaderObject->imageUpload();
             }
-            $vendor_categories = (isset($_POST['vendor_categories'])) ? $_POST['vendor_categories'] : null ;
-            $vendor_locations = (isset($_POST['vendor_locations'])) ? $_POST['vendor_locations'] : null ;
+            
             
             
 
@@ -109,13 +146,13 @@ if($_POST){
     }
 
 }
-$vendor = Vendor::where('login_token',$login_token)->with('categories','locations','locations.state')->first();
+$vendor = Vendor::where('login_token',$login_token)->with('categories','locations','locations.state','vendor_membership_level')->first();
 $categories = Category::get();
 $states = State::get();
 
 // $vendor = Vendor::get();
 // echo "<pre>";
-// var_dump($vendor);exit;
+// var_dump($vendor->vendor_membership_level);exit;
 // foreach($vendor as $v_single){
 // 	var_dump($v_single);
 // }
@@ -162,7 +199,7 @@ $states = State::get();
                                 <form method="post" class="full-width-form" enctype="multipart/form-data">
                                     <input type="hidden" name="operation_add_update_overview" value="1"/>
                                     <div class="edit-vendor-profile-main-photo">
-                                        <img class="full h_full" src="<?php echo SITE_LINK; ?><?php echo ($vendor->profile_photo == "" || $vendor->profile_photo == null) ? "/images/no_image.jpg" : "/images/vendors/".$vendor->profile_photo;  ?>" alt="profile_picture" id="active_profile_picture"/>
+                                        <img onerror="this.src='<?php echo SITE_LINK; ?>images/no_image.jpg'" class="full h_full" src="<?php echo SITE_LINK; ?><?php echo ($vendor->profile_photo == "" || $vendor->profile_photo == null) ? "/images/no_image.jpg" : "/images/vendors/".$vendor->profile_photo;  ?>" alt="profile_picture" id="active_profile_picture"/>
                                     </div>
                                     <h3>Profile Photo Upload</h3>
                                     <div>
@@ -193,23 +230,10 @@ $states = State::get();
                                             <div class="spacer-10px"></div>
                                             <div>
                                                 <select name="travel_distance" id="travel-distance" class="search-input">
-                                                    <option value="not-applicable" class="select-option-01" <?php echo (isset($vendor->travel_distance) && $vendor->travel_distance == "not-applicable") ? 'selected' : '' ; ?>>Not Applicable</option>
-                                                    <option value="5" class="select-option-01" <?php echo (isset($vendor->travel_distance) && $vendor->travel_distance == "5") ? 'selected' : '' ; ?>>5 miles</option>
-                                                    <option value="10" class="select-option-01" <?php echo (isset($vendor->travel_distance) && $vendor->travel_distance == "10") ? 'selected' : '' ; ?>>10 miles</option>
-                                                    <option value="15" class="select-option-01" <?php echo (isset($vendor->travel_distance) && $vendor->travel_distance == "15") ? 'selected' : '' ; ?>>15 miles</option>
-                                                    <option value="25" class="select-option-01" <?php echo (isset($vendor->travel_distance) && $vendor->travel_distance == "25") ? 'selected' : '' ; ?>>25 miles</option>
-                                                    <option value="50" class="select-option-01" <?php echo (isset($vendor->travel_distance) && $vendor->travel_distance == "50") ? 'selected' : '' ; ?>>50 miles</option>
-                                                    <option value="75" class="select-option-01" <?php echo (isset($vendor->travel_distance) && $vendor->travel_distance == "75") ? 'selected' : '' ; ?>>75 miles</option>
-                                                    <option value="100" class="select-option-01" <?php echo (isset($vendor->travel_distance) && $vendor->travel_distance == "100") ? 'selected' : '' ; ?>>100 miles</option>
-                                                    <option value="150" class="select-option-01" <?php echo (isset($vendor->travel_distance) && $vendor->travel_distance == "150") ? 'selected' : '' ; ?>>150 miles</option>
-                                                    <option value="200" class="select-option-01" <?php echo (isset($vendor->travel_distance) && $vendor->travel_distance == "200") ? 'selected' : '' ; ?>>200 miles</option>
-                                                    <option value="300" class="select-option-01" <?php echo (isset($vendor->travel_distance) && $vendor->travel_distance == "300") ? 'selected' : '' ; ?>>300 miles</option>
-                                                    <option value="400" class="select-option-01" <?php echo (isset($vendor->travel_distance) && $vendor->travel_distance == "400") ? 'selected' : '' ; ?>>400 miles</option>
-                                                    <option value="500" class="select-option-01" <?php echo (isset($vendor->travel_distance) && $vendor->travel_distance == "500") ? 'selected' : '' ; ?>>500 miles</option>
-                                                    <option value="750" class="select-option-01" <?php echo (isset($vendor->travel_distance) && $vendor->travel_distance == "750") ? 'selected' : '' ; ?>>750 miles</option>
-                                                    <option value="1000" class="select-option-01" <?php echo (isset($vendor->travel_distance) && $vendor->travel_distance == "1000") ? 'selected' : '' ; ?>>1,000 miles</option>
-                                                    <option value="continental-us" class="select-option-01" <?php echo (isset($vendor->travel_distance) && $vendor->travel_distance == "continental-us") ? 'selected' : '' ; ?>>Continental US</option>
-                                                    <option value="50-states" class="select-option-01" <?php echo (isset($vendor->travel_distance) && $vendor->travel_distance == "50-states") ? 'selected' : '' ; ?>>All 50 States</option>
+                                                    <?php foreach($travel_limit_array as $key=>$single_travel_limit){ ?>
+                                                        <option value="<?php echo $key; ?>" class="select-option-01" <?php echo (isset($vendor->travel_distance) && $vendor->travel_distance == $key) ? 'selected' : '' ; ?>><?php echo $single_travel_limit; ?></option>
+                                                        <?php if($key == $vendor->vendor_membership_level->travel_limit) break; ?>
+                                                    <?php } ?>
                                                 </select>
                                             </div>
                                             <div class="spacer-10px"></div>
@@ -248,7 +272,7 @@ $states = State::get();
                                             </div>
                                         </div>
                                         <div class="form-input-search">
-                                            <label for="location" class="input-label">Category List &nbsp;&nbsp;<i>(Primary is in green)</i></label>
+                                            <label for="location" class="input-label">Category List &nbsp;&nbsp;<i>(Primary is in green)</i> <?php echo ($errors['vendor_categories'] != "") ? '<span class="text_error">'.$errors['vendor_categories'].'</span>' : '' ?></label>
                                             <div class="spacer-10px"></div>
                                             <div class="list-container">
                                                 <ul class="category-ul" id="added_category_list">
@@ -329,7 +353,7 @@ $states = State::get();
                                             </div>
                                         </div>
                                         <div class="form-input-search">
-                                            <label for="location" class="input-label">Location List &nbsp;&nbsp;<i>(Primary is in green)</i></label>
+                                            <label for="location" class="input-label">Location List &nbsp;&nbsp;<i>(Primary is in green)</i><?php echo ($errors['vendor_locations'] != "") ? '<span class="text_error">'.$errors['vendor_locations'].'</span>' : '' ?></label>
                                             <div class="spacer-10px"></div>
                                             <div class="list-container-tall">
                                                 <ul class="category-ul" id="added_location_list">
@@ -393,7 +417,7 @@ $states = State::get();
                                     <h3>Keywords</h3>
                                     <div class="form-input-container">
                                         <div class="form-input-search">
-                                            <label for="keywords" class="input-label">Enter Comma Separated Keywords<br>(70 character limit...aprx 10 words)</label>
+                                            <label for="keywords" class="input-label">Enter Comma Separated Keywords<br>(<?php echo $vendor->vendor_membership_level->keyword_char_limit; ?> character limit...aprx 10 words) <?php echo ($errors['keywords'] != "") ? '<span class="text_error">'.$errors['keywords'].'</span>' : '' ?></label>
                                             <div class="spacer-10px"></div>
                                             <div>
                                                 <input value="<?php echo $vendor->keywords; ?>" type="text" id="keyword-vendor-search" name="keywords" class="search-input" placeholder="example: party band, caterer, photographer">
