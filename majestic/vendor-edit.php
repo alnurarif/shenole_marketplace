@@ -11,6 +11,7 @@ use Shenole_project\utils\RandomStringGenerator;
 use Shenole_project\helpers\UserHelper;
 use Shenole_project\repositories\MajesticRepository;
 use Shenole_project\helpers\MyHelpers;
+use Shenole_project\models\Vendor_membership_level;
 
 $isMajesticLoggedIn = UserHelper::isUserLoggedIn($_SESSION, 'majestic', new MajesticRepository);
 
@@ -77,6 +78,7 @@ if($_POST){
 		$vendor->email = $_POST['email'];
 		$vendor->password = $_POST['password'];
 		$vendor->account_status = $_POST['status'];
+		$vendor->membership_level = $_POST['membership_level'];
 		if($errors['errors_number'] == 0){
 			$vendor->save();
 			header("Location: ".SITE_LINK_MAJESTIC."vendor-listing.php");
@@ -87,6 +89,7 @@ if($_POST){
 		$vendor = Vendor::find($vendor_id);
 	}
 }
+$membership_levels = Vendor_membership_level::get();
 
 
 ?>
@@ -183,6 +186,18 @@ if($_POST){
 									id="confirm_password" 
 									value="<?php echo isset($_POST['confirm_password']) ? $_POST['confirm_password'] : ''; ?>"
 									/>
+								</div>
+								<div class="fix floatleft half pr_16 border_box mn_h_80">
+									<p class="fs_14 lh_22 text_dark_ash font_bold">Membership Level</p>
+									<select 
+									class="full h_30 bt_1 br_1 bb_1 bl_1 border_solid border_ash pl_5 pr_5 border_box" 
+									name="membership_level" 
+									id="membership_level" 
+									>
+										<?php foreach($membership_levels as $single_level){?>
+											<option value="<?php echo $single_level->id; ?>" <?php echo (isset($vendor->membership_level) && $vendor->membership_level ==  $single_level->id) ? 'selected' : ''; ?>><?php echo $single_level->name; ?></option>
+										<?php } ?>
+									</select>
 								</div>
 								<div class="fix floatleft half pr_16 border_box mn_h_80">
 									<p class="fs_14 lh_22 text_dark_ash font_bold">Status</p>
