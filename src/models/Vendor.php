@@ -3,6 +3,7 @@
 namespace Shenole_project\models;
 use Shenole_project\models\Vendor_category;
 use Shenole_project\models\Vendor_location;
+use Shenole_project\models\Vendor_membership_level;
 use Illuminate\Database\Eloquent\Model;
 
 class Vendor extends Model{
@@ -27,5 +28,8 @@ class Vendor extends Model{
     }
     public function locations(){
         return $this->hasMany(Vendor_location::class);
+    }
+    public function vendor_membership_level(){
+        return $this->belongsTo(Vendor_membership_level::class,'membership_level','id');
     }
 }
