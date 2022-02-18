@@ -51,7 +51,7 @@ if($_GET['vendor_uuid']){
                     <div class="vendor-profile-container">
                         <div class="vendor-profile-header-container">
                             <div class="vendor-profile-main-photo">
-                                <img class="full h_full" src="<?php echo SITE_LINK;?>images/vendors/<?php echo $vendor->profile_photo; ?>" alt="profile photo">
+                                <img class="full h_full" onerror="this.src='<?php echo SITE_LINK; ?>images/no_image.jpg'" src="<?php echo SITE_LINK;?>images/vendors/<?php echo $vendor->profile_photo; ?>" alt="profile photo">
                             </div>
                             <div class="vendor-profile-main-overview">
                                 <div class="profile-header-title">
@@ -81,11 +81,13 @@ if($_GET['vendor_uuid']){
                                     <div class="overview-icon-text">Starting at $<?php echo $vendor->starting_fee; ?> per event.</div>
                                 </div>
                                 <hr class="divider">
+                                <?php if($vendor->locations[0]->location_phone != null && $vendor->locations[0]->location_phone != "" && $vendor->locations[0]->is_phone_number_visible == 1){ ?>
                                 <a href="tel:<?php echo $vendor->locations[0]->location_phone; ?>" class="button-link-text">
                                     <div class="button-02">
                                         Call <?php echo $vendor->locations[0]->location_phone; ?>
                                     </div>
                                 </a>
+                                <?php } ?>
                                 <div class="spacer-1rem"></div>
                                 <a href="" class="button-link-text white-text">
                                     <div class="button-01 primary">
@@ -119,11 +121,13 @@ if($_GET['vendor_uuid']){
                                 <div class="profile-contact-info" id="<?php echo ($key == 0) ? 'primary-loction' : 'location-'.($key+1); ?>">
                                     <h4 class="primary-text"><?php echo ($key == 0) ? 'Primary Location' : 'Location #'.($key+1); ?></h4>
                                     <ul class="profile-location-ul">
-                                        <li class="profile-location-li"><?php echo $single_location->street_address_1; ?></li>
-                                        <li class="profile-location-li"><?php echo $single_location->street_address_2; ?></li>
+                                        <li class="profile-location-li"><?php echo ($single_location->city_state_only == 0) ? $single_location->street_address_1 : '&nbsp;'; ?></li>
+                                        <li class="profile-location-li"><?php echo ($single_location->city_state_only == 0) ? $single_location->street_address_2 : '&nbsp;'; ?></li>
                                         <li class="profile-location-li"><?php echo $single_location->location_city; ?>, <?php echo $single_location->state->short_name; ?></li>
-                                        <li class="profile-location-li-zip"><?php echo $single_location->location_zip_code; ?></li>
-                                        <li class="profile-location-li"><a href="tel:<?php echo $single_location->location_phone; ?>" class="button-01 primary"><?php echo $single_location->location_phone; ?></a></li>
+                                        <li class="profile-location-li-zip"><?php echo ($single_location->city_state_only == 0) ? $single_location->location_zip_code : '&nbsp;'; ?></li>
+                                        <?php if($single_location->location_phone != null && $single_location->location_phone != "" && $single_location->is_phone_number_visible == 1){ ?>
+                                            <li class="profile-location-li"><a href="tel:<?php echo $single_location->location_phone; ?>" class="button-01 primary"><?php echo $single_location->location_phone; ?></a></li>
+                                        <?php } ?>
                                     </ul>
                                 </div>
                             <?php } ?>
