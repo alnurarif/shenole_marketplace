@@ -130,7 +130,7 @@ $total_pagination_button = ceil($total_pagination_button);
                         <?php foreach($vendors as $single_vendor){?>
                             <article class="listing-card">
                                 <div class="listing-card-image">
-                                    <img class="full h_full" src="<?php echo SITE_LINK; ?>images/vendors/<?php echo $single_vendor->profile_photo; ?>" class="listing-image" alt="profile_photo"/>
+                                    <img class="full h_full listing-image" onerror="this.src='<?php echo SITE_LINK; ?>images/no_image.jpg'" src="<?php echo SITE_LINK; ?>images/vendors/<?php echo $single_vendor->profile_photo; ?>" alt="profile_photo"/>
                                 </div>
                                 <div class="listing-card-vendor-name-container">
                                     <h3 class="listing-card-vendor-name">
