@@ -315,7 +315,7 @@ foreach($vendor_membership_level_list as $single_level){
                                     <?php echo ($errors['errors_number'] > 0 && $errors['price'] != "") ? '<span style="color:firebrick;font-size:12px;">'.$errors['price'].'</span>' : '' ; ?></label>
                                     <div class="spacer-10px"></div>
                                     <div class="flex-container">
-                                        <b>$</b>&nbsp;<input value="<?php echo (isset($membership_level->price)) ? $membership_level->price : '' ; ?>" type="number" name="price" id="price" class="search-input" placeholder="example: 25.99">
+                                        <b>$</b>&nbsp;<input value="<?php echo (isset($membership_level->price)) ? $membership_level->price : '' ; ?>" type="number" step="0.01" name="price" id="price" class="search-input" placeholder="example: 25.99">
                                     </div>
                                 </div>
                                 <div class="form-input-search">
