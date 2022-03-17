@@ -33,6 +33,7 @@
                     <a href=""><img src="<?php echo SITE_LINK; ?>images/facebook-icon.png" alt="Facebook icon."></a>
                     <a href=""><img src="<?php echo SITE_LINK; ?>images/instagram-icon.png" alt="Instagram icon."></a>
                     <a href=""><img src="<?php echo SITE_LINK; ?>images/youtube-icon.png" alt="Youtube icon."></a>
+                    <a href=""><img src="<?php echo SITE_LINK; ?>images/tiktok-icon.png" alt="TikTok icon."></a>
                 </div>
             </div>
         </div>

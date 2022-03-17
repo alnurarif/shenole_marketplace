@@ -3,44 +3,44 @@ html, body, div, span, applet, object, iframe, table, caption, tbody, tfoot, the
 del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, 
 h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, 
 dl, dt, dd, ol, ul, li, fieldset, form, label, legend {
-    vertical-align: baseline;
-    font-family: inherit;
-    font-weight: inherit;
-    font-style: inherit;
-    font-size: 100%;
-    outline: 0;
-    padding: 0;
-    margin: 0;
-    border: 0;
-    }
+	vertical-align: baseline;
+	font-family: inherit;
+	font-weight: inherit;
+	font-style: inherit;
+	font-size: 100%;
+	outline: 0;
+	padding: 0;
+	margin: 0;
+	border: 0;
+	}
 /* remember to define focus styles! */
 :focus {
-    outline: 0;
-    }
+	outline: 0;
+	}
 body {
-    background: white;
-    line-height: 1;
-    color: black;
-    }
+	background: white;
+	line-height: 1;
+	color: black;
+	}
 ol, ul {
-    list-style: none;
-    }
+	list-style: none;
+	}
 /* tables still need cellspacing="0" in the markup */
 table {
-    border-collapse: separate;
-    border-spacing: 0;
-    }
+	border-collapse: separate;
+	border-spacing: 0;
+	}
 caption, th, td {
-    font-weight: normal;
-    text-align: left;
-    }
+	font-weight: normal;
+	text-align: left;
+	}
 /* remove possible quote marks (") from <q> & <blockquote> */
 blockquote:before, blockquote:after, q:before, q:after {
-    content: "";
-    }
+	content: "";
+	}
 blockquote, q {
-    quotes: "" "";
-    }
+	quotes: "" "";
+	}
 
 /* GLOBAL CSS VARIABLES */
 :root {
@@ -127,8 +127,20 @@ p {
 .white-text {
     color: #ffffff;
 }
+.primary-text {
+    color: var(--primary);
+}
 .secondary-text {
     color: var(--secondary);
+}
+.go-text {
+    color: var(--go-button);
+}
+.caution-text {
+    color: var(--caution-button);
+}
+.stop-text {
+    color: var(--stop-button);
 }
 .primary-selection {
     color: var(--go-button);
@@ -178,6 +190,9 @@ p {
 }
 .quaternary {
     background-color: var(--quaternary);
+}
+.major-alert {
+    background-color: var(--stop-button);
 }
 
 /* NAVIGATION */
@@ -259,6 +274,62 @@ html {
     display: flex;
     align-items: center;
 }
+.space-between {
+    justify-content: space-between;
+}
+.system-modal {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    width: 100vw;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(102, 0, 102, 0.9);
+    z-index: 50000;
+}
+.show-modal {
+    display: flex;
+}
+.modal-close-icon {
+    margin-bottom: 10px;
+    color: var(--ternary);
+    cursor: pointer;
+}
+.modal-content {
+    width: 680px;
+    padding: 1rem;
+    background-color: var(--primary);
+    box-shadow: var(--shadow-small);
+    border-radius: 5px;
+}
+.modal-message-window-receive {
+    width: 100%;
+    height: 100px;
+    overflow: auto;
+    background-color: var(--ternary);
+    border: 1px solid #d9d9d9;
+    border-radius: 5px;
+    margin-bottom: 2rem;
+    font-size: 0.8rem;
+}
+.modal-note-window-display {
+    width: 100%;
+    height: 400px;
+    overflow: auto;
+    background-color: var(--ternary);
+    border: 1px solid #d9d9d9;
+    border-radius: 5px;
+    margin-bottom: 2rem;
+    font-size: 0.8rem;
+}
+.modal-form {
+    height: 280px;
+}
+textarea.modal-textarea {
+    height: 100px;
+}
 .main-body-content {
     padding: 3rem 0rem;
 }
@@ -268,6 +339,11 @@ html {
 }
 .wysiwyg-container {
     margin-bottom: 2rem;
+}
+.overdue-one {
+    padding: 0.25rem 1rem;
+    margin-left: 0.25rem;
+    border-radius: 5px;
 }
 .margin-auto {
     margin: auto;
@@ -357,6 +433,59 @@ section {
     border-radius: 4px;
     cursor: pointer;
 }
+.respond-button {
+    width: 92px;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 700;
+    background-color: var(--primary);
+    color: var(--ternary);
+}
+.custom-table-container-01 {
+    min-width: 780px;
+    overflow-x: auto;
+}
+.custom-table-heading-01 {
+    display: flex;
+    justify-content: space-between;
+    background-color: var(--primary);
+    color: var(--quaternary);
+    padding: 1rem 0.5rem;
+    text-transform: uppercase;
+}
+.table-row-content-container-date {
+    min-width: 86px;
+}
+.table-row-content-container-type {
+    min-width: 120px;
+}
+.table-row-content-container-vendor {
+    min-width: 260px;
+}
+.table-row-content-container-item {
+    min-width: 548px;
+}
+.table-row-content-container-qty {
+    min-width: 105px;
+}
+.table-row-content-container-price {
+    min-width: 120px;
+}
+.table-row-content-container-booking {
+    min-width: 980px;
+}
+.custom-table-row-01 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 0.5rem;
+    border-left: solid 1px #000000;
+    border-right: solid 1px #000000;
+    border-bottom: solid 1px #000000;
+    box-sizing: border-box;
+}
 .divider {
     border-top: #999999;
     margin: 1rem 0rem;
@@ -373,6 +502,9 @@ section {
 .full-width {
     width: 100%;
 }
+.search-select-small {
+    width: 174px;
+}
 .listing-search-header {
     width: 1150px;
     border-bottom: 1px solid #d9d9d9;
@@ -386,6 +518,15 @@ section {
 .listing-card {
     width: 274px;
     height: 584px;
+    box-sizing: border-box;
+    padding: 12px;
+    border-radius: 0.25rem;
+    box-shadow: 0px 1px 13px rgb(0 0 0 / 10%);
+    margin: 0rem 6.75px 2rem 6.75px;
+}
+.listing-card2 {
+    width: 274px;
+    height: 184px;
     box-sizing: border-box;
     padding: 12px;
     border-radius: 0.25rem;
@@ -479,6 +620,52 @@ section {
     display: flex;
     justify-content: center;
     margin-top: auto;
+}
+.vendor-list-photo {
+    width: 60px;
+    height: 60px;
+    border-radius: 50% 50%;
+    background-color: var(--quaternary);
+}
+.message-screen {
+    width: 100%;
+    height: 600px;
+    background-color: var(--ternary);
+    border: 1px solid #d9d9d9;
+    border-radius: 4px;
+    padding: 1rem 1.5rem;
+    overflow-y: auto;
+    box-sizing: border-box;
+}
+.message-container {
+    display: flex;
+    width: 100%;
+    padding-bottom: 80px;
+}
+.message-sidebar {
+    width: 80px;
+}
+.message-profile-pic {
+    width: 80px;
+    height: 80px;
+    border-radius: 50% 50%;
+    background-color: var(--quaternary);
+}
+.message-display-body {
+    padding: 0px 20px;
+    box-sizing: border-box;
+}
+.message-date-container {
+    margin-bottom: 80px;
+}
+.date-button {
+    width: 170px;
+    padding: 0.5rem 0rem;
+    margin: auto;
+    background-color: var(--primary);
+    color: var(--ternary);
+    text-align: center;
+    border-radius: 4px;
 }
 .pagination-container {
     display: flex;
@@ -617,6 +804,10 @@ option {
     justify-content: center;
     padding-top: 1.5rem;
 }
+.form-submit-container-modal {
+    display: flex;
+    justify-content: center;
+}
 .form-submit-container input {
     cursor: pointer;
     font-size: 1rem;
@@ -669,6 +860,13 @@ option {
     font-size: 1.25rem;
     font-weight: 700;
     text-align: center;
+    margin-bottom: 0.5rem;
+}
+.profile-header-title-client {
+    width: 100%;
+    font-size: 1.25rem;
+    font-weight: 700;
+    text-align: left;
     margin-bottom: 0.5rem;
 }
 .profile-sub-header {
@@ -821,6 +1019,7 @@ option {
 .full-width-textarea {
     width: 100%;
     height: 200px;
+    border: 1px solid #d9d9d9;
 }
 .multi-button-container {
     display: flex;
