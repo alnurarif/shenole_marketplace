@@ -94,12 +94,12 @@ if($_POST){
                             </div>
                         </div>
                         <div class="vendor-profile-nav">
-                            <div class="profile-nav-link">Status</div>
-                            <div class="profile-nav-link">Messages</div>
-                            <div class="profile-nav-link">Support Tickets</div>
-                            <div class="profile-nav-link">Notes</div>
+                            <div class="profile-nav-link" id="tag_status">Status</div>
+                            <div class="profile-nav-link" id="tag_messages">Messages</div>
+                            <div class="profile-nav-link" id="tag_support_tickets">Support Tickets</div>
+                            <div class="profile-nav-link" id="tag_notes">Notes</div>
                         </div>
-                        <div class="profile-section" id="status-vendor">
+                        <div class="profile-section" id="status">
                             <h2>Status</h2>
                             <div class="vendor-profile-header-container">
                                 <form action="" class="full-width-form">
@@ -124,7 +124,7 @@ if($_POST){
                                 </form>
                             </div>
                         </div>
-                        <div class="profile-section" id="transactions">
+                        <div class="profile-section" id="messages">
                             <h2>Messages</h2>
                             <div class="listing-search-header">
                                 <form action="" class="full-width-form">
@@ -230,7 +230,7 @@ if($_POST){
                             <div class="spacer-10px"></div>
                             <div class="spacer-10px"></div>
                         </div>
-                        <div class="profile-section" id="bookings">
+                        <div class="profile-section" id="support_tickets">
                             <h2>Support Tickets</h2>
                             <div class="custom-table-container-01">
                                 <div class="custom-table-heading-01">
@@ -297,7 +297,7 @@ if($_POST){
                                 <a href="" class="white-text"><div class="pagination-link">2</div></a>
                             </div>
                         </div>
-                        <div class="profile-section" id="notes-client">
+                        <div class="profile-section" id="notes">
                             <h2>Notes</h2>
                             <form action="" class="full-width-form">
                                 <span id="vendor-description-character-countdown">2500</span> characters left
@@ -415,6 +415,7 @@ if($_POST){
         MyHelpers::includeWithVariables('../layouts/footer.php', [], $print = true);
         ?>
 	</div>
-	<script src="../js/jquery.min.js"></script>
+	<script src="<?php echo SITE_LINK; ?>js/jquery.min.js"></script>
+    <script src="<?php echo SITE_LINK; ?>js/pages/majestic/staff-details.js"></script>
 </body>
 </html>

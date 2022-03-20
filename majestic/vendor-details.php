@@ -104,13 +104,13 @@ if($_POST){
                             </div>
                         </div>
                         <div class="vendor-profile-nav">
-                            <div class="profile-nav-link">Status</div>
-                            <div class="profile-nav-link">Transactions</div>
-                            <div class="profile-nav-link">Bookings</div>
-                            <div class="profile-nav-link">Payment History<span class="overdue-one major-alert white-text" id="overdue-alert-one">Overdue</span></div>
-                            <div class="profile-nav-link">Notes</div>
+                            <div class="profile-nav-link" id="tag_status">Status</div>
+                            <div class="profile-nav-link" id="tag_transactions">Transactions</div>
+                            <div class="profile-nav-link" id="tag_bookings">Bookings</div>
+                            <div class="profile-nav-link" id="tag_payment_history">Payment History<span class="overdue-one major-alert white-text" id="overdue-alert-one">Overdue</span></div>
+                            <div class="profile-nav-link" id="tag_notes">Notes</div>
                         </div>
-                        <div class="profile-section" id="status-vendor">
+                        <div class="profile-section" id="status">
                             <h2>Status</h2>
                             <div class="vendor-profile-header-container">
                                 <form action="" class="full-width-form">
@@ -202,7 +202,50 @@ if($_POST){
                                 <a href="" class="white-text"><div class="pagination-link">2</div></a>
                             </div>
                         </div>
-                        <div class="profile-section" id="transactions">
+                        <div class="profile-section" id="bookings">
+                            <h2>Bookings</h2>
+                            <div class="custom-table-container-01">
+                                <div class="custom-table-heading-01">
+                                    <div class="table-row-content-container-date">
+                                        date
+                                    </div>
+                                    <div class="table-row-content-container-booking">
+                                        booking
+                                    </div>
+                                </div>
+                                <div class="custom-table-row-01">
+                                    <div class="table-row-content-container-date">
+                                        09/28/22
+                                    </div>
+                                    <div class="table-row-content-container-booking">
+                                        Lorem ipsum dolor sit amet consectetur adipiscing...
+                                    </div>
+                                </div>
+                                <div class="custom-table-row-01">
+                                    <div class="table-row-content-container-date">
+                                        09/28/22
+                                    </div>
+                                    <div class="table-row-content-container-booking">
+                                        Lorem ipsum dolor sit amet consectetur adipiscing...
+                                    </div>
+                                </div>
+                                <div class="custom-table-row-01">
+                                    <div class="table-row-content-container-date">
+                                        09/28/22
+                                    </div>
+                                    <div class="table-row-content-container-booking">
+                                        Lorem ipsum dolor sit amet consectetur adipiscing...
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="spacer-10px"></div>
+                            <div class="spacer-10px"></div>
+                            <div class="pagination-container">
+                                <div class="pagination-link-current">1</div>
+                                <a href="" class="white-text"><div class="pagination-link">2</div></a>
+                            </div>
+                        </div>
+                        <div class="profile-section" id="payment_history">
                             <h2>Payment History</h2>
                             <div class="custom-table-container-01">
                                 <div class="custom-table-heading-01">
@@ -256,50 +299,7 @@ if($_POST){
                                 <a href="" class="white-text"><div class="pagination-link">2</div></a>
                             </div>
                         </div>
-                        <div class="profile-section" id="bookings">
-                            <h2>Bookings</h2>
-                            <div class="custom-table-container-01">
-                                <div class="custom-table-heading-01">
-                                    <div class="table-row-content-container-date">
-                                        date
-                                    </div>
-                                    <div class="table-row-content-container-booking">
-                                        booking
-                                    </div>
-                                </div>
-                                <div class="custom-table-row-01">
-                                    <div class="table-row-content-container-date">
-                                        09/28/22
-                                    </div>
-                                    <div class="table-row-content-container-booking">
-                                        Lorem ipsum dolor sit amet consectetur adipiscing...
-                                    </div>
-                                </div>
-                                <div class="custom-table-row-01">
-                                    <div class="table-row-content-container-date">
-                                        09/28/22
-                                    </div>
-                                    <div class="table-row-content-container-booking">
-                                        Lorem ipsum dolor sit amet consectetur adipiscing...
-                                    </div>
-                                </div>
-                                <div class="custom-table-row-01">
-                                    <div class="table-row-content-container-date">
-                                        09/28/22
-                                    </div>
-                                    <div class="table-row-content-container-booking">
-                                        Lorem ipsum dolor sit amet consectetur adipiscing...
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="spacer-10px"></div>
-                            <div class="spacer-10px"></div>
-                            <div class="pagination-container">
-                                <div class="pagination-link-current">1</div>
-                                <a href="" class="white-text"><div class="pagination-link">2</div></a>
-                            </div>
-                        </div>
-                        <div class="profile-section" id="notes-vendor">
+                        <div class="profile-section" id="notes">
                             <h2>Notes</h2>
                             <form action="" class="full-width-form">
                                 <span id="vendor-description-character-countdown">2500</span> characters left
@@ -395,6 +395,7 @@ if($_POST){
         MyHelpers::includeWithVariables('../layouts/footer.php', [], $print = true);
         ?>
 	</div>
-	<script src="../js/jquery.min.js"></script>
+	<script src="<?php echo SITE_LINK; ?>js/jquery.min.js"></script>
+    <script src="<?php echo SITE_LINK; ?>js/pages/majestic/vendor-details.js"></script>
 </body>
 </html>
