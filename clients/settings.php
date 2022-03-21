@@ -40,11 +40,11 @@ if(!$isClientLoggedIn){
                 </div> -->
                 <div class="content-container-center">
                     <div class="vendor-profile-nav">
-                        <div class="profile-nav-link">Account</div>
-                        <div class="profile-nav-link">Paypal</div>
-                        <div class="profile-nav-link">Upgrades</div>
+                        <div class="profile-nav-link" id="tab_account">Account</div>
+                        <div class="profile-nav-link" id="tab_paypal">Paypal</div>
+                        <div class="profile-nav-link" id="tab_upgrades">Upgrades</div>
                     </div>
-                    <div class="profile-section" id="client-account">
+                    <div class="profile-section" id="account">
                         <h2>Account</h2>
                         <form action="" class="full-width-form">
                             <h3>Change Your Login Email</h3>
@@ -73,7 +73,7 @@ if(!$isClientLoggedIn){
                             </div>
                         </form>
                     </div>
-                    <div class="profile-section" id="client-paypal">
+                    <div class="profile-section" id="paypal">
                         <h2>Paypal</h2>
                         <form action="" class="full-width-form">
                             <h3>Paypal Email</h3>
@@ -138,7 +138,7 @@ if(!$isClientLoggedIn){
         MyHelpers::includeWithVariables('../layouts/footer.php', [], $print = true);
         ?>
 	</div>
-	<script src="../js/jquery.min.js"></script>
-	<script src="../js/pages/index_page.js"></script>
+	<script src="<?php echo SITE_LINK; ?>js/jquery.min.js"></script>
+    <script src="<?php echo SITE_LINK; ?>js/pages/clients/settings.js"></script>
 </body>
 </html>
