@@ -29,10 +29,10 @@ if(!$isStaffLoggedIn){
 			<section class="section-type-01">
                 <div class="content-container-center">
                     <div class="vendor-profile-nav">
-                        <div class="profile-nav-link">Account</div>
-                        <div class="profile-nav-link">Paypal</div>
+                        <div class="profile-nav-link" id="tab_account">Account</div>
+                        <div class="profile-nav-link" id="tab_paypal">Paypal</div>
                     </div>
-                    <div class="profile-section" id="staff-account">
+                    <div class="profile-section" id="account">
                         <h2>Account Settings</h2>
                         <form action="" class="full-width-form">
                             <h3>Staff Member Info</h3>
@@ -101,7 +101,7 @@ if(!$isStaffLoggedIn){
                             </div>
                         </form>
                     </div>
-                    <div class="profile-section" id="staff-paypal">
+                    <div class="profile-section" id="paypal">
                         <h2>Paypal</h2>
                         <form action="" class="full-width-form">
                             <h3>Paypal Email</h3>
@@ -133,7 +133,7 @@ if(!$isStaffLoggedIn){
         MyHelpers::includeWithVariables('../layouts/footer.php', [], $print = true);
         ?>
 	</div>
-	<script src="../js/jquery.min.js"></script>
-	<script src="../js/pages/index_page.js"></script>
+	<script src="<?php echo SITE_LINK; ?>js/jquery.min.js"></script>
+    <script src="<?php echo SITE_LINK; ?>js/pages/staff/settings.js"></script>
 </body>
 </html>
