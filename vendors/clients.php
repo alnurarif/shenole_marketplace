@@ -60,9 +60,9 @@ if(!$isVendorLoggedIn){
                             </div>
                         </div>
                         <div class="vendor-profile-nav">
-                            <div class="profile-nav-link">Transactions</div>
-                            <div class="profile-nav-link">Messages</div>
-                            <div class="profile-nav-link">Bookings</div>
+                            <div class="profile-nav-link" id="tab_transactions">Transactions</div>
+                            <div class="profile-nav-link" id="tab_messages">Messages</div>
+                            <div class="profile-nav-link" id="tab_bookings">Bookings</div>
                         </div>
                         <div class="profile-section" id="transactions">
                             <h2>Transactions</h2>
@@ -304,7 +304,7 @@ if(!$isVendorLoggedIn){
         MyHelpers::includeWithVariables('../layouts/footer.php', [], $print = true);
         ?>
 	</div>
-	<script src="../js/jquery.min.js"></script>
-	<script src="../js/pages/index_page.js"></script>
+	<script src="<?php echo SITE_LINK; ?>js/jquery.min.js"></script>
+    <script src="<?php echo SITE_LINK; ?>js/pages/vendors/clients.js"></script>
 </body>
 </html>
