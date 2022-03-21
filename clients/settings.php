@@ -49,20 +49,7 @@ if(!$isClientLoggedIn){
                         <form action="" class="full-width-form">
                             <h3>Change Your Login Email</h3>
                             <div class="form-input-container">
-                                <div class="form-input-search">
-                                    <label for="category" class="input-label">Enter New Login Email</label>
-                                    <div class="spacer-10px"></div>
-                                    <div>
-                                        <input type="text" id="client-login-email-setting" class="search-input" placeholder="example: mymail@email.com">
-                                    </div>
-                                </div>
-                                <div class="form-input-search">
-                                    <label for="location" class="input-label">Your Current Paypal Email</label>
-                                    <div class="spacer-10px"></div>
-                                    <ul class="category-ul">
-                                        <li class="category-li"><div>No Paypal Email Saved At This Time</div></li>
-                                    </ul>
-                                </div>
+                                
                             </div>
                             <h3>Change Your Password</h3>
                             <div class="form-input-container">
