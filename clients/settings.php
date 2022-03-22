@@ -47,9 +47,39 @@ if(!$isClientLoggedIn){
                     <div class="profile-section" id="account">
                         <h2>Account</h2>
                         <form action="" class="full-width-form">
-                            <h3>Change Your Login Email</h3>
+                            <h3>Change Your Login Email & Username</h3>
                             <div class="form-input-container">
-                                
+                                <div class="form-input-search">
+                                    <label for="client-username" class="input-label">Enter Your Desired Username</label>
+                                    <div class="spacer-10px"></div>
+                                    <div>
+                                        <input type="text" id="client-username" class="search-input" placeholder="example: JohnyBoy123">
+                                    </div>
+                                </div>
+                                <div class="form-input-search">
+                                    <label for="client-location" class="input-label">Location</label>
+                                    <div class="spacer-10px"></div>
+                                    <select name="state-01" class="search-input-mini">
+                                        <option value="" class="select-option-01">State</option>
+                                        <option value="" class="select-option-01"></option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-input-container">
+                                <div class="form-input-search">
+                                    <label for="client-login-email-setting" class="input-label">Enter New Login Email</label>
+                                    <div class="spacer-10px"></div>
+                                    <div>
+                                        <input type="text" id="client-login-email-setting" class="search-input" placeholder="example: mymail@email.com">
+                                    </div>
+                                </div>
+                                <!-- <div class="form-input-search">
+                                    <label for="paypal-email-display" class="input-label">Your Current Paypal Email</label>
+                                    <div class="spacer-10px"></div>
+                                    <ul class="category-ul">
+                                        <li class="category-li"><div>No Paypal Email Saved At This Time</div></li>
+                                    </ul>
+                                </div> -->
                             </div>
                             <h3>Change Your Password</h3>
                             <div class="form-input-container">
