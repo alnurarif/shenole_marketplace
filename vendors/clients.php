@@ -25,7 +25,7 @@ if(!$isVendorLoggedIn){
 		MyHelpers::includeWithVariables('../layouts/top_nav.php', ['isVendorLoggedIn' => $isVendorLoggedIn], $print = true);
 		?>
 		<div class="main-body-content">
-			<section class="section-type-01">
+            <section class="section-type-01">
                 <div class="ad-space-container-160">
                     <div class="ad-space-type01-desktop">
                         <!-- Ad Space (160 x 600) -->
@@ -38,249 +38,62 @@ if(!$isVendorLoggedIn){
 
                 </div> -->
                 <div class="content-container-center">
-                    <div class="vendor-profile-container">
-                        <div class="vendor-profile-header-container">
-                            <div class="vendor-profile-main-photo">
-                                <img src="../images/main-images/client-group.jpg" class="fluid-image" alt="Photo showing people of various races and genders.">
-                            </div>
-                            <div class="vendor-profile-main-overview">
-                                <div class="profile-header-title-client">
-                                    Client's Username Here
-                                </div>
-                                <hr class="divider">
-                                <h3>Total Earned From Client:</h3>
-                                <h3 class="primary-text">$780.00</h3>
-                                <div class="spacer-1rem"></div>
-                                <h3>Total Messages:</h3>
-                                <h3 class="primary-text">43</h3>
-                                <div class="spacer-1rem"></div>
-                                <h3>Total Bookings Received:</h3>
-                                <h3 class="primary-text">2</h3>
-                                <div class="spacer-1rem"></div>
-                            </div>
-                        </div>
-                        <div class="vendor-profile-nav">
-                            <div class="profile-nav-link" id="tab_transactions">Transactions</div>
-                            <div class="profile-nav-link" id="tab_messages">Messages</div>
-                            <div class="profile-nav-link" id="tab_bookings">Bookings</div>
-                        </div>
-                        <div class="profile-section" id="transactions">
-                            <h2>Transactions</h2>
-                            <div class="custom-table-container-01">
-                                <div class="custom-table-heading-01">
-                                    <div class="table-row-content-container-date">
-                                        date
-                                    </div>
-                                    <div class="table-row-content-container-item">
-                                        item
-                                    </div>
-                                    <div class="table-row-content-container-qty">
-                                        quantity
-                                    </div>
-                                    <div class="table-row-content-container-price">
-                                        price
+                    <div class="listing-search-header">
+                        <form action="" class="full-width-form">
+                            <div class="form-input-container">
+                                <div class="form-input-search">
+                                    <label for="client-username-search" class="input-label">Client Username</label>
+                                    <div class="spacer-10px"></div>
+                                    <div>
+                                        <input type="text" id="client-username-search" class="search-input" placeholder="Enter Username">
                                     </div>
                                 </div>
-                                <div class="custom-table-row-01">
-                                    <div class="table-row-content-container-date">
-                                        09/28/22
-                                    </div>
-                                    <div class="table-row-content-container-item">
-                                        Lorem ipsum dolor sit amet consectetur adipiscing elit
-                                    </div>
-                                    <div class="table-row-content-container-qty">
-                                        2
-                                    </div>
-                                    <div class="table-row-content-container-price">
-                                        $8,995.00
-                                    </div>
+                                <div class="form-input-search">
+                                    <label for="client-location-search" class="input-label">Location City, State</label>
+                                    <div class="spacer-10px"></div>
+                                    <input type="text" id="client-location-search" class="search-input" placeholder="Orlando, FL">
                                 </div>
-                                <div class="custom-table-row-01">
-                                    <div class="table-row-content-container-date">
-                                        09/28/22
-                                    </div>
-                                    <div class="table-row-content-container-item">
-                                        Lorem ipsum dolor sit amet consectetur adipiscing elit
-                                    </div>
-                                    <div class="table-row-content-container-qty">
-                                        2
-                                    </div>
-                                    <div class="table-row-content-container-price">
-                                        $8,995.00
-                                    </div>
+                                <div class="form-input-select">
+                                    <label for="client-sort-alphabetically" class="input-label">Sort Alphabetically</label>
+                                    <div class="spacer-10px"></div>
+                                    <select name="client-sort-alphabetically" id="client-sort-alphabetically" class="search-select-small">
+                                        <option value="">Sort Clients Username</option>
+                                        <option value="a-z">A - Z</option>
+                                        <option value="z-a">Z - A</option>
+                                    </select>
                                 </div>
-                                <div class="custom-table-row-01">
-                                    <div class="table-row-content-container-date">
-                                        09/28/22
-                                    </div>
-                                    <div class="table-row-content-container-item">
-                                        Lorem ipsum dolor sit amet consectetur adipiscing...
-                                    </div>
-                                    <div class="table-row-content-container-qty">
-                                        2
-                                    </div>
-                                    <div class="table-row-content-container-price">
-                                        $8,995.00
-                                    </div>
+                                <div class="form-input-select">
+                                    <label for="client-sort-status" class="input-label">Sort Status</label>
+                                    <div class="spacer-10px"></div>
+                                    <select name="client-sort-status" id="client-sort-status" class="search-select-small">
+                                        <option value="">Sort Client Status</option>
+                                        <option value="a-z">Active</option>
+                                        <option value="z-a">Inactive</option>
+                                        <option value="z-a">Suspended</option>
+                                    </select>
                                 </div>
                             </div>
-                            <div class="spacer-10px"></div>
-                            <div class="spacer-10px"></div>
-                            <div class="pagination-container">
-                                <div class="pagination-link-current">1</div>
-                                <a href="" class="white-text"><div class="pagination-link">2</div></a>
+                            
+                            <div class="form-submit-container">
+                                <input type="submit" class="button-01 primary white-text" value="Search">
                             </div>
-                        </div>
-                        <div class="profile-section" id="messages">
-                            <h2>Messages</h2>
-                            <div class="listing-search-header">
-                                <form action="" class="full-width-form">
-                                    <div class="form-input-container">
-                                        <div class="form-input-search">
-                                            <label for="keywords" class="input-label">Comma Separated Keywords</label>
-                                            <div class="spacer-10px"></div>
-                                            <div>
-                                                <input type="text" id="keyword-vendor-search" class="search-input" placeholder="hostess1993">
-                                            </div>
-                                        </div>
-                                        <div class="form-input-select">
-                                            <label for="category" class="input-label">Client Location</label>
-                                            <div class="spacer-10px"></div>
-                                            <select name="" id="" class="search-select">
-                                                <option value="">Select State</option>
-                                                <option value=""></option>
-                                            </select>
-                                        </div>
-                                        <div class="form-input-select">
-                                            <label for="sort" class="input-label">Sort Alphabetically</label>
-                                            <div class="spacer-10px"></div>
-                                            <select name="" id="" class="search-select">
-                                                <option value="">Sort Clients</option>
-                                                <option value="a-z">A - Z</option>
-                                                <option value="z-a">Z - A</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-input-select">
-                                            <label for="sort-by-date" class="input-label">Sort By Date</label>
-                                            <div class="spacer-10px"></div>
-                                            <select name="sort-by-date" id="sort-by-date" class="search-select">
-                                                <option value="">Sort Messages</option>
-                                                <option value="newest">Newest First</option>
-                                                <option value="oldest">Oldest First</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-submit-container">
-                                        <input type="submit" class="button-01 primary white-text" value="Search Messages">
-                                    </div>
-                                </form>
+                        </form>
+                    </div>
+                    <div class="listing-content-container">
+                        <article class="listing-card2">
+                            <div class="listing-card-vendor-name-container">
+                                <h3 class="listing-card-vendor-name">
+                                    <a href="" class="listing-card-vendor-name-link">Client Username Here And It May Be A Long Name</a>
+                                </h3>
                             </div>
-                            <div class="message-screen">
-                                <div class="message-date-container">
-                                    <hr>
-                                    <div class="date-button">
-                                        <span class="message-date">09 / 27 / 2022</span>
-                                    </div>
-                                    <hr>
-                                </div>
-                                <div class="message-container">
-                                    <div class="message-sidebar">
-                                        <img src="" alt="" class="fluid-image message-profile-pic">
-                                    </div>
-                                    <div class="message-display-body">
-                                        <h3 class="primary-text">Vendor Name</h3>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-                                        <div class="respond-button-container">
-                                            <div class="respond-button">Respond</div>
-                                        </div>
-                                    </div>
-                                    <div class="message-sidebar">
-                                        <span class="message-time">12:00<br>PM</span>
-                                    </div>
-                                </div>
-                                <div class="message-container">
-                                    <div class="message-sidebar">
-                                        <img src="" alt="" class="fluid-image message-profile-pic">
-                                    </div>
-                                    <div class="message-display-body">
-                                        <h3>Client Username</h3>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-                                        <div class="respond-button-container">
-                                            <div class="respond-button">Respond</div>
-                                        </div>
-                                    </div>
-                                    <div class="message-sidebar">
-                                        <span class="message-time">1:45<br>PM</span>
-                                    </div>
-                                </div>
-                                <div class="message-date-container">
-                                    <hr>
-                                    <div class="date-button">
-                                        <span class="message-date">09 / 28 / 2022</span>
-                                    </div>
-                                    <hr>
-                                </div>
-                                <div class="message-container">
-                                    <div class="message-sidebar">
-                                        <img src="" alt="" class="fluid-image message-profile-pic">
-                                    </div>
-                                    <div class="message-display-body">
-                                        <h3 class="primary-text">Vendor Name</h3>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                                    </div>
-                                    <div class="message-sidebar">
-                                        <span class="message-time">10:58<br>AM</span>
-                                    </div>
-                                </div>
+                            <ul class="listing-card-ul-01">
+                                <li class="listing-card-li-01"><img class="listing-card-li-icon" src="../images/icons/maps-and-flags.png">Tampa, FL</li>
+                            </ul>
+                            <div class="spacer-10px"></div>
+                            <div class="listing-card-footer">
+                                <a href="" class="button-03 button-link-text white-text">Find Out More</a>
                             </div>
-                            <div class="spacer-10px"></div>
-                            <div class="spacer-10px"></div>
-                            <div class="spacer-10px"></div>
-                            <div class="spacer-10px"></div>
-                        </div>
-                        <div class="profile-section" id="bookings">
-                            <h2>Bookings</h2>
-                            <div class="custom-table-container-01">
-                                <div class="custom-table-heading-01">
-                                    <div class="table-row-content-container-date">
-                                        date
-                                    </div>
-                                    <div class="table-row-content-container-booking">
-                                        booking
-                                    </div>
-                                </div>
-                                <div class="custom-table-row-01">
-                                    <div class="table-row-content-container-date">
-                                        09/28/22
-                                    </div>
-                                    <div class="table-row-content-container-booking">
-                                        Lorem ipsum dolor sit amet consectetur adipiscing...
-                                    </div>
-                                </div>
-                                <div class="custom-table-row-01">
-                                    <div class="table-row-content-container-date">
-                                        09/28/22
-                                    </div>
-                                    <div class="table-row-content-container-booking">
-                                        Lorem ipsum dolor sit amet consectetur adipiscing...
-                                    </div>
-                                </div>
-                                <div class="custom-table-row-01">
-                                    <div class="table-row-content-container-date">
-                                        09/28/22
-                                    </div>
-                                    <div class="table-row-content-container-booking">
-                                        Lorem ipsum dolor sit amet consectetur adipiscing...
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="spacer-10px"></div>
-                            <div class="spacer-10px"></div>
-                            <div class="pagination-container">
-                                <div class="pagination-link-current">1</div>
-                                <a href="" class="white-text"><div class="pagination-link">2</div></a>
-                            </div>
-                        </div>
+                        </article>
                     </div>
                 </div>
                 <!-- <div class="ad-space-type01-mobile">
@@ -295,10 +108,6 @@ if(!$isVendorLoggedIn){
                     </div>
                 </div>
             </section>
-			<div class="pagination-container">
-                <div class="pagination-link-current">1</div>
-                <a href="" class="white-text"><div class="pagination-link">2</div></a>
-            </div>
 		</div>
 		<?php 
         MyHelpers::includeWithVariables('../layouts/footer.php', [], $print = true);
