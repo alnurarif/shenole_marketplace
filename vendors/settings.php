@@ -3,16 +3,65 @@ session_start();
 require "../start.php";
 use Shenole_project\helpers\Validator;
 use Shenole_project\models\Vendor;
+use Shenole_project\models\Client;
 use Shenole_project\utils\RandomStringGenerator;
 use Shenole_project\helpers\UserHelper;
 use Shenole_project\repositories\VendorRepository;
 use Shenole_project\helpers\MyHelpers;
 
 $isVendorLoggedIn = UserHelper::isUserLoggedIn($_SESSION, 'vendor', new VendorRepository);
-
+$login_token = UserHelper::getLoginTokenByUserType($_SESSION, 'vendor');
 if(!$isVendorLoggedIn){
 	header("Location: ".SITE_LINK."login.php");
     exit();
+}
+$account_errors = [
+    'errors_number' => 0,
+    'email' => '',	
+    'password' => '',	
+    'confirm_password' => ''
+];
+$vendor = Vendor::where('login_token',$login_token)->first();
+if($_POST){
+    if(isset($_POST['operation_add_update_account'])){
+        
+        if($_POST['email'] == ""){
+            $account_errors['errors_number'] += 1;
+            $account_errors['email'] = 'This field cannot be empty.';
+        }
+        if(!Validator::isValidEmail($_POST['email'])){
+            $account_errors['errors_number'] += 1;
+            $account_errors['email'] = 'You have entered an invalid email address.';
+        }
+        if(Vendor::where('email', '=', $_POST['email'])->exists() || Client::where('email', '=', $_POST['email'])->exists()){
+            if($vendor->email != $_POST['email']){
+                $account_errors['errors_number'] += 1;
+                $account_errors['email'] = 'This email is already in use.';
+            }
+        }
+        if($_POST['password'] == ""){
+            $account_errors['errors_number'] += 1;
+            $account_errors['password'] = 'This field cannot be empty.';
+        }
+        if(!Validator::isStrongPassword($_POST['password'], 8, 12)){
+            $account_errors['errors_number'] += 1;
+            $account_errors['password'] = 'Password must containt atleast 1 uppercase letter, 1 lowercase letter, 1 number and 1 special character and it must be 8-12 characters long';
+        }
+        if(Vendor::where('password', '=', $_POST['password'])->exists() || Client::where('password', '=', $_POST['password'])->exists()){
+            $account_errors['errors_number'] += 1;
+            $account_errors['password'] = 'This password is already in use.';
+        }
+        if($_POST['password'] !== $_POST['confirm_password']){
+            $account_errors['errors_number'] += 1;
+            $account_errors['confirm_password'] = 'This password does not match.';	
+        }
+
+        if($account_errors['errors_number'] == 0){
+            $vendor->email = trim($_POST['email']);
+            $vendor->password = trim($_POST['password']);
+            $vendor->save();
+        }
+    }
 }
 ?>
 
@@ -46,36 +95,49 @@ if(!$isVendorLoggedIn){
                     </div>
                     <div class="profile-section" id="account">
                         <h2>Account</h2>
-                        <form action="" class="full-width-form">
+                        <form method="post" class="full-width-form">
+                        <input type="hidden" name="operation_add_update_account" value="1"/>
                             <h3>Change Your Login Email</h3>
                             <div class="form-input-container">
                                 <div class="form-input-search">
-                                    <label for="category" class="input-label">Enter New Login Email</label>
+                                    <label for="category" class="input-label">Enter New Login Email
+                                    <?php if($account_errors['email'] != ""){?>
+                                        <span class="fs_12 lh_20 text_error ml_10"><?php echo $account_errors['email']; ?></span>
+                                    <?php } ?>
+                                    </label>
                                     <div class="spacer-10px"></div>
                                     <div>
-                                        <input type="text" id="vendor-login-email-setting" class="search-input" placeholder="example: mymail@email.com">
+                                        <input name="email" value="<?php echo $vendor->email; ?>" type="text" id="vendor-login-email-setting" class="search-input" placeholder="example: mymail@email.com">
                                     </div>
                                 </div>
                             </div>
                             <h3>Change Your Password</h3>
                             <div class="form-input-container">
                                 <div class="form-input-search">
-                                    <label for="category" class="input-label">Enter New Password</label>
+                                    <label for="category" class="input-label">Enter New Password
+                                    <?php if($account_errors['password'] != ""){?>
+                                        <span class="fs_12 lh_20 text_error ml_10"><?php echo $account_errors['password']; ?></span>
+                                    <?php } ?>
+                                    </label>
                                     <div class="spacer-10px"></div>
                                     <div>
-                                        <input type="text" id="vendor-new-password-setting" class="search-input" placeholder="example: mymail@email.com">
+                                        <input name="password" value="<?php if(isset($_POST['password'])){ echo $_POST['password']; } ?>" type="password" id="vendor-new-password-setting" class="search-input" placeholder="example: mymail@email.com">
                                     </div>
                                 </div>
                                 <div class="form-input-search">
-                                    <label for="category" class="input-label">Confirm New Password</label>
+                                    <label for="category" class="input-label">Confirm New Password
+                                    <?php if($account_errors['confirm_password'] != ""){?>
+                                        <span class="fs_12 lh_20 text_error ml_10"><?php echo $account_errors['confirm_password']; ?></span>
+                                    <?php } ?>
+                                    </label>
                                     <div class="spacer-10px"></div>
                                     <div>
-                                        <input type="text" id="vendor-confirm-new-password" class="search-input" placeholder="example: mymail@email.com">
+                                        <input name="confirm_password" value="<?php if(isset($_POST['confirm_password'])){ echo $_POST['confirm_password']; } ?>" type="password" id="vendor-confirm-new-password" class="search-input" placeholder="example: mymail@email.com">
                                     </div>
                                 </div>
                             </div>
                             <div class="form-submit-container">
-                                <imput type="button" class="button-01 white-text" id="vendor-account-submit">Submit</imput>
+                                <button type="submit" class="button-01 white-text" id="vendor-account-submit">Submit</button>
                             </div>
                         </form>
                     </div>
