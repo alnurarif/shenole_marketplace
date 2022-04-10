@@ -54,7 +54,7 @@ blockquote, q {
     /* BUTTONS */
         --main-button: #2b6bdb;
         --go-button: #06b514;
-        --caution-button: #ff9933;
+        --caution-button: #ff9933; 
         --stop-button: #e60000;
     /* SHADOWS */ 
         --shadow-small: 0px 7px 20px 0px rgb(26 41 60 / 39%);
@@ -151,6 +151,13 @@ p {
 }
 .location-list-text {
     padding: 0.3rem 0rem;
+}
+.heading-primary {
+    color: var(--primary);
+}
+.membership-features {
+    font-size: 0.7rem;
+    margin-bottom: 0.5rem;
 }
 .callout {
     padding: 1.8rem 3rem;
@@ -409,6 +416,9 @@ section {
     font-weight: 700;
     text-align: center;
 }
+.button-01:hover {
+    cursor: pointer;
+}
 .button-02 {
     padding: 1rem 1.5rem;
     border-radius: 0.25rem;
@@ -417,6 +427,9 @@ section {
     font-weight: 700;
     text-align: center;
     color: var(--primary);
+}
+.button-02:hover {
+    cursor: pointer;
 }
 .button-03 {
     padding: 6px 10px;
@@ -427,10 +440,16 @@ section {
     font-weight: 700;
     text-align: center;
 }
+.button-03:hover {
+    cursor: pointer;
+}
 .small-button {
     padding: 5px 10px;
     border: none;
     border-radius: 4px;
+    cursor: pointer;
+}
+.small-button:hover {
     cursor: pointer;
 }
 .respond-button {
@@ -442,6 +461,9 @@ section {
     font-weight: 700;
     background-color: var(--primary);
     color: var(--ternary);
+}
+.respond-button:hover {
+    cursor: pointer;
 }
 .custom-table-container-01 {
     min-width: 780px;
@@ -463,6 +485,8 @@ section {
 }
 .table-row-content-container-vendor {
     min-width: 260px;
+    padding-left: 20px;
+    box-sizing: border-box;
 }
 .table-row-content-container-item {
     min-width: 548px;
@@ -472,6 +496,8 @@ section {
 }
 .table-row-content-container-price {
     min-width: 120px;
+    padding-left: 20px;
+    box-sizing: border-box;
 }
 .table-row-content-container-booking {
     min-width: 980px;
