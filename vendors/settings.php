@@ -3,6 +3,7 @@ session_start();
 require "../start.php";
 use Shenole_project\helpers\Validator;
 use Shenole_project\models\Vendor;
+use Shenole_project\models\Vendor_setting;
 use Shenole_project\models\Client;
 use Shenole_project\utils\RandomStringGenerator;
 use Shenole_project\helpers\UserHelper;
@@ -21,7 +22,13 @@ $account_errors = [
     'password' => '',	
     'confirm_password' => ''
 ];
-$vendor = Vendor::where('login_token',$login_token)->first();
+$paypal_errors = [
+    'errors_number' => 0,
+    'vendor_paypal_email' => ''
+];
+
+$vendor = Vendor::where('login_token',$login_token)->with('vendor_setting')->first();
+
 if($_POST){
     if(isset($_POST['operation_add_update_account'])){
         
@@ -62,6 +69,63 @@ if($_POST){
             $vendor->save();
         }
     }
+    if(isset($_POST['operation_add_update_paypal'])){
+        if($_POST['vendor_paypal_email'] == ""){
+            $paypal_errors['errors_number'] += 1;
+            $paypal_errors['vendor_paypal_email'] = 'This field cannot be empty.';
+        }
+        if(!Validator::isValidEmail($_POST['vendor_paypal_email'])){
+            $paypal_errors['errors_number'] += 1;
+            $paypal_errors['vendor_paypal_email'] = 'You have entered an invalid email address.';
+        }
+
+        if($paypal_errors['errors_number'] == 0){
+            if($vendor->vendor_setting === null){
+                $vendor_setting_object = new Vendor_setting;
+                $vendor_setting_object->vendor_paypal_email = trim($_POST['vendor_paypal_email']);
+                
+                $vendor->vendor_setting()->save($vendor_setting_object);
+            }else{
+                $vendor->vendor_setting->vendor_paypal_email = trim($_POST['vendor_paypal_email']);
+                $vendor->vendor_setting->save();
+            }
+            $vendor = Vendor::where('login_token',$login_token)->with('vendor_setting')->first();
+        }
+        $show_paypal_section = true;
+    }
+    if(isset($_POST['operation_add_update_membership'])){
+        if($vendor->vendor_setting === null){
+            $vendor_setting_object = new Vendor_setting;
+            if(isset($_POST['membership_1'])){
+                $vendor_setting_object->membership_level = 'membership_1';
+            }elseif(isset($_POST['membership_2'])){
+                $vendor_setting_object->membership_level = 'membership_2';
+            }elseif(isset($_POST['membership_3'])){
+                $vendor_setting_object->membership_level = 'membership_3';
+            }elseif(isset($_POST['membership_4'])){
+                $vendor_setting_object->membership_level = 'membership_4';
+            }else{
+                $vendor_setting_object->membership_level = 'membership_1';
+            }
+            
+            $vendor->vendor_setting()->save($vendor_setting_object);
+        }else{
+            if(isset($_POST['membership_1'])){
+                $vendor->vendor_setting->membership_level = 'membership_1';
+            }elseif(isset($_POST['membership_2'])){
+                $vendor->vendor_setting->membership_level = 'membership_2';
+            }elseif(isset($_POST['membership_3'])){
+                $vendor->vendor_setting->membership_level = 'membership_3';
+            }elseif(isset($_POST['membership_4'])){
+                $vendor->vendor_setting->membership_level = 'membership_4';
+            }else{
+                $vendor->vendor_setting->membership_level = 'membership_1';
+            }
+            $vendor->vendor_setting->save();
+        }
+        $vendor = Vendor::where('login_token',$login_token)->with('vendor_setting')->first();
+        $show_membership_section = true;
+    }
 }
 ?>
 
@@ -96,7 +160,7 @@ if($_POST){
                     <div class="profile-section" id="account">
                         <h2>Account</h2>
                         <form method="post" class="full-width-form">
-                        <input type="hidden" name="operation_add_update_account" value="1"/>
+                            <input type="hidden" name="operation_add_update_account" value="1"/>
                             <h3>Change Your Login Email</h3>
                             <div class="form-input-container">
                                 <div class="form-input-search">
@@ -141,41 +205,54 @@ if($_POST){
                             </div>
                         </form>
                     </div>
-                    <div class="profile-section" id="paypal">
+                    <div class="profile-section" id="paypal" data-show-initially="<?php echo (isset($show_paypal_section))? '1' : '0' ; ?>">
                         <h2>Paypal</h2>
-                        <form action="" class="full-width-form">
+                        <form method="post" class="full-width-form">
+                            <input type="hidden" name="operation_add_update_paypal" value="1"/>
                             <h3>Paypal Email</h3>
                             <div class="form-input-container">
                                 <div class="form-input-search">
-                                    <label for="category" class="input-label">Enter Your Paypal Email</label>
+                                    <label for="category" class="input-label">Enter Your Paypal Email
+                                    <?php if($paypal_errors['vendor_paypal_email'] != ""){?>
+                                        <span class="fs_12 lh_20 text_error ml_10"><?php echo $paypal_errors['vendor_paypal_email']; ?></span>
+                                    <?php } ?>
+                                    </label>
                                     <div class="spacer-10px"></div>
                                     <div>
-                                        <input type="text" id="client-paypal-email-setting" class="search-input" placeholder="example: mymail@email.com">
+                                        <input name="vendor_paypal_email" value="<?php echo ($vendor->vendor_setting != null) ? $vendor->vendor_setting->vendor_paypal_email : ''; ?>" type="text" id="vendor-paypal-email-setting" class="search-input" placeholder="example: mymail@email.com">
                                     </div>
                                 </div>
                                 <div class="form-input-search">
                                     <label for="location" class="input-label">Your Current Paypal Email</label>
                                     <div class="spacer-10px"></div>
                                     <ul class="category-ul">
-                                        <li class="category-li"><div>No Paypal Email Saved At This Time</div></li>
+                                        <li class="category-li"><div><?php echo ($vendor->vendor_setting != null && $vendor->vendor_setting->vendor_paypal_email != "" && $vendor->vendor_setting->vendor_paypal_email != null) ? $vendor->vendor_setting->vendor_paypal_email : 'No Paypal Email Saved At This Time'; ?></div></li>
                                     </ul>
                                 </div>
                             </div>
                             <div class="form-submit-container">
-                                <imput type="button" class="button-01 white-text" id="majestic-vendor-categories-submit">Submit</imput>
+                                <button type="submit" class="button-01 white-text" id="majestic-vendor-categories-submit">Submit</button>
                             </div>
                         </form>
                     </div>
-                    <div class="profile-section" id="upgrades">
+                    <div class="profile-section" id="upgrades" data-show-initially="<?php echo (isset($show_membership_section))? '1' : '0' ; ?>">
                         <h2>Membership Plans</h2>
-                        <form action="" class="full-width-form">
+                        <form method="post" class="full-width-form">
+                        <input type="hidden" name="operation_add_update_membership" value="1"/>
                             <h3>Membership Selection</h3>
                             <div class="spacer-10px"></div>
                             <div class="spacer-10px"></div>
                             <div class="form-input-container">
                                 <div class="form-input-search">
                                     <div>
-                                        <input type="checkbox" name="disable-ads" id="disable-ads">
+                                        <input 
+                                        name="membership_1" 
+                                        class="membership_level" 
+                                        type="checkbox" 
+                                        id="select-membership-1"
+                                        <?php echo (($vendor->vendor_setting == null) || ($vendor->vendor_setting->membership_level == null)) ? "checked" : ""; ?>
+                                        <?php echo (($vendor->vendor_setting != null) && ($vendor->vendor_setting->membership_level == 'membership_1')) ? "checked" : ""; ?>
+                                        >
                                         <div class="spacer-10px"></div>
                                         <h3 class="heading-primary">Membership 1</h3>
                                         <div class="spacer-10px"></div>
@@ -195,7 +272,12 @@ if($_POST){
                                 </div>
                                 <div class="form-input-search">
                                     <div>
-                                        <input type="checkbox" name="disable-ads" id="disable-ads">
+                                        <input 
+                                        name="membership_2" 
+                                        class="membership_level" 
+                                        type="checkbox" 
+                                        id="select-membership-2"
+                                        <?php echo (($vendor->vendor_setting != null) && ($vendor->vendor_setting->membership_level == 'membership_2')) ? "checked" : ""; ?>>
                                         <div class="spacer-10px"></div>
                                         <h3 class="heading-primary">Membership 2</h3>
                                         <div class="spacer-10px"></div>
@@ -217,7 +299,12 @@ if($_POST){
                                 </div>
                                 <div class="form-input-search">
                                     <div>
-                                        <input type="checkbox" name="disable-ads" id="disable-ads">
+                                        <input 
+                                        name="membership_3" 
+                                        class="membership_level" 
+                                        type="checkbox" 
+                                        id="select-membership-3"
+                                        <?php echo (($vendor->vendor_setting != null) && ($vendor->vendor_setting->membership_level == 'membership_3')) ? "checked" : ""; ?>>
                                         <div class="spacer-10px"></div>
                                         <h3 class="heading-primary">Membership 3</h3>
                                         <div class="spacer-10px"></div>
@@ -241,7 +328,12 @@ if($_POST){
                                 </div>
                                 <div class="form-input-search">
                                     <div>
-                                        <input type="checkbox" name="disable-ads" id="disable-ads">
+                                        <input 
+                                        name="membership_4" 
+                                        class="membership_level" 
+                                        type="checkbox" 
+                                        id="select-membership-4"
+                                        <?php echo (($vendor->vendor_setting != null) && ($vendor->vendor_setting->membership_level == 'membership_4')) ? "checked" : ""; ?>>
                                         <div class="spacer-10px"></div>
                                         <h3 class="heading-primary">Membership 4</h3>
                                         <div class="spacer-10px"></div>
@@ -267,7 +359,7 @@ if($_POST){
                                 </div>
                             </div>
                             <div class="form-submit-container">
-                                <imput type="button" class="button-01 white-text" name="membership-settings-submit" id="membership-settings-submit">Submit</imput>
+                                <button type="submit" class="button-01 white-text" name="membership-settings-submit" id="membership-settings-submit">Submit</button>
                             </div>
                         </form>
                     </div>
