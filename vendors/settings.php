@@ -544,7 +544,7 @@ if($_POST){
                                         <img src="../images/main-images/top-left.jpg" alt="Place ad in top left banner." class="fluid-image" id="top-left">
                                 </div>
                                 <div class="form-input-search">
-                                    <label for="category" class="input-label">Place Ad In Top Left Banner</label>
+                                    <label for="category" class="input-label">Place Ad In Top Right Banner</label>
                                     <div class="spacer-10px"></div>
                                     <input type="checkbox" name="disable-ads" id="disable-ads">
                                         <div class="spacer-10px"></div>

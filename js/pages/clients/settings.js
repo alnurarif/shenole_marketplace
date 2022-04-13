@@ -1,10 +1,14 @@
 $(document).ready(function(){
 	$('.profile-section').hide();
 	$('.profile-section:first').show();
-	// if($('#memberships').attr('data-show-initially') == '1'){
-		// $('.profile-section').hide();
-		// $('#memberships').show();
-	// }
+	if($('#paypal').attr('data-show-initially') == '1'){
+		$('.profile-section').hide();
+		$('#paypal').show();
+	}
+	if($('#upgrades').attr('data-show-initially') == '1'){
+		$('.profile-section').hide();
+		$('#upgrades').show();
+	}
 	$('.profile-nav-link').on('click',function(){
 		let section = $(this).attr('id').substr(4);
 		$('.profile-nav-link').removeClass('tab-active');

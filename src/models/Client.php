@@ -24,4 +24,7 @@ class Client extends Model{
     public function state(){
         return $this->belongsTo(State::class);
     }
+    public function client_setting(){
+        return $this->hasOne(Client_setting::class);
+    }
 }
