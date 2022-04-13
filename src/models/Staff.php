@@ -24,4 +24,7 @@ class Staff extends Model{
     public function state(){
         return $this->belongsTo(State::class);
     }
+    public function staff_setting(){
+        return $this->hasOne(Staff_setting::class);
+    }
 }
