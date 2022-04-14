@@ -578,6 +578,9 @@ $states = State::get();
 
 	<script src="<?php echo SITE_LINK; ?>js/jquery.min.js"></script>
 	<script src="<?php echo SITE_LINK; ?>js/pages/vendors/edit-profile.js"></script>
+    <?php 
+	MyHelpers::includeWithVariables('../layouts/common_footer.php', [], $print = true);
+	?>
     
 </body>
 </html>

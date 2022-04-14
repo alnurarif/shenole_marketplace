@@ -184,5 +184,8 @@ foreach($vendors as $vendor){
 	</div>
 	<script src="../js/jquery.min.js"></script>
 	<script src="../js/pages/index_page.js"></script>
+    <?php 
+	MyHelpers::includeWithVariables('../layouts/common_footer.php', [], $print = true);
+	?>
 </body>
 </html>

@@ -249,5 +249,8 @@ if(isset($_POST['vendor_signup'])){
         MyHelpers::includeWithVariables('./layouts/footer.php', [], $print = true);
         ?>
 	</div>
+	<?php 
+	MyHelpers::includeWithVariables('./layouts/common_footer.php', [], $print = true);
+	?>
 </body>
 </html>

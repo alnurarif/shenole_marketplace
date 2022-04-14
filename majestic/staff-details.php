@@ -417,5 +417,8 @@ if($_POST){
 	</div>
 	<script src="<?php echo SITE_LINK; ?>js/jquery.min.js"></script>
     <script src="<?php echo SITE_LINK; ?>js/pages/majestic/staff-details.js"></script>
+    <?php 
+	MyHelpers::includeWithVariables('../layouts/common_footer.php', [], $print = true);
+	?>
 </body>
 </html>

@@ -1,0 +1,1 @@
+<script src="<?php echo SITE_LINK; ?>js/custom.js"></script>

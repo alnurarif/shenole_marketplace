@@ -64,5 +64,8 @@ $isMajesticLoggedIn = UserHelper::isUserLoggedIn($_SESSION, 'majestic', new Maje
             ?> 
         </div>
         <script src="./js/main.js"></script>
+        <?php 
+        MyHelpers::includeWithVariables('./layouts/common_footer.php', [], $print = true);
+        ?>  
     </body>
 </html>

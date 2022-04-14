@@ -227,5 +227,8 @@ $membership_levels = Vendor_membership_level::get();
         ?>
 	</div>
 	<script src="../js/jquery.min.js"></script>
+	<?php 
+	MyHelpers::includeWithVariables('../layouts/common_footer.php', [], $print = true);
+	?>
 </body>
 </html>

@@ -53,5 +53,8 @@ $membership04 = 0;
         MyHelpers::includeWithVariables('./layouts/footer.php', [], $print = true);
         ?>
 	</div>
+	<?php 
+	MyHelpers::includeWithVariables('./layouts/common_footer.php', [], $print = true);
+	?>
 </body>
 </html>
