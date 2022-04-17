@@ -208,7 +208,7 @@ if($_POST){
                                     </label>
                                     <div class="spacer-10px"></div>
                                     <div>
-                                        <input name="password" value="<?php if(isset($_POST['password'])){ echo $_POST['password']; } ?>" type="text" id="client-new-password-setting" class="search-input" placeholder="example: mymail@email.com">
+                                        <input name="password" value="<?php if(isset($_POST['password'])){ echo $_POST['password']; } ?>" type="password" id="client-new-password-setting" class="search-input" placeholder="example: mymail@email.com">
                                     </div>
                                 </div>
                                 <div class="form-input-search">
@@ -219,7 +219,7 @@ if($_POST){
                                     </label>
                                     <div class="spacer-10px"></div>
                                     <div>
-                                        <input name="confirm_password" value="<?php if(isset($_POST['confirm_password'])){ echo $_POST['confirm_password']; } ?>" type="text" id="client-confirm-new-password" class="search-input" placeholder="example: mymail@email.com">
+                                        <input name="confirm_password" value="<?php if(isset($_POST['confirm_password'])){ echo $_POST['confirm_password']; } ?>" type="password" id="client-confirm-new-password" class="search-input" placeholder="example: mymail@email.com">
                                     </div>
                                 </div>
                             </div>
