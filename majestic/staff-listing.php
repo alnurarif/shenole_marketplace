@@ -145,8 +145,6 @@ foreach($staff as $staff){
 	</div>
 	<script src="../js/jquery.min.js"></script>
 	<script src="../js/pages/index_page.js"></script>
-    <?php 
-	MyHelpers::includeWithVariables('../layouts/common_footer.php', [], $print = true);
-	?>
+    <script src="../js/custom.js"></script>
 </body>
 </html>

@@ -127,8 +127,6 @@ if(isset($_POST['login'])){
 			</div>
 		</div>
 	</div>
-	<?php 
-	MyHelpers::includeWithVariables('../layouts/common_footer.php', [], $print = true);
-	?>
+	<script src="../js/custom.js"></script>
 </body>
 </html>

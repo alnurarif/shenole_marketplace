@@ -515,8 +515,6 @@ foreach($vendor_membership_level_list as $single_level){
 	</div>
 	<script src="<?php echo SITE_LINK; ?>js/jquery.min.js"></script>
 	<script src="<?php echo SITE_LINK; ?>js/pages/majestic/settings.js"></script>
-    <?php 
-	MyHelpers::includeWithVariables('../layouts/common_footer.php', [], $print = true);
-	?>
+    <script src="../js/custom.js"></script>
 </body>
 </html>

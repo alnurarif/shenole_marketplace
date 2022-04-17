@@ -174,8 +174,6 @@ foreach($vendor_categories as $vendor_category){
 	</div>
 	<script src="../js/jquery.min.js"></script>
 	<script src="<?php echo SITE_LINK; ?>js/pages/majestic/settings.js"></script>
-	<?php 
-	MyHelpers::includeWithVariables('../layouts/common_footer.php', [], $print = true);
-	?>
+	<script src="../js/custom.js"></script>
 </body>
 </html>

@@ -212,8 +212,6 @@ if($_POST){
         ?>
 	</div>
 	<script src="../js/jquery.min.js"></script>
-    <?php 
-	MyHelpers::includeWithVariables('../layouts/common_footer.php', [], $print = true);
-	?>
+    <script src="../js/custom.js"></script>
 </body>
 </html>
