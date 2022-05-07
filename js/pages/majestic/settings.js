@@ -5,6 +5,10 @@ $(document).ready(function(){
 		$('.profile-section').hide();
 		$('#memberships').show();
 	}
+	if($('#paypal').attr('data-show-initially') == '1'){
+		$('.profile-section').hide();
+		$('#paypal').show();
+	}
 	$('.profile-nav-link').on('click',function(){
 		let section = $(this).attr('id').substr(4);
 		console.log(section);

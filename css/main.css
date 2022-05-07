@@ -50,11 +50,11 @@ blockquote, q {
         --ternary: #ffffff;
         --quaternary: #f3f3f3;
     /* FONT COLORS */
-        --main-text: #00104b; 
+        --main-text: #1a1a1a; 
     /* BUTTONS */
         --main-button: #2b6bdb;
         --go-button: #06b514;
-        --caution-button: #ff9933; 
+        --caution-button: #ff9933;
         --stop-button: #e60000;
     /* SHADOWS */ 
         --shadow-small: 0px 7px 20px 0px rgb(26 41 60 / 39%);
@@ -124,6 +124,9 @@ p {
     color: var(--secondary);
     font-style: italic;
 }
+.main-text {
+    color: var(--main-text);
+}
 .white-text {
     color: #ffffff;
 }
@@ -141,6 +144,14 @@ p {
 }
 .stop-text {
     color: var(--stop-button);
+}
+.center-text {
+    text-align: center;
+}
+.small-text-01 {
+    color: var(--main-text);
+    font-size: 16px;
+    font-weight: 400;
 }
 .primary-selection {
     color: var(--go-button);
@@ -201,6 +212,9 @@ p {
 .major-alert {
     background-color: var(--stop-button);
 }
+.dark {
+    background-color: var(--main-text);
+}
 
 /* NAVIGATION */
 .main-nav-mobile-01 {
@@ -234,6 +248,8 @@ p {
     list-style-type: none;
     margin: 0rem;
     padding: 0rem;
+    display: flex;
+    align-items: center;
 }
 .nav-admin-ul-desktop {
     display: flex;
@@ -417,6 +433,18 @@ section {
     text-align: center;
 }
 .button-01:hover {
+    cursor: pointer;
+}
+.button-01-dark {
+    padding: 1rem 1.5rem;
+    border-radius: 0.25rem;
+    border: 3px solid var(--main-text);
+    background-color: var(--main-text);
+    text-decoration: none;
+    font-weight: 700;
+    text-align: center;
+}
+.button-01-dark:hover {
     cursor: pointer;
 }
 .button-02 {
@@ -790,6 +818,9 @@ footer {
 .form-input-search {
     width: 360px;
 }
+.form-input-search-full-width {
+    width: 100%;
+}
 .input-label {
     font-size: 14px;
     font-weight: 700;
@@ -952,6 +983,18 @@ option {
     padding: 1rem 1.75rem;
     height: 441px;
 }
+.service-date-listing {
+    display: flex;
+    flex-wrap: wrap;
+}
+.service-date-container {
+    width: 108px;
+    text-align: center;
+}
+.service-date-container-small {
+    width: 80px;
+    text-align: center;
+}
 .service-footer {
     display: flex;
     justify-content: space-between;
@@ -1027,6 +1070,17 @@ option {
     border: 1px solid #d9d9d9;
     border-radius: 4px;
 }
+.list-container-full-width {
+    width: 100%;
+    max-height: 260px;
+    overflow-y: auto;
+    box-sizing: border-box;
+    background-color: var(--ternary);
+    padding: 1rem 1.5rem;
+    font-size: 0.75rem;
+    border: 1px solid #d9d9d9;
+    border-radius: 4px;
+}
 .list-container-tall {
     width: 360px;
     max-height: 355px;
@@ -1050,6 +1104,59 @@ option {
 .multi-button-container {
     display: flex;
     justify-content: space-between;
+}
+/* SHOPPING CART MODAL */
+.shopping-cart-modal {
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(102, 0, 102, 1);
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.shopping-cart-container {
+    width: 360px;
+    height: 540px;
+    padding: 2rem 1.4rem;
+    box-sizing: border-box;
+    background-color: var(--ternary);
+    border-radius: 4px;
+    overflow: auto;
+    box-shadow: 0px 0px 120px 0px rgb(0 0 0 / 93%);
+}
+.shopping-cart {
+    width: auto;
+    height: 60px;
+}
+#close-shopping-cart {
+    cursor: pointer;
+}
+.shopping-cart-description-text {
+    font-size: 16px;
+}
+#navbar-shopping-cart {
+    width: auto;
+    height: 50px;
+}
+#cart-icon-container {
+    box-sizing: border-box;
+    width: 50px;
+    height: 50px;
+    background-image: url("../images/shopping-cart-01.png");
+    background-size: 50px;
+    padding-top: 9px;
+    cursor: pointer;
+}
+#cart-quantity-text {
+    width: 30px;
+    margin-left: 20px;
+    text-align: center;
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--caution-button);
 }
 
 @media all and (max-width: 1199px) {
@@ -1117,6 +1224,12 @@ option {
     }
     .content-container-center {
         width: 100%;
+    }
+}
+
+@media all and (max-width: 768px) {
+    .service-date-listing {
+        justify-content: center;
     }
 }
 

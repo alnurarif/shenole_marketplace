@@ -107,6 +107,12 @@ if($_POST){
 		$majestic->youtube_url = trim($_POST['youtube_url']);
 		$majestic->save();
 	}
+    if(isset($_POST['add_paypal_operation'])){
+        $majestic->paypal_client_id = trim($_POST['paypal_client_id']);
+		$majestic->paypal_secret_id = trim($_POST['paypal_secret_id']);
+		$majestic->save();
+        $show_paypal_section = true;
+    }
 }
 if(isset($_GET['membership_level'])){
     $membership_level = Vendor_membership_level::where('id',$_GET['membership_level'])->first();
@@ -170,8 +176,34 @@ foreach($vendor_membership_level_list as $single_level){
                     <div class="profile-section" id="account">
                         <h2>Account</h2>
                     </div>
-                    <div class="profile-section" id="paypal">
+                    <div class="profile-section" id="paypal" data-show-initially="<?php echo (isset($show_paypal_section))? '1' : '0' ; ?>">
                         <h2>Paypal</h2>
+                        <div class="full-width-form">
+                            <form method="post">
+                                <div class="form-input-container">
+                                    <div class="form-input-search">
+                                        <input type="hidden" name="add_paypal_operation" value="1"/>
+                                        <label for="paypal-client-id" class="input-label">Paypal Client ID</label>
+                                        <div class="spacer-10px"></div>
+                                        <div>
+                                            <input value="<?php echo $majestic->paypal_client_id; ?>" name="paypal_client_id" type="text" id="paypal-client-id" class="search-input" placeholder="Place your Paypal client ID here">
+                                        </div>
+                                        <div class="spacer-10px"></div>
+                                    </div>
+                                    <div class="form-input-search">
+                                        <label for="paypal-secret-id" class="input-label">Paypal Secret ID</label>
+                                        <div class="spacer-10px"></div>
+                                        <div>
+                                            <input value="<?php echo $majestic->paypal_secret_id; ?>" name="paypal_secret_id" type="text" id="paypal-secret-id" class="search-input" placeholder="Place your Paypal secret ID here">
+                                        </div>
+                                        <div class="spacer-10px"></div>
+                                    </div>
+                                </div>
+                                <div class="form-submit-container">
+                                    <button type="submit" class="button-01 white-text" id="majestic-paypal-submit">Submit</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                     <div class="profile-section" id="global">
                         <h2>Global</h2>

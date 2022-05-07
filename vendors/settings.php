@@ -83,10 +83,14 @@ if($_POST){
             if($vendor->vendor_setting === null){
                 $vendor_setting_object = new Vendor_setting;
                 $vendor_setting_object->vendor_paypal_email = trim($_POST['vendor_paypal_email']);
+                $vendor_setting_object->paypal_client_id = trim($_POST['paypal_client_id']);
+                $vendor_setting_object->paypal_secret_id = trim($_POST['paypal_secret_id']);
                 
                 $vendor->vendor_setting()->save($vendor_setting_object);
             }else{
                 $vendor->vendor_setting->vendor_paypal_email = trim($_POST['vendor_paypal_email']);
+                $vendor->vendor_setting->paypal_client_id = trim($_POST['paypal_client_id']);
+                $vendor->vendor_setting->paypal_secret_id = trim($_POST['paypal_secret_id']);
                 $vendor->vendor_setting->save();
             }
             $vendor = Vendor::where('login_token',$login_token)->with('vendor_setting')->first();
@@ -228,6 +232,23 @@ if($_POST){
                                     <ul class="category-ul">
                                         <li class="category-li"><div><?php echo ($vendor->vendor_setting != null && $vendor->vendor_setting->vendor_paypal_email != "" && $vendor->vendor_setting->vendor_paypal_email != null) ? $vendor->vendor_setting->vendor_paypal_email : 'No Paypal Email Saved At This Time'; ?></div></li>
                                     </ul>
+                                </div>
+                            </div>
+                            <h3>Paypal Client & Secret ID</h3>
+                            <div class="form-input-container">
+                                <div class="form-input-search">
+                                    <label for="paypal-client-id" class="input-label">Enter Your Paypal Client ID</label>
+                                    <div class="spacer-10px"></div>
+                                    <div>
+                                        <input value="<?php echo ($vendor->vendor_setting != null) ? $vendor->vendor_setting->paypal_client_id : ''; ?>" name="paypal_client_id" type="text" id="paypal-client-id" class="search-input" placeholder="">
+                                    </div>
+                                </div>
+                                <div class="form-input-search">
+                                    <label for="paypal-secret-id" class="input-label">Enter Your Paypal Secret ID</label>
+                                    <div class="spacer-10px"></div>
+                                    <div>
+                                        <input value="<?php echo ($vendor->vendor_setting != null) ? $vendor->vendor_setting->paypal_secret_id : ''; ?>" name="paypal_secret_id" type="text" id="paypal-secret-id" class="search-input" placeholder="Place your Paypal secret ID here">
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-submit-container">
