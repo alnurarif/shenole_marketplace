@@ -9,6 +9,7 @@ use Shenole_project\utils\RandomStringGenerator;
 use Shenole_project\repositories\MajesticRepository;
 use Shenole_project\helpers\MyHelpers;
 use Shenole_project\models\Majestic;
+use Shenole_project\models\Majestic_ad_setting;
 use Shenole_project\models\Vendor;
 use Shenole_project\models\Vendor_membership_level;
 
@@ -97,6 +98,79 @@ if($_POST){
 			exit();
 		}
 	}
+    if(isset($_POST['add_edit_ads_operation'])){
+        if($majestic->ad_setting === null){
+            // echo "<pre>";
+            // var_dump($_POST);
+            // exit;
+            $ad_setting_object = new Majestic_ad_setting;
+            $ad_setting_object->client_ad_display_price = $_POST['client_ad_display_price'];
+            $ad_setting_object->vendor_one_day_ad_price = $_POST['vendor_one_day_ad_price'];
+            $ad_setting_object->vendor_one_week_ad_price = $_POST['vendor_one_week_ad_price'];
+            $ad_setting_object->vendor_one_month_ad_price = $_POST['vendor_one_month_ad_price'];
+            $ad_setting_object->vendor_three_months_ad_price = $_POST['vendor_three_months_ad_price'];
+            $ad_setting_object->vendor_six_months_ad_price = $_POST['vendor_six_months_ad_price'];
+            $ad_setting_object->vendor_one_year_ad_price = $_POST['vendor_one_year_ad_price'];
+            $ad_setting_object->keyword_qty_price = $_POST['keyword_qty_price'];
+            $ad_setting_object->category_qty_price = $_POST['category_qty_price'];
+            $ad_setting_object->location_qty_price = $_POST['location_qty_price'];
+            $ad_setting_object->banner_qty_price = $_POST['banner_qty_price'];
+            $ad_setting_object->banner_top_left_price = $_POST['banner_top_left_price'];
+            $ad_setting_object->banner_top_right_price = $_POST['banner_top_right_price'];
+            $ad_setting_object->banner_bottom_left_price = $_POST['banner_bottom_left_price'];
+            $ad_setting_object->banner_bottom_right_price = $_POST['banner_bottom_right_price'];
+            $ad_setting_object->banners_two_top_price = $_POST['banners_two_top_price'];
+            $ad_setting_object->banners_two_bottom_price = $_POST['banners_two_bottom_price'];
+            $ad_setting_object->banners_all_four_price = $_POST['banners_all_four_price'];
+            $ad_setting_object->keyword_qty = $_POST['keyword_qty'];
+            $ad_setting_object->category_qty = $_POST['category_qty'];
+            $ad_setting_object->location_qty = $_POST['location_qty'];
+            $ad_setting_object->banner_qty = $_POST['banner_qty'];
+                
+            $ad_setting_object->vendor_one_day_ad = (isset($_POST['vendor_one_day_ad'])) ? 1 : 0 ;
+            $ad_setting_object->vendor_one_week_ad = (isset($_POST['vendor_one_week_ad'])) ? 1 : 0 ;
+            $ad_setting_object->vendor_one_month_ad = (isset($_POST['vendor_one_month_ad'])) ? 1 : 0 ;
+            $ad_setting_object->vendor_three_months_ad = (isset($_POST['vendor_three_months_ad'])) ? 1 : 0 ;
+            $ad_setting_object->vendor_six_months_ad = (isset($_POST['vendor_six_months_ad'])) ? 1 : 0 ;
+            $ad_setting_object->vendor_one_year_ad = (isset($_POST['vendor_one_year_ad'])) ? 1 : 0 ;
+            
+            $majestic->ad_setting()->save($ad_setting_object);
+        }else{
+            $majestic->ad_setting->client_ad_display_price = $_POST['client_ad_display_price'];
+            $majestic->ad_setting->vendor_one_day_ad_price = $_POST['vendor_one_day_ad_price'];
+            $majestic->ad_setting->vendor_one_week_ad_price = $_POST['vendor_one_week_ad_price'];
+            $majestic->ad_setting->vendor_one_month_ad_price = $_POST['vendor_one_month_ad_price'];
+            $majestic->ad_setting->vendor_three_months_ad_price = $_POST['vendor_three_months_ad_price'];
+            $majestic->ad_setting->vendor_six_months_ad_price = $_POST['vendor_six_months_ad_price'];
+            $majestic->ad_setting->vendor_one_year_ad_price = $_POST['vendor_one_year_ad_price'];
+            $majestic->ad_setting->keyword_qty_price = $_POST['keyword_qty_price'];
+            $majestic->ad_setting->category_qty_price = $_POST['category_qty_price'];
+            $majestic->ad_setting->location_qty_price = $_POST['location_qty_price'];
+            $majestic->ad_setting->banner_qty_price = $_POST['banner_qty_price'];
+            $majestic->ad_setting->banner_top_left_price = $_POST['banner_top_left_price'];
+            $majestic->ad_setting->banner_top_right_price = $_POST['banner_top_right_price'];
+            $majestic->ad_setting->banner_bottom_left_price = $_POST['banner_bottom_left_price'];
+            $majestic->ad_setting->banner_bottom_right_price = $_POST['banner_bottom_right_price'];
+            $majestic->ad_setting->banners_two_top_price = $_POST['banners_two_top_price'];
+            $majestic->ad_setting->banners_two_bottom_price = $_POST['banners_two_bottom_price'];
+            $majestic->ad_setting->banners_all_four_price = $_POST['banners_all_four_price'];
+            $majestic->ad_setting->keyword_qty = $_POST['keyword_qty'];
+            $majestic->ad_setting->category_qty = $_POST['category_qty'];
+            $majestic->ad_setting->location_qty = $_POST['location_qty'];
+            $majestic->ad_setting->banner_qty = $_POST['banner_qty'];
+                
+            $majestic->ad_setting->vendor_one_day_ad = (isset($_POST['vendor_one_day_ad'])) ? 1 : 0 ;
+            $majestic->ad_setting->vendor_one_week_ad = (isset($_POST['vendor_one_week_ad'])) ? 1 : 0 ;
+            $majestic->ad_setting->vendor_one_month_ad = (isset($_POST['vendor_one_month_ad'])) ? 1 : 0 ;
+            $majestic->ad_setting->vendor_three_months_ad = (isset($_POST['vendor_three_months_ad'])) ? 1 : 0 ;
+            $majestic->ad_setting->vendor_six_months_ad = (isset($_POST['vendor_six_months_ad'])) ? 1 : 0 ;
+            $majestic->ad_setting->vendor_one_year_ad = (isset($_POST['vendor_one_year_ad'])) ? 1 : 0 ;
+
+            $majestic->ad_setting->save();
+        }
+        $majestic = Majestic::where('login_token',$login_token)->with('ad_setting')->first();
+        $show_ad_section = true;
+    }
 	if(isset($_POST['add_details_operation'])){
 		
 		$majestic->website_name = trim($_POST['website_name']);
@@ -308,8 +382,305 @@ foreach($vendor_membership_level_list as $single_level){
 							</form>
 						</div>
                     </div>
-                    <div class="profile-section" id="ads">
+                    <div class="profile-section" id="ads" data-show-initially="<?php echo (isset($show_ad_section))? '1' : '0' ; ?>">
                         <h2>Ads</h2>
+                        <form method="post" class="full-width-form">
+                            <input type="hidden" name="add_edit_ads_operation">
+                            <h3>Client: Ad Display Pricing</h3>
+                            <div class="form-input-container">
+                                <div class="form-input-search">
+                                    <label for="client-ad-display" class="input-label">Set Client Ad Display Price&nbsp;&nbsp;&nbsp;&nbsp;<i>($0.00 will set to free)</i></label>
+                                    <div class="spacer-10px"></div>
+                                    <div class="flex-container">
+                                        <b>$</b>&nbsp;<input name="client_ad_display_price" value="<?php echo ($majestic->ad_setting != null) ? $majestic->ad_setting->client_ad_display_price : ''; ?>" type="number" id="client-ad-display" class="search-input" placeholder="example: 2.99">
+                                    </div>
+                                </div>
+                            </div>
+                            <h3>Vendor: Campaign Length Pricing</h3>
+                            <div class="form-input-container">
+                                <div class="form-input-search">
+                                    <label for="campaign-length-1day" class="input-label">1 Day</label>
+                                    <div class="spacer-10px"></div>
+                                    <input name="vendor_one_day_ad" <?php echo ($majestic->ad_setting != null && $majestic->ad_setting->vendor_one_day_ad == 1) ? 'checked' : ''; ?> type="checkbox" id="campaign-length-1day">
+                                    <div class="spacer-10px"></div>
+                                    <label for="campaign-price-1day" class="input-label">Set Campaign Length Price&nbsp;&nbsp;&nbsp;&nbsp;<i>($0.00 will set to free)</i></label>
+                                    <div class="spacer-10px"></div>
+                                    <div class="flex-container">
+                                        <b>$</b>&nbsp;<input name="vendor_one_day_ad_price" value="<?php echo ($majestic->ad_setting != null) ? $majestic->ad_setting->vendor_one_day_ad_price : ''; ?>" type="number" id="campaign-price-1day" class="search-input" placeholder="example: 2.99">
+                                    </div>
+                                </div>
+                                <div class="form-input-search">
+                                    <label for="campaign-length-1week" class="input-label">1 Week</label>
+                                    <div class="spacer-10px"></div>
+                                    <input name="vendor_one_week_ad" <?php echo ($majestic->ad_setting != null && $majestic->ad_setting->vendor_one_week_ad == 1) ? 'checked' : ''; ?> type="checkbox" id="campaign-length-1week">
+                                    <div class="spacer-10px"></div>
+                                    <label for="campaign-price-1week" class="input-label">Set Campaign Length Price&nbsp;&nbsp;&nbsp;&nbsp;<i>($0.00 will set to free)</i></label>
+                                    <div class="spacer-10px"></div>
+                                    <div class="flex-container">
+                                        <b>$</b>&nbsp;<input name="vendor_one_week_ad_price" value="<?php echo ($majestic->ad_setting != null) ? $majestic->ad_setting->vendor_one_week_ad_price : ''; ?>" type="number" id="campaign-price-1week" class="search-input" placeholder="example: 2.99">
+                                    </div>
+                                </div>
+                                <div class="form-input-search">
+                                    <label for="campaign-length-1month" class="input-label">1 Month</label>
+                                    <div class="spacer-10px"></div>
+                                    <input name="vendor_one_month_ad" <?php echo ($majestic->ad_setting != null && $majestic->ad_setting->vendor_one_month_ad == 1) ? 'checked' : ''; ?> type="checkbox" id="campaign-length-1month">
+                                    <div class="spacer-10px"></div>
+                                    <label for="campaign-price-1month" class="input-label">Set Campaign Length Price&nbsp;&nbsp;&nbsp;&nbsp;<i>($0.00 will set to free)</i></label>
+                                    <div class="spacer-10px"></div>
+                                    <div class="flex-container">
+                                        <b>$</b>&nbsp;<input name="vendor_one_month_ad_price" value="<?php echo ($majestic->ad_setting != null) ? $majestic->ad_setting->vendor_one_month_ad_price : ''; ?>" type="number" id="campaign-price-1month" class="search-input" placeholder="example: 2.99">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-input-container">
+                                <div class="form-input-search">
+                                    <label for="campaign-length-3months" class="input-label">3 Months</label>
+                                    <div class="spacer-10px"></div>
+                                    <input name="vendor_three_months_ad" <?php echo ($majestic->ad_setting != null && $majestic->ad_setting->vendor_three_months_ad == 1) ? 'checked' : ''; ?> type="checkbox" id="campaign-length-3months">
+                                    <div class="spacer-10px"></div>
+                                    <label for="campaign-price-3months" class="input-label">Set Campaign Length Price&nbsp;&nbsp;&nbsp;&nbsp;<i>($0.00 will set to free)</i></label>
+                                    <div class="spacer-10px"></div>
+                                    <div class="flex-container">
+                                        <b>$</b>&nbsp;<input name="vendor_three_months_ad_price" value="<?php echo ($majestic->ad_setting != null) ? $majestic->ad_setting->vendor_three_months_ad_price : ''; ?>" type="number" id="campaign-price-3months" class="search-input" placeholder="example: 2.99">
+                                    </div>
+                                </div>
+                                <div class="form-input-search">
+                                    <label for="campaign-length-6months" class="input-label">6 Months</label>
+                                    <div class="spacer-10px"></div>
+                                    <input name="vendor_six_months_ad" <?php echo ($majestic->ad_setting != null && $majestic->ad_setting->vendor_six_months_ad == 1) ? 'checked' : ''; ?> type="checkbox" id="campaign-length-6months">
+                                    <div class="spacer-10px"></div>
+                                    <label for="campaign-price-6months" class="input-label">Set Campaign Length Price&nbsp;&nbsp;&nbsp;&nbsp;<i>($0.00 will set to free)</i></label>
+                                    <div class="spacer-10px"></div>
+                                    <div class="flex-container">
+                                        <b>$</b>&nbsp;<input name="vendor_six_months_ad_price" value="<?php echo ($majestic->ad_setting != null) ? $majestic->ad_setting->vendor_six_months_ad_price : ''; ?>" type="number" id="campaign-price-6months" class="search-input" placeholder="example: 2.99">
+                                    </div>
+                                </div>
+                                <div class="form-input-search">
+                                    <label for="campaign-length-1year" class="input-label">1 Year</label>
+                                    <div class="spacer-10px"></div>
+                                    <input name="vendor_one_year_ad" <?php echo ($majestic->ad_setting != null && $majestic->ad_setting->vendor_one_year_ad == 1) ? 'checked' : ''; ?> type="checkbox" id="campaign-length-1year">
+                                    <div class="spacer-10px"></div>
+                                    <label for="campaign-price-1year" class="input-label">Set Campaign Length Price&nbsp;&nbsp;&nbsp;&nbsp;<i>($0.00 will set to free)</i></label>
+                                    <div class="spacer-10px"></div>
+                                    <div class="flex-container">
+                                        <b>$</b>&nbsp;<input name="vendor_one_year_ad_price" value="<?php echo ($majestic->ad_setting != null) ? $majestic->ad_setting->vendor_one_year_ad_price : ''; ?>" type="number" id="campaign-price-1year" class="search-input" placeholder="example: 2.99">
+                                    </div>
+                                </div>
+                            </div>
+                            <h3>Vendor: Keyword Quantity & Pricing</h3>
+                            <div class="form-input-container">
+                                <div class="form-input-search">
+                                    <label for="Keyword-quantity" class="input-label">Set Keyword Quantity</label>
+                                    <div class="spacer-10px"></div>
+                                    <div>
+                                        <input name="keyword_qty" value="<?php echo ($majestic->ad_setting != null) ? $majestic->ad_setting->keyword_qty : ''; ?>" type="number" id="Keyword-quantity" class="search-input" placeholder="example: 10">
+                                    </div>
+                                    <div class="spacer-10px"></div>
+                                    <div class="form-submit-container">
+                                        <a href="" class="button-03 button-link-text white-text">Add Keyword Settings</a>
+                                    </div>
+                                </div>
+                                <div class="form-input-search">
+                                    <label for="keyword-pricing" class="input-label">Set Keyword Pricing&nbsp;&nbsp;&nbsp;&nbsp;<i>($0.00 will set to free)</i></label>
+                                    <div class="spacer-10px"></div>
+                                    <div class="flex-container">
+                                        <b>$</b>&nbsp;<input name="keyword_qty_price" value="<?php echo ($majestic->ad_setting != null) ? $majestic->ad_setting->keyword_qty_price : ''; ?>" type="number" id="keyword-pricing" class="search-input" placeholder="example: 2.99">
+                                    </div>
+                                </div>
+                                <div class="form-input-search">
+                                    <label for="location" class="input-label">Keyword Quantity & Pricing List</label>
+                                    <div class="spacer-10px"></div>
+                                    <div class="list-container">
+                                        <ul class="category-ul">
+                                            <li class="category-li"><div><span>7</span> keywords | <span>$0.20</span></div><br><div><button class="small-button primary white-text">Delete</button></div></li>
+                                            <li class="category-li"><div><span>15</span> keywords | <span>$0.30</span></div><br><div><button class="small-button primary white-text">Delete</button></div></li>
+                                            <li class="category-li"><div><span>24</span> keywords | <span>$0.40</span></div><br><div><button class="small-button primary white-text">Delete</button></div></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <h3>Vendor: Category Quantity & Pricing</h3>
+                            <div class="form-input-container">
+                                <div class="form-input-search">
+                                    <label for="category-quantity" class="input-label">Set Category Quantity</label>
+                                    <div class="spacer-10px"></div>
+                                    <div>
+                                        <input name="category_qty" value="<?php echo ($majestic->ad_setting != null) ? $majestic->ad_setting->category_qty : ''; ?>" type="number" id="category-quantity" class="search-input" placeholder="example: 10">
+                                    </div>
+                                    <div class="spacer-10px"></div>
+                                    <div class="form-submit-container">
+                                        <a href="" class="button-03 button-link-text white-text">Add Category Settings</a>
+                                    </div>
+                                </div>
+                                <div class="form-input-search">
+                                    <label for="category-quantity-price" class="input-label">Set Category Pricing&nbsp;&nbsp;&nbsp;&nbsp;<i>($0.00 will set to free)</i></label>
+                                    <div class="spacer-10px"></div>
+                                    <div class="flex-container">
+                                        <b>$</b>&nbsp;<input name="category_qty_price" value="<?php echo ($majestic->ad_setting != null) ? $majestic->ad_setting->category_qty_price : ''; ?>" type="number" id="category-quantity-price" class="search-input" placeholder="example: 2.99">
+                                    </div>
+                                </div>
+                                <div class="form-input-search">
+                                    <label for="location" class="input-label">Category Quantity & Pricing List</label>
+                                    <div class="spacer-10px"></div>
+                                    <div class="list-container">
+                                        <ul class="category-ul">
+                                            <li class="category-li"><div><span>7</span> categories | <span>$0.20</span></div><br><div><button class="small-button primary white-text">Delete</button></div></li>
+                                            <li class="category-li"><div><span>15</span> categories | <span>$0.30</span></div><br><div><button class="small-button primary white-text">Delete</button></div></li>
+                                            <li class="category-li"><div><span>24</span> categories | <span>$0.40</span></div><br><div><button class="small-button primary white-text">Delete</button></div></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <h3>Vendor: Location Quantity & Pricing</h3>
+                            <div class="form-input-container">
+                                <div class="form-input-search">
+                                    <label for="location-quantity" class="input-label">Set Location Quantity</label>
+                                    <div class="spacer-10px"></div>
+                                    <div>
+                                        <input name="location_qty" value="<?php echo ($majestic->ad_setting != null) ? $majestic->ad_setting->location_qty : ''; ?>" type="number" id="location-quantity" class="search-input" placeholder="example: 10">
+                                    </div>
+                                    <div class="spacer-10px"></div>
+                                    <div class="form-submit-container">
+                                        <a href="" class="button-03 button-link-text white-text">Add Location Settings</a>
+                                    </div>
+                                </div>
+                                <div class="form-input-search">
+                                    <label for="location-quantity-price" class="input-label">Set Location Pricing&nbsp;&nbsp;&nbsp;&nbsp;<i>($0.00 will set to free)</i></label>
+                                    <div class="spacer-10px"></div>
+                                    <div class="flex-container">
+                                        <b>$</b>&nbsp;<input name="location_qty_price" value="<?php echo ($majestic->ad_setting != null) ? $majestic->ad_setting->location_qty_price : ''; ?>" type="number" id="location-quantity-price" class="search-input" placeholder="example: 2.99">
+                                    </div>
+                                </div>
+                                <div class="form-input-search">
+                                    <label for="location" class="input-label">Location Quantity & Pricing List</label>
+                                    <div class="spacer-10px"></div>
+                                    <div class="list-container">
+                                        <ul class="category-ul">
+                                            <li class="category-li"><div><span>7</span> Locations | <span>$0.20</span></div><br><div><button class="small-button primary white-text">Delete</button></div></li>
+                                            <li class="category-li"><div><span>15</span> Locations | <span>$0.30</span></div><br><div><button class="small-button primary white-text">Delete</button></div></li>
+                                            <li class="category-li"><div><span>24</span> Locations | <span>$0.40</span></div><br><div><button class="small-button primary white-text">Delete</button></div></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <h3>Banner Placement Pricing</h3>
+                            <div class="spacer-10px"></div>
+                            <div class="spacer-10px"></div>
+                            <div class="form-input-container">
+                                <div class="form-input-search">
+                                    <label for="banner-quantity" class="input-label">Set Banner Quantity</label>
+                                    <div class="spacer-10px"></div>
+                                    <div>
+                                        <input name="banner_qty" value="<?php echo ($majestic->ad_setting != null) ? $majestic->ad_setting->banner_qty : ''; ?>" type="number" id="banner-quantity" class="search-input" placeholder="example: 2">
+                                    </div>
+                                    <div class="spacer-10px"></div>
+                                    <div class="form-submit-container">
+                                        <a href="" class="button-03 button-link-text white-text">Add Banner Settings</a>
+                                    </div>
+                                </div>
+                                <div class="form-input-search">
+                                    <label for="banner-quantity-price" class="input-label">Set Banner Pricing&nbsp;&nbsp;&nbsp;&nbsp;<i>($0.00 will set to free)</i></label>
+                                    <div class="spacer-10px"></div>
+                                    <div class="flex-container">
+                                        <b>$</b>&nbsp;<input name="banner_qty_price" value="<?php echo ($majestic->ad_setting != null) ? $majestic->ad_setting->banner_qty_price : ''; ?>" type="number" id="banner-quantity-price" class="search-input" placeholder="example: 2.99">
+                                    </div>
+                                </div>
+                                <div class="form-input-search">
+                                    <label for="banner" class="input-label">Banner Quantity & Pricing List</label>
+                                    <div class="spacer-10px"></div>
+                                    <div class="list-container">
+                                        <ul class="category-ul">
+                                            <li class="category-li"><div><span>1</span> Banners | <span>$0.05</span></div><br><div><button class="small-button primary white-text">Delete</button></div></li>
+                                            <li class="category-li"><div><span>3</span> Banners | <span>$0.15</span></div><br><div><button class="small-button primary white-text">Delete</button></div></li>
+                                            <li class="category-li"><div><span>4</span> Banners | <span>$0.20</span></div><br><div><button class="small-button primary white-text">Delete</button></div></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-input-container">
+                                <div class="form-input-search">
+                                    <label for="top-left" class="input-label">Place Ad In Top Left Banner</label>
+                                    <div class="spacer-10px"></div>
+                                    <img src="../images/main-images/top-left.jpg" alt="Place ad in top left banner." class="fluid-image" id="top-left">
+                                    <label for="majestic-top-left-placement-price" class="input-label">Set Placement Pricing&nbsp;&nbsp;&nbsp;&nbsp;<i>($0.00 will set to free)</i></label>
+                                    <div class="spacer-10px"></div>
+                                    <div class="flex-container">
+                                        <b>$</b>&nbsp;<input name="banner_top_left_price" value="<?php echo ($majestic->ad_setting != null) ? $majestic->ad_setting->banner_top_left_price : ''; ?>" type="number" id="majestic-top-left-placement-price" class="search-input" placeholder="example: 2.99">
+                                    </div>
+                                </div>
+                                <div class="form-input-search">
+                                    <label for="top-right" class="input-label">Place Ad In Top Right Banner</label>
+                                    <div class="spacer-10px"></div>
+                                    <img src="../images/main-images/top-right.jpg" alt="Place ad in top right banner." class="fluid-image" id="top-right">
+                                    <label for="majestic-top-right-price" class="input-label">Set Placement Pricing&nbsp;&nbsp;&nbsp;&nbsp;<i>($0.00 will set to free)</i></label>
+                                    <div class="spacer-10px"></div>
+                                    <div class="flex-container">
+                                        <b>$</b>&nbsp;<input name="banner_top_right_price" value="<?php echo ($majestic->ad_setting != null) ? $majestic->ad_setting->banner_top_right_price : ''; ?>" type="number" id="majestic-top-right-price" class="search-input" placeholder="example: 2.99">
+                                    </div>
+                                </div>
+                                <div class="form-input-search">
+                                    <label for="bottom-left" class="input-label">Place Ad In Bottom Left Banner</label>
+                                    <div class="spacer-10px"></div>
+                                    <img src="../images/main-images/bottom-left.jpg" alt="Place ad in bottom left banner." class="fluid-image" id="bottom-left">
+                                    <label for="majestic-bottom-left-price" class="input-label">Set Placement Pricing&nbsp;&nbsp;&nbsp;&nbsp;<i>($0.00 will set to free)</i></label>
+                                    <div class="spacer-10px"></div>
+                                    <div class="flex-container">
+                                        <b>$</b>&nbsp;<input name="banner_bottom_left_price" value="<?php echo ($majestic->ad_setting != null) ? $majestic->ad_setting->banner_bottom_left_price : ''; ?>" type="number" id="majestic-bottom-left-price" class="search-input" placeholder="example: 2.99">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-input-container">
+                                <div class="form-input-search">
+                                    <label for="gottom-right" class="input-label">Place Ad In Bottom Right Banner</label>
+                                    <div class="spacer-10px"></div>
+                                    <img src="../images/main-images/bottom-right.jpg" alt="Place ad in bottom right banner." class="fluid-image" id="bottom-right">
+                                    <label for="majestic-bottom-right-price" class="input-label">Set Placement Pricing&nbsp;&nbsp;&nbsp;&nbsp;<i>($0.00 will set to free)</i></label>
+                                    <div class="spacer-10px"></div>
+                                    <div class="flex-container">
+                                        <b>$</b>&nbsp;<input name="banner_bottom_right_price" value="<?php echo ($majestic->ad_setting != null) ? $majestic->ad_setting->banner_bottom_right_price : ''; ?>" type="number" id="majestic-bottom-right-price" class="search-input" placeholder="example: 2.99">
+                                    </div>
+                                </div>
+                                <div class="form-input-search">
+                                    <label for="two-top" class="input-label">Place Ad In Two Top Banners</label>
+                                    <div class="spacer-10px"></div>
+                                    <img src="../images/main-images/two-top.jpg" alt="Place ad in two top banners." class="fluid-image" id="two-top">
+                                    <label for="majestic-two-top-price" class="input-label">Set Placement Pricing&nbsp;&nbsp;&nbsp;&nbsp;<i>($0.00 will set to free)</i></label>
+                                    <div class="spacer-10px"></div>
+                                    <div class="flex-container">
+                                        <b>$</b>&nbsp;<input name="banners_two_top_price" value="<?php echo ($majestic->ad_setting != null) ? $majestic->ad_setting->banners_two_top_price : ''; ?>" type="number" id="majestic-two-top-price" class="search-input" placeholder="example: 2.99">
+                                    </div>
+                                </div>
+                                <div class="form-input-search">
+                                    <label for="two-bottom" class="input-label">Place Ad In Two Bottom Banners</label>
+                                    <div class="spacer-10px"></div>
+                                    <img src="../images/main-images/two-bottom.jpg" alt="Place ad in two bottom banners." class="fluid-image" id="two-bottom">
+                                    <label for="majestic-two-bottom-price" class="input-label">Set Placement Pricing&nbsp;&nbsp;&nbsp;&nbsp;<i>($0.00 will set to free)</i></label>
+                                    <div class="spacer-10px"></div>
+                                    <div class="flex-container">
+                                        <b>$</b>&nbsp;<input name="banners_two_bottom_price" value="<?php echo ($majestic->ad_setting != null) ? $majestic->ad_setting->banners_two_bottom_price : ''; ?>" type="number" id="majestic-two-bottom-price" class="search-input" placeholder="example: 2.99">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-input-container">
+                                <div class="form-input-search">
+                                    <label for="all-banners" class="input-label">Place Ad In All Banners</label>
+                                    <div class="spacer-10px"></div>
+                                    <img src="../images/main-images/all-banners.jpg" alt="Place ad in all banners." class="fluid-image" id="all-banners">
+                                    <label for="majestic-all-banners-price" class="input-label">Set Placement Pricing&nbsp;&nbsp;&nbsp;&nbsp;<i>($0.00 will set to free)</i></label>
+                                    <div class="spacer-10px"></div>
+                                    <div class="flex-container">
+                                        <b>$</b>&nbsp;<input name="banners_all_four_price" value="<?php echo ($majestic->ad_setting != null) ? $majestic->ad_setting->banners_all_four_price : ''; ?>" type="number" id="majestic-all-banners-price" class="search-input" placeholder="example: 2.99">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="spacer-10px"></div>
+                            <div class="spacer-10px"></div>
+                            <div class="spacer-10px"></div>
+                            <div class="spacer-10px"></div>
+                            <div class="form-submit-container">
+                                <button type="submit" class="button-01 white-text" name="majestic-ad-settings-submit" id="majestic-ad-settings-submit">Submit</button>
+                            </div>
+                        </form>
                     </div>
                     <div class="profile-section" id="memberships" data-show-initially="<?php echo (isset($show_membership_section))? '1' : '0' ; ?>">
                         <h2>Memberships</h2>

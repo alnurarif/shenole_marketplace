@@ -9,6 +9,10 @@ $(document).ready(function(){
 		$('.profile-section').hide();
 		$('#paypal').show();
 	}
+	if($('#ads').attr('data-show-initially') == '1'){
+		$('.profile-section').hide();
+		$('#ads').show();
+	}
 	$('.profile-nav-link').on('click',function(){
 		let section = $(this).attr('id').substr(4);
 		console.log(section);

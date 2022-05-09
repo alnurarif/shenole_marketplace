@@ -21,4 +21,7 @@ class Majestic extends Model{
     //     'body', 
     //     'created_by'
     // ];
+    public function ad_setting(){
+        return $this->hasOne(Majestic_ad_setting::class);
+    }
 }
