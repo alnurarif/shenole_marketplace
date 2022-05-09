@@ -160,6 +160,7 @@ if($_POST){
                         <div class="profile-nav-link" id="tab_paypal">Paypal</div>
                         <div class="profile-nav-link" id="tab_upgrades">Upgrades</div>
                         <div class="profile-nav-link" id="tab_ad_space">Ad Space</div>
+                        <div class="profile-nav-link" id="tab_services">Services</div>
                     </div>
                     <div class="profile-section" id="account">
                         <h2>Account</h2>
@@ -617,6 +618,109 @@ if($_POST){
                             </div>
                             <div class="form-submit-container">
                                 <imput type="button" class="button-01 white-text" name="membership-settings-submit" id="membership-settings-submit">Submit</imput>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="profile-section" id="services">
+                        <h2>Services</h2>
+                        <form action="" class="full-width-form">
+                            <h3>Create Services</h3>
+                            <div class="spacer-10px"></div>
+                            <div class="spacer-10px"></div>
+                            <div class="form-input-container">
+                                <div class="form-input-search">
+                                    <label for="vendor-service-title" class="input-label">Enter Your Service Title</label>
+                                    <div class="spacer-10px"></div>
+                                    <div>
+                                        <input type="text" id="vendor-service-title" class="search-input" placeholder="example: Wedding Portraits">
+                                    </div>
+                                </div>
+                                <div class="form-input-search">
+                                    <label for="vendor-service-price" class="input-label">Enter Your Service Price</label>
+                                    <div class="spacer-10px"></div>
+                                    <div class="flex-container">
+                                        <b>$</b>&nbsp;<input type="number" name="vendor-service-price" id="vendor-service-price" class="search-input" placeholder="example: 275.00">
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <label for="vendor-service-description" class="input-label">Enter Your Service Description</label>
+                                <div class="spacer-10px"></div>
+                                <span id="service-description-character-countdown">500</span> characters left
+                                <div class="wysiwyg-container">
+                                    <textarea name="vendor-service-description" id="vendor-service-description" class="full-width-textarea"></textarea>
+                                </div>
+                                <div class="spacer-20"></div>
+                            </div>
+                            <div class="form-input-container">
+                                <div class="form-input-search">
+                                    <label for="vendor-service-date" class="input-label">Enter Available Dates (Optional)</label>
+                                    <div class="spacer-10px"></div>
+                                    <div>
+                                        <input type="date" name="vendor-service-date" id="vendor-service-date" class="search-input" placeholder="example: Musician, Caterer, Bartender">
+                                    </div>
+                                    <div class="spacer-10px"></div>
+                                    <div class="form-submit-container">
+                                        <a href="" class="button-03 button-link-text white-text">Add Date</a>
+                                    </div>
+                                </div>
+                                <div class="form-input-search">
+                                    <label for="location" class="input-label">List of Available Dates</label>
+                                    <div class="spacer-10px"></div>
+                                    <div class="list-container">
+                                        <ul class="category-ul">
+                                            <li class="category-li"><div>04/19/23</div><br><div><button class="small-button primary white-text">Delete</button></div></li>
+                                            <li class="category-li"><div>04/20/23</div><br><div><button class="small-button primary white-text">Delete</button></div></li>
+                                            <li class="category-li"><div>07/29/23</div><br><div><button class="small-button primary white-text">Delete</button></div></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-submit-container">
+                                <imput type="button" class="button-01 white-text" name="services-settings-submit" id="services-settings-submit">Submit</imput>
+                            </div>
+                        </form>
+                        <form action="" class="full-width-form">
+                            <h3>Delete Services</h3>
+                            <div class="spacer-10px"></div>
+                            <div class="spacer-10px"></div>
+                            <div class="form-input-container">
+                                <div class="form-input-search-full-width">
+                                    <label for="membership-01-billing-cycle" class="input-label">Set Services For Deletion</label>
+                                    <div class="spacer-10px"></div>
+                                    <div class="list-container-full-width" id="delete-services-display">
+                                        <ul class="category-ul">
+                                            <li class="category-li">
+                                                <div>
+                                                    <h4>Service Title Goes Here</h4>
+                                                </div>
+                                                <div>
+                                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum eree. Excepteur sinte occaecat cupidatat none proident.
+                                                </div>
+                                                <br>
+                                                <div class="service-date-listing">
+                                                    <div class="service-date-container-small"><h5>10/28/22</h5></div>
+                                                    <div class="service-date-container-small"><h5>10/28/22</h5></div>
+                                                    <div class="service-date-container-small"><h5>10/28/22</h5></div>
+                                                    <div class="service-date-container-small"><h5>10/28/22</h5></div>
+                                                    <div class="service-date-container-small"><h5>10/28/22</h5></div>
+                                                    <div class="service-date-container-small"><h5>10/28/22</h5></div>
+                                                    <div class="service-date-container-small"><h5>10/28/22</h5></div>
+                                                    <div class="service-date-container-small"><h5>10/28/22</h5></div>
+                                                    <div class="service-date-container-small"><h5>10/28/22</h5></div>
+                                                    <div class="service-date-container-small"><h5>10/28/22</h5></div>
+                                                </div>
+                                                <div>
+                                                    <button class="small-button primary white-text">Delete</button>&nbsp;&nbsp;<span class="stop-text"><b>Set to be deleted.</b></span></div><br><div><button class="small-button primary white-text">Cancel Delete</button>
+                                                </div>
+                                                <div class="spacer-10px"></div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-submit-container">
+                                <imput type="button" class="button-01 white-text" name="services-delete-submit" id="services-delete-submit">Submit</imput>
                             </div>
                         </form>
                     </div>
