@@ -30,6 +30,11 @@ if(isset($isMajesticLoggedIn) && $isMajesticLoggedIn){
                 <?php if($show_login_sign_up){ ?>
                 <li class="nav-li-desktop"><a href="<?php echo SITE_LINK; ?>signup.php" class="nav-link-desktop">Sign Up</a></li>
                 <li class="nav-li-desktop"><a href="<?php echo SITE_LINK; ?>login.php" class="nav-link-desktop">Login</a></li>
+                <li class="nav-li-desktop">
+                            <div id="cart-icon-container">
+                                <div id="cart-quantity-text"></div>
+                            </div>
+                        </li>
                 <?php }else{ ?>
                     <?php if(isset($isMajesticLoggedIn) && $isMajesticLoggedIn){ ?>
                         <li class="nav-li-desktop"><a href="<?php echo SITE_LINK_MAJESTIC; ?>logout.php" class="nav-link-desktop">Logout</a></li>
@@ -41,7 +46,12 @@ if(isset($isMajesticLoggedIn) && $isMajesticLoggedIn){
 
                     <?php if(((isset($isMajesticLoggedIn) && !$isMajesticLoggedIn) || !isset($isMajesticLoggedIn)) && isset($isClientLoggedIn) && $isClientLoggedIn){ ?>
                         <li class="nav-li-desktop"><a href="<?php echo SITE_LINK_CLIENT; ?>logout.php" class="nav-link-desktop">Logout</a></li>
-                    <?php } ?>
+                        <li class="nav-li-desktop">
+                            <div id="cart-icon-container">
+                                <div id="cart-quantity-text"></div>
+                            </div>
+                        </li>
+                        <?php } ?>
 
                     <?php if(((isset($isMajesticLoggedIn) && !$isMajesticLoggedIn) || !isset($isMajesticLoggedIn)) && isset($isStaffLoggedIn) && $isStaffLoggedIn){ ?>
                         <li class="nav-li-desktop"><a href="<?php echo SITE_LINK_STAFF; ?>logout.php" class="nav-link-desktop">Logout</a></li>

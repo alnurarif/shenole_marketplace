@@ -60,9 +60,13 @@ $isMajesticLoggedIn = UserHelper::isUserLoggedIn($_SESSION, 'majestic', new Maje
                 </section>
             </div>
             <?php 
+            MyHelpers::includeWithVariables('./layouts/cart_modal.php', [], $pring = true);
             MyHelpers::includeWithVariables('./layouts/footer.php', [], $print = true);
             ?> 
         </div>
+        <script src="<?php echo SITE_LINK; ?>js/jquery.min.js"></script>
+        <script src="<?php echo SITE_LINK; ?>js/custom.js"></script>
+        <script src="<?php echo SITE_LINK; ?>js/cart_modal.js"></script>
         <script src="./js/main.js"></script>
         <?php 
         MyHelpers::includeWithVariables('./layouts/common_footer.php', [], $print = true);

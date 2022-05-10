@@ -36,11 +36,12 @@ if(!$isClientLoggedIn){
 			</section>
 		</div>
 		<?php 
+		MyHelpers::includeWithVariables('../layouts/cart_modal.php', [], $print = true);
         MyHelpers::includeWithVariables('../layouts/footer.php', [], $print = true);
         ?>
 	</div>
-	<script src="../js/jquery.min.js"></script>
-	<script src="../js/pages/index_page.js"></script>
-	<script src="../js/custom.js"></script>
+	<script src="<?php echo SITE_LINK; ?>js/jquery.min.js"></script>
+	<script src="<?php echo SITE_LINK; ?>js/custom.js"></script>
+	<script src="<?php echo SITE_LINK; ?>js/cart_modal.js"></script>
 </body>
 </html>
