@@ -36,8 +36,8 @@ if(!$isClientLoggedIn){
 			</section>
 		</div>
 		<?php 
-        MyHelpers::includeWithVariables('../layouts/footer.php', [], $print = true);
 		MyHelpers::includeWithVariables('../layouts/cart_modal.php', [], $pring = true);
+        MyHelpers::includeWithVariables('../layouts/footer.php', [], $print = true);
         ?>
 	</div>
 	<script src="<?php echo SITE_LINK; ?>js/jquery.min.js"></script>
