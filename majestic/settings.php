@@ -12,6 +12,11 @@ use Shenole_project\models\Majestic;
 use Shenole_project\models\Majestic_ad_setting;
 use Shenole_project\models\Vendor;
 use Shenole_project\models\Vendor_membership_level;
+use Shenole_project\models\Ad_keyword_quantity_pricing_setting;
+use Shenole_project\models\Ad_category_quantity_pricing_setting;
+use Shenole_project\models\Ad_location_quantity_pricing_setting;
+use Shenole_project\models\Ad_banner_quantity_pricing_setting;
+
 
 $isMajesticLoggedIn = UserHelper::isUserLoggedIn($_SESSION, 'majestic', new MajesticRepository);
 
@@ -99,10 +104,15 @@ if($_POST){
 		}
 	}
     if(isset($_POST['add_edit_ads_operation'])){
+        $keyword_quantity_price_infos = (isset($_POST['keyword_quantity_price_infos'])) ? $_POST['keyword_quantity_price_infos'] : null ;
+        $category_quantity_price_infos = (isset($_POST['category_quantity_price_infos'])) ? $_POST['category_quantity_price_infos'] : null ;
+        $location_quantity_price_infos = (isset($_POST['location_quantity_price_infos'])) ? $_POST['location_quantity_price_infos'] : null ;
+        $banner_quantity_price_infos = (isset($_POST['banner_quantity_price_infos'])) ? $_POST['banner_quantity_price_infos'] : null ;
         if($majestic->ad_setting === null){
             // echo "<pre>";
-            // var_dump($_POST);
+            // var_dump($keyword_quantity_price_infos);
             // exit;
+
             $ad_setting_object = new Majestic_ad_setting;
             $ad_setting_object->client_ad_display_price = $_POST['client_ad_display_price'];
             $ad_setting_object->vendor_one_day_ad_price = $_POST['vendor_one_day_ad_price'];
@@ -134,7 +144,48 @@ if($_POST){
             $ad_setting_object->vendor_six_months_ad = (isset($_POST['vendor_six_months_ad'])) ? 1 : 0 ;
             $ad_setting_object->vendor_one_year_ad = (isset($_POST['vendor_one_year_ad'])) ? 1 : 0 ;
             
-            $majestic->ad_setting()->save($ad_setting_object);
+            $ad_setting = $majestic->ad_setting()->save($ad_setting_object);
+            
+
+            Ad_keyword_quantity_pricing_setting::where('ad_setting_id',$ad_setting->id)->delete();
+            foreach($keyword_quantity_price_infos as $key=>$single_info){
+                $single_info = explode('|||',$single_info);
+                $ad_keyword_quantity_pricing_setting = new Ad_keyword_quantity_pricing_setting;
+                $ad_keyword_quantity_pricing_setting->ad_setting_id = $ad_setting->id;
+                $ad_keyword_quantity_pricing_setting->quantity = $single_info[0];
+                $ad_keyword_quantity_pricing_setting->price = $single_info[1];
+                $ad_keyword_quantity_pricing_setting->save();
+            }
+
+            Ad_category_quantity_pricing_setting::where('ad_setting_id',$ad_setting->id)->delete();
+            foreach($category_quantity_price_infos as $key=>$single_info){
+                $single_info = explode('|||',$single_info);
+                $ad_category_quantity_pricing_setting = new Ad_category_quantity_pricing_setting;
+                $ad_category_quantity_pricing_setting->ad_setting_id = $ad_setting->id;
+                $ad_category_quantity_pricing_setting->quantity = $single_info[0];
+                $ad_category_quantity_pricing_setting->price = $single_info[1];
+                $ad_category_quantity_pricing_setting->save();
+            }
+
+            Ad_location_quantity_pricing_setting::where('ad_setting_id',$ad_setting->id)->delete();
+            foreach($location_quantity_price_infos as $key=>$single_info){
+                $single_info = explode('|||',$single_info);
+                $ad_location_quantity_pricing_setting = new Ad_location_quantity_pricing_setting;
+                $ad_location_quantity_pricing_setting->ad_setting_id = $ad_setting->id;
+                $ad_location_quantity_pricing_setting->quantity = $single_info[0];
+                $ad_location_quantity_pricing_setting->price = $single_info[1];
+                $ad_location_quantity_pricing_setting->save();
+            }
+
+            Ad_banner_quantity_pricing_setting::where('ad_setting_id',$ad_setting->id)->delete();
+            foreach($banner_quantity_price_infos as $key=>$single_info){
+                $single_info = explode('|||',$single_info);
+                $ad_banner_quantity_pricing_setting = new Ad_banner_quantity_pricing_setting;
+                $ad_banner_quantity_pricing_setting->ad_setting_id = $ad_setting->id;
+                $ad_banner_quantity_pricing_setting->quantity = $single_info[0];
+                $ad_banner_quantity_pricing_setting->price = $single_info[1];
+                $ad_banner_quantity_pricing_setting->save();
+            }
         }else{
             $majestic->ad_setting->client_ad_display_price = $_POST['client_ad_display_price'];
             $majestic->ad_setting->vendor_one_day_ad_price = $_POST['vendor_one_day_ad_price'];
@@ -167,6 +218,46 @@ if($_POST){
             $majestic->ad_setting->vendor_one_year_ad = (isset($_POST['vendor_one_year_ad'])) ? 1 : 0 ;
 
             $majestic->ad_setting->save();
+            Ad_keyword_quantity_pricing_setting::where('ad_setting_id',$majestic->ad_setting->id)->delete();
+            foreach($keyword_quantity_price_infos as $key=>$single_info){
+                $single_info = explode('|||',$single_info);
+                $ad_keyword_quantity_pricing_setting = new Ad_keyword_quantity_pricing_setting;
+                $ad_keyword_quantity_pricing_setting->ad_setting_id = $majestic->ad_setting->id;
+                $ad_keyword_quantity_pricing_setting->quantity = $single_info[0];
+                $ad_keyword_quantity_pricing_setting->price = $single_info[1];
+                $ad_keyword_quantity_pricing_setting->save();
+            }
+
+            Ad_category_quantity_pricing_setting::where('ad_setting_id',$majestic->ad_setting->id)->delete();
+            foreach($category_quantity_price_infos as $key=>$single_info){
+                $single_info = explode('|||',$single_info);
+                $ad_category_quantity_pricing_setting = new Ad_category_quantity_pricing_setting;
+                $ad_category_quantity_pricing_setting->ad_setting_id = $majestic->ad_setting->id;
+                $ad_category_quantity_pricing_setting->quantity = $single_info[0];
+                $ad_category_quantity_pricing_setting->price = $single_info[1];
+                $ad_category_quantity_pricing_setting->save();
+            }
+
+            Ad_location_quantity_pricing_setting::where('ad_setting_id',$majestic->ad_setting->id)->delete();
+            foreach($location_quantity_price_infos as $key=>$single_info){
+                $single_info = explode('|||',$single_info);
+                $ad_location_quantity_pricing_setting = new Ad_location_quantity_pricing_setting;
+                $ad_location_quantity_pricing_setting->ad_setting_id = $majestic->ad_setting->id;
+                $ad_location_quantity_pricing_setting->quantity = $single_info[0];
+                $ad_location_quantity_pricing_setting->price = $single_info[1];
+                $ad_location_quantity_pricing_setting->save();
+            }
+
+            Ad_banner_quantity_pricing_setting::where('ad_setting_id',$majestic->ad_setting->id)->delete();
+            foreach($banner_quantity_price_infos as $key=>$single_info){
+                $single_info = explode('|||',$single_info);
+                $ad_banner_quantity_pricing_setting = new Ad_banner_quantity_pricing_setting;
+                $ad_banner_quantity_pricing_setting->ad_setting_id = $majestic->ad_setting->id;
+                $ad_banner_quantity_pricing_setting->quantity = $single_info[0];
+                $ad_banner_quantity_pricing_setting->price = $single_info[1];
+                $ad_banner_quantity_pricing_setting->save();
+            }
+            
         }
         $majestic = Majestic::where('login_token',$login_token)->with('ad_setting')->first();
         $show_ad_section = true;
@@ -226,6 +317,12 @@ foreach($vendor_membership_level_list as $single_level){
         $show_membership_level_section .= '</div>';
     $show_membership_level_section .= '</li>';    
 }
+// echo "<pre>";
+// var_dump($majestic->ad_setting->keyword_quantity_pricing_settings->count()); 
+// var_dump($majestic->ad_setting->banner_quantity_pricing_settings->count()); 
+// var_dump($majestic->ad_setting->category_quantity_pricing_settings->count()); 
+// var_dump($majestic->ad_setting->location_quantity_pricing_settings->count()); 
+// exit;
 
 ?>
 
@@ -473,29 +570,46 @@ foreach($vendor_membership_level_list as $single_level){
                                     <label for="Keyword-quantity" class="input-label">Set Keyword Quantity</label>
                                     <div class="spacer-10px"></div>
                                     <div>
-                                        <input name="keyword_qty" value="<?php echo ($majestic->ad_setting != null) ? $majestic->ad_setting->keyword_qty : ''; ?>" type="number" id="Keyword-quantity" class="search-input" placeholder="example: 10">
+                                        <input name="keyword_qty" type="number" id="keyword_quantity" class="search-input" placeholder="example: 10">
                                     </div>
                                     <div class="spacer-10px"></div>
+                                    <div id="hidden_keyword_quantity_price_input" class="display_none">
+                                        <?php foreach($majestic->ad_setting->keyword_quantity_pricing_settings as $key=>$single_quantity_pricing_setting){ ?>
+                                            <?php $full_keyword_info_joined = $single_quantity_pricing_setting->quantity.'|||'.$single_quantity_pricing_setting->price; ?>
+                                            <input type="hidden" value="<?php echo $full_keyword_info_joined; ?>" name="keyword_quantity_price_infos[]" id="keyword_quantity_price_infos_input_<?php echo $key+1; ?>">
+                                        <?php } ?>  
+                                    </div>
                                     <div class="form-submit-container">
-                                        <a href="" class="button-03 button-link-text white-text">Add Keyword Settings</a>
+                                        <button type="button" class="button-03 button-link-text white-text" id="add_keyword_info_to_list">Add Keyword Settings</button>
                                     </div>
                                 </div>
                                 <div class="form-input-search">
                                     <label for="keyword-pricing" class="input-label">Set Keyword Pricing&nbsp;&nbsp;&nbsp;&nbsp;<i>($0.00 will set to free)</i></label>
                                     <div class="spacer-10px"></div>
                                     <div class="flex-container">
-                                        <b>$</b>&nbsp;<input name="keyword_qty_price" value="<?php echo ($majestic->ad_setting != null) ? $majestic->ad_setting->keyword_qty_price : ''; ?>" type="number" id="keyword-pricing" class="search-input" placeholder="example: 2.99">
+                                        <b>$</b>&nbsp;<input name="keyword_qty_price" type="number" id="keyword_price" class="search-input" placeholder="example: 2.99">
                                     </div>
                                 </div>
                                 <div class="form-input-search">
                                     <label for="location" class="input-label">Keyword Quantity & Pricing List</label>
                                     <div class="spacer-10px"></div>
                                     <div class="list-container">
-                                        <ul class="category-ul">
-                                            <li class="category-li"><div><span>7</span> keywords | <span>$0.20</span></div><br><div><button class="small-button primary white-text">Delete</button></div></li>
-                                            <li class="category-li"><div><span>15</span> keywords | <span>$0.30</span></div><br><div><button class="small-button primary white-text">Delete</button></div></li>
-                                            <li class="category-li"><div><span>24</span> keywords | <span>$0.40</span></div><br><div><button class="small-button primary white-text">Delete</button></div></li>
-                                        </ul>
+                                        <ul class="category-ul" id="added_keyword_quantity_pricing_list">
+                                        <?php foreach($majestic->ad_setting->keyword_quantity_pricing_settings as $key=>$single_quantity_pricing_setting){ ?>
+                                            <li class="category-li single_added_keyword_quantity_pricing" id="single_added_keyword_quantity_pricing_<?php echo $key+1;?>">
+                                                <div class="display_none keyword_quantity_pricing_object">
+                                                    <span class="keyword_quantity"><?php echo $single_quantity_pricing_setting->quantity; ?></span>
+                                                    <span class="keyword_price"><?php echo $single_quantity_pricing_setting->price; ?></span>
+                                                </div>
+                                                <div>
+                                                    <span><?php echo $single_quantity_pricing_setting->quantity; ?></span> keywords | 
+                                                    <span>$<?php echo $single_quantity_pricing_setting->price; ?></span>
+                                                </div>
+                                                 
+                                                <div class="delete_button_container"><button type="button" class="small-button primary white-text delete_keyword_quantity_pricing_from_list" id="delete_keyword_quantity_pricing_<?php echo $key+1; ?>">Delete</button></div>
+                                            </li>
+                                        <?php } ?>
+                                    </ul>
                                     </div>
                                 </div>
                             </div>
@@ -505,28 +619,46 @@ foreach($vendor_membership_level_list as $single_level){
                                     <label for="category-quantity" class="input-label">Set Category Quantity</label>
                                     <div class="spacer-10px"></div>
                                     <div>
-                                        <input name="category_qty" value="<?php echo ($majestic->ad_setting != null) ? $majestic->ad_setting->category_qty : ''; ?>" type="number" id="category-quantity" class="search-input" placeholder="example: 10">
+                                        <input name="category_qty" type="number" id="category_quantity" class="search-input" placeholder="example: 10">
                                     </div>
                                     <div class="spacer-10px"></div>
+                                    <div id="hidden_category_quantity_price_input" class="display_none">
+                                        <?php foreach($majestic->ad_setting->category_quantity_pricing_settings as $key=>$single_quantity_pricing_setting){ ?>
+                                            <?php $full_category_info_joined = $single_quantity_pricing_setting->quantity.'|||'.$single_quantity_pricing_setting->price; ?>
+                                            <input type="hidden" value="<?php echo $full_category_info_joined; ?>" name="category_quantity_price_infos[]" id="category_quantity_price_infos_input_<?php echo $key+1; ?>">
+                                        <?php } ?>  
+                                    </div>
                                     <div class="form-submit-container">
-                                        <a href="" class="button-03 button-link-text white-text">Add Category Settings</a>
+                                        <button type="button" class="button-03 button-link-text white-text" id="add_category_info_to_list">Add Category Settings</button>
                                     </div>
                                 </div>
                                 <div class="form-input-search">
                                     <label for="category-quantity-price" class="input-label">Set Category Pricing&nbsp;&nbsp;&nbsp;&nbsp;<i>($0.00 will set to free)</i></label>
                                     <div class="spacer-10px"></div>
                                     <div class="flex-container">
-                                        <b>$</b>&nbsp;<input name="category_qty_price" value="<?php echo ($majestic->ad_setting != null) ? $majestic->ad_setting->category_qty_price : ''; ?>" type="number" id="category-quantity-price" class="search-input" placeholder="example: 2.99">
+                                        <b>$</b>&nbsp;<input name="category_qty_price" type="number" id="category_price" class="search-input" placeholder="example: 2.99">
                                     </div>
                                 </div>
                                 <div class="form-input-search">
                                     <label for="location" class="input-label">Category Quantity & Pricing List</label>
                                     <div class="spacer-10px"></div>
                                     <div class="list-container">
-                                        <ul class="category-ul">
-                                            <li class="category-li"><div><span>7</span> categories | <span>$0.20</span></div><br><div><button class="small-button primary white-text">Delete</button></div></li>
-                                            <li class="category-li"><div><span>15</span> categories | <span>$0.30</span></div><br><div><button class="small-button primary white-text">Delete</button></div></li>
-                                            <li class="category-li"><div><span>24</span> categories | <span>$0.40</span></div><br><div><button class="small-button primary white-text">Delete</button></div></li>
+                                        <ul class="category-ul" id="added_category_quantity_pricing_list">
+                                        <?php foreach($majestic->ad_setting->category_quantity_pricing_settings as $key=>$single_quantity_pricing_setting){ ?>
+                                            <li class="category-li single_added_category_quantity_pricing" id="single_added_category_quantity_pricing_<?php echo $key+1;?>">
+                                                <div class="display_none category_quantity_pricing_object">
+                                                    <span class="category_quantity"><?php echo $single_quantity_pricing_setting->quantity; ?></span>
+                                                    <span class="category_price"><?php echo $single_quantity_pricing_setting->price; ?></span>
+                                                </div>
+                                                <div>
+                                                    <span><?php echo $single_quantity_pricing_setting->quantity; ?></span> categories | 
+                                                    <span>$<?php echo $single_quantity_pricing_setting->price; ?></span>
+                                                </div>
+                                                <br>
+                                                <div class="delete_button_container"><button type="button" class="small-button primary white-text delete_category_quantity_pricing_from_list" id="delete_category_quantity_pricing_<?php echo $key+1; ?>"">Delete</button></div>
+                                            </li>
+                                        <?php } ?>
+                                        
                                         </ul>
                                     </div>
                                 </div>
@@ -537,28 +669,44 @@ foreach($vendor_membership_level_list as $single_level){
                                     <label for="location-quantity" class="input-label">Set Location Quantity</label>
                                     <div class="spacer-10px"></div>
                                     <div>
-                                        <input name="location_qty" value="<?php echo ($majestic->ad_setting != null) ? $majestic->ad_setting->location_qty : ''; ?>" type="number" id="location-quantity" class="search-input" placeholder="example: 10">
+                                        <input name="location_qty" type="number" id="location_quantity" class="search-input" placeholder="example: 10">
                                     </div>
                                     <div class="spacer-10px"></div>
+                                    <div id="hidden_location_quantity_price_input" class="display_none">
+                                        <?php foreach($majestic->ad_setting->location_quantity_pricing_settings as $key=>$single_quantity_pricing_setting){ ?>
+                                            <?php $full_location_info_joined = $single_quantity_pricing_setting->quantity.'|||'.$single_quantity_pricing_setting->price; ?>
+                                            <input type="hidden" value="<?php echo $full_location_info_joined; ?>" name="location_quantity_price_infos[]" id="location_quantity_price_infos_input_<?php echo $key+1; ?>">
+                                        <?php } ?>  
+                                    </div>
                                     <div class="form-submit-container">
-                                        <a href="" class="button-03 button-link-text white-text">Add Location Settings</a>
+                                        <button type="button" class="button-03 button-link-text white-text" id="add_location_info_to_list">Add Location Settings</button>
                                     </div>
                                 </div>
                                 <div class="form-input-search">
                                     <label for="location-quantity-price" class="input-label">Set Location Pricing&nbsp;&nbsp;&nbsp;&nbsp;<i>($0.00 will set to free)</i></label>
                                     <div class="spacer-10px"></div>
                                     <div class="flex-container">
-                                        <b>$</b>&nbsp;<input name="location_qty_price" value="<?php echo ($majestic->ad_setting != null) ? $majestic->ad_setting->location_qty_price : ''; ?>" type="number" id="location-quantity-price" class="search-input" placeholder="example: 2.99">
+                                        <b>$</b>&nbsp;<input name="location_qty_price" type="number" id="location_price" class="search-input" placeholder="example: 2.99">
                                     </div>
                                 </div>
                                 <div class="form-input-search">
                                     <label for="location" class="input-label">Location Quantity & Pricing List</label>
                                     <div class="spacer-10px"></div>
                                     <div class="list-container">
-                                        <ul class="category-ul">
-                                            <li class="category-li"><div><span>7</span> Locations | <span>$0.20</span></div><br><div><button class="small-button primary white-text">Delete</button></div></li>
-                                            <li class="category-li"><div><span>15</span> Locations | <span>$0.30</span></div><br><div><button class="small-button primary white-text">Delete</button></div></li>
-                                            <li class="category-li"><div><span>24</span> Locations | <span>$0.40</span></div><br><div><button class="small-button primary white-text">Delete</button></div></li>
+                                        <ul class="category-ul" id="added_location_quantity_pricing_list">
+                                        <?php foreach($majestic->ad_setting->location_quantity_pricing_settings as $key=>$single_quantity_pricing_setting){ ?>
+                                            <li class="category-li single_added_location_quantity_pricing" id="single_added_location_quantity_pricing_<?php echo $key+1;?>">
+                                                <div class="display_none location_quantity_pricing_object">
+                                                    <span class="location_quantity"><?php echo $single_quantity_pricing_setting->quantity; ?></span>
+                                                    <span class="location_price"><?php echo $single_quantity_pricing_setting->price; ?></span>
+                                                </div>
+                                                <div>
+                                                    <span><?php echo $single_quantity_pricing_setting->quantity; ?></span> Locations | 
+                                                    <span>$<?php echo $single_quantity_pricing_setting->price; ?></span></div>
+                                                <br>
+                                                <div class="delete_button_container"><button class="small-button primary white-text delete_location_quantity_pricing_from_list" id="delete_location_quantity_pricing_<?php echo $key+1; ?>">Delete</button></div>
+                                            </li>
+                                        <?php } ?>
                                         </ul>
                                     </div>
                                 </div>
@@ -571,28 +719,45 @@ foreach($vendor_membership_level_list as $single_level){
                                     <label for="banner-quantity" class="input-label">Set Banner Quantity</label>
                                     <div class="spacer-10px"></div>
                                     <div>
-                                        <input name="banner_qty" value="<?php echo ($majestic->ad_setting != null) ? $majestic->ad_setting->banner_qty : ''; ?>" type="number" id="banner-quantity" class="search-input" placeholder="example: 2">
+                                        <input name="banner_qty" type="number" id="banner_quantity" class="search-input" placeholder="example: 2">
                                     </div>
                                     <div class="spacer-10px"></div>
+                                    <div id="hidden_banner_quantity_price_input" class="display_none">
+                                        <?php foreach($majestic->ad_setting->banner_quantity_pricing_settings as $key=>$single_quantity_pricing_setting){ ?>
+                                            <?php $full_banner_info_joined = $single_quantity_pricing_setting->quantity.'|||'.$single_quantity_pricing_setting->price; ?>
+                                            <input type="hidden" value="<?php echo $full_banner_info_joined; ?>" name="banner_quantity_price_infos[]" id="banner_quantity_price_infos_input_<?php echo $key+1; ?>">
+                                        <?php } ?>  
+                                    </div>
                                     <div class="form-submit-container">
-                                        <a href="" class="button-03 button-link-text white-text">Add Banner Settings</a>
+                                        <button type="button" class="button-03 button-link-text white-text" id="add_banner_info_to_list">Add Banner Settings</a>
                                     </div>
                                 </div>
                                 <div class="form-input-search">
                                     <label for="banner-quantity-price" class="input-label">Set Banner Pricing&nbsp;&nbsp;&nbsp;&nbsp;<i>($0.00 will set to free)</i></label>
                                     <div class="spacer-10px"></div>
                                     <div class="flex-container">
-                                        <b>$</b>&nbsp;<input name="banner_qty_price" value="<?php echo ($majestic->ad_setting != null) ? $majestic->ad_setting->banner_qty_price : ''; ?>" type="number" id="banner-quantity-price" class="search-input" placeholder="example: 2.99">
+                                        <b>$</b>&nbsp;<input name="banner_qty_price" type="number" id="banner_price" class="search-input" placeholder="example: 2.99">
                                     </div>
                                 </div>
                                 <div class="form-input-search">
                                     <label for="banner" class="input-label">Banner Quantity & Pricing List</label>
                                     <div class="spacer-10px"></div>
                                     <div class="list-container">
-                                        <ul class="category-ul">
-                                            <li class="category-li"><div><span>1</span> Banners | <span>$0.05</span></div><br><div><button class="small-button primary white-text">Delete</button></div></li>
-                                            <li class="category-li"><div><span>3</span> Banners | <span>$0.15</span></div><br><div><button class="small-button primary white-text">Delete</button></div></li>
-                                            <li class="category-li"><div><span>4</span> Banners | <span>$0.20</span></div><br><div><button class="small-button primary white-text">Delete</button></div></li>
+                                        <ul class="category-ul" id="added_banner_quantity_pricing_list">
+                                        <?php foreach($majestic->ad_setting->banner_quantity_pricing_settings as $key=>$single_quantity_pricing_setting){ ?>
+                                            <li class="category-li single_added_banner_quantity_pricing" id="single_added_banner_quantity_pricing_<?php echo $key+1;?>">
+                                                <div class="display_none banner_quantity_pricing_object">
+                                                    <span class="banner_quantity"><?php echo $single_quantity_pricing_setting->quantity; ?></span>
+                                                    <span class="banner_price"><?php echo $single_quantity_pricing_setting->price; ?></span>
+                                                </div>
+                                                <div>
+                                                    <span><?php echo $single_quantity_pricing_setting->quantity; ?></span> Banners | 
+                                                    <span>$<?php echo $single_quantity_pricing_setting->price; ?></span>
+                                                </div>
+                                                <br>
+                                                <div class="delete_button_container"><button type="button" class="small-button primary white-text delete_banner_quantity_pricing_from_list" id="delete_banner_quantity_pricing_<?php echo $key+1; ?>">Delete</button></div>
+                                            </li>
+                                        <?php } ?>
                                         </ul>
                                     </div>
                                 </div>
