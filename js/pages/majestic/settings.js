@@ -202,19 +202,28 @@ $(document).ready(function(){
 		let input_to_create = '';
 
 		if(banner_quantity_price_list >0){
-			element_to_create += `<li class="category-li single_added_banner_quantity_pricing" id="single_added_banner_quantity_pricing_${(banner_quantity_price_list+1)}">
-				<div class="display_none banner_quantity_pricing_object">
-					<span class="banner_quantity">${banner_quantity}</span>
-					<span class="banner_price">${banner_price}</span>
-				</div>
-				<div>
-					<span>${banner_quantity}</span> banners | 
-					<span>$${banner_price}</span>
-				</div>
-				<br>
-				<div class="delete_button_container"><button type="button" class="small-button primary white-text delete_banner_quantity_pricing_from_list" id="delete_banner_quantity_pricing_${(banner_quantity_price_list+1)}">Delete</button></div>	
-			</li>`;
-			input_to_create += '<input type="hidden" value="'+full_info_joined+'" name="banner_quantity_price_infos[]" id="banner_quantity_price_infos_input_'+(banner_quantity_price_list+1)+'">';
+			console.log(banner_quantity_price_list);
+			if(banner_quantity_price_list >= 4) {
+				element_to_create += '';
+				input_to_create += '';
+				return false;
+			
+			}else{
+				element_to_create += `<li class="category-li single_added_banner_quantity_pricing" id="single_added_banner_quantity_pricing_${(banner_quantity_price_list+1)}">
+					<div class="display_none banner_quantity_pricing_object">
+						<span class="banner_quantity">${banner_quantity}</span>
+						<span class="banner_price">${banner_price}</span>
+					</div>
+					<div>
+						<span>${banner_quantity}</span> banners | 
+						<span>$${banner_price}</span>
+					</div>
+					<br>
+					<div class="delete_button_container"><button type="button" class="small-button primary white-text delete_banner_quantity_pricing_from_list" id="delete_banner_quantity_pricing_${(banner_quantity_price_list+1)}">Delete</button></div>	
+				</li>`;
+				input_to_create += '<input type="hidden" value="'+full_info_joined+'" name="banner_quantity_price_infos[]" id="banner_quantity_price_infos_input_'+(banner_quantity_price_list+1)+'">';
+
+			}
 		}else{
 			element_to_create += `<li class="category-li single_added_banner_quantity_pricing" id="single_added_banner_quantity_pricing_1">
 				<div class="display_none banner_quantity_pricing_object">
