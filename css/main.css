@@ -1107,7 +1107,8 @@ option {
 }
 /* SHOPPING CART MODAL */
 .shopping-cart-modal {
-    width: 100vw;
+    width: 100%;
+    overflow-x: hidden;
     height: 100vh;
     background-color: rgba(102, 0, 102, 1);
     position: fixed;
