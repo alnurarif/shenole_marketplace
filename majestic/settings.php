@@ -112,6 +112,7 @@ if($_POST){
 
             $ad_setting_object = new Majestic_ad_setting;
             $ad_setting_object->client_ad_display_price = ($_POST['client_ad_display_price'] == '') ? 0 : $_POST['client_ad_display_price'];
+            $ad_setting_object->ad_disable_billing_cycle = ($_POST['ad_disable_billing_cycle'] == '') ? 0 : $_POST['ad_disable_billing_cycle'];
             $ad_setting_object->vendor_one_day_ad_price = ($_POST['vendor_one_day_ad_price'] == '') ? 0 : $_POST['vendor_one_day_ad_price'];
             $ad_setting_object->vendor_one_week_ad_price = ($_POST['vendor_one_week_ad_price'] == '') ? 0 : $_POST['vendor_one_week_ad_price'];
             $ad_setting_object->vendor_one_month_ad_price = ($_POST['vendor_one_month_ad_price'] == '') ? 0 : $_POST['vendor_one_month_ad_price'];
@@ -177,6 +178,7 @@ if($_POST){
             }
         }else{
             $majestic->ad_setting->client_ad_display_price = ($_POST['client_ad_display_price'] == '') ? 0 : $_POST['client_ad_display_price'];
+            $majestic->ad_setting->ad_disable_billing_cycle = ($_POST['ad_disable_billing_cycle'] == '') ? 0 : $_POST['ad_disable_billing_cycle'];
             $majestic->ad_setting->vendor_one_day_ad_price = ($_POST['vendor_one_day_ad_price'] == '') ? 0 : $_POST['vendor_one_day_ad_price'];
             $majestic->ad_setting->vendor_one_week_ad_price = ($_POST['vendor_one_week_ad_price'] == '') ? 0 : $_POST['vendor_one_week_ad_price'];
             $majestic->ad_setting->vendor_one_month_ad_price = ($_POST['vendor_one_month_ad_price'] == '') ? 0 : $_POST['vendor_one_month_ad_price'];
@@ -471,6 +473,19 @@ foreach($vendor_membership_level_list as $single_level){
                                     <div class="spacer-10px"></div>
                                     <div class="flex-container">
                                         <b>$</b>&nbsp;<input name="client_ad_display_price" value="<?php echo ($majestic->ad_setting != null) ? $majestic->ad_setting->client_ad_display_price : ''; ?>" type="number" id="client-ad-display" class="search-input" placeholder="example: 2.99">
+                                    </div>
+                                </div>
+                                <div class="form-input-search">
+                                    <label for="client-upgrade-01-billing-cycle" class="input-label">Set Ad Disable Billing Cycle</label>
+                                    <div class="spacer-10px"></div>
+                                    <div>
+                                        <select name="ad_disable_billing_cycle" id="client-upgrade-01-billing-cycle" class="search-input">
+                                            <option class="select-option-01">Select A Period</option>
+                                            <option value="daily" class="select-option-01" <?php echo ($majestic->ad_setting != null && $majestic->ad_setting->ad_disable_billing_cycle == 'daily') ? 'selected' : ''; ?>>Daily</option>
+                                            <option value="weekly" class="select-option-01" <?php echo ($majestic->ad_setting != null && $majestic->ad_setting->ad_disable_billing_cycle == 'weekly') ? 'selected' : ''; ?>>Weekly</option>
+                                            <option value="monthly" class="select-option-01" <?php echo ($majestic->ad_setting != null && $majestic->ad_setting->ad_disable_billing_cycle == 'monthly') ? 'selected' : ''; ?>>Monthly</option>
+                                            <option value="yearly" class="select-option-01" <?php echo ($majestic->ad_setting != null && $majestic->ad_setting->ad_disable_billing_cycle == 'yearly') ? 'selected' : ''; ?>>Yearly</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
