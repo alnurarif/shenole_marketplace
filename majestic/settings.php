@@ -202,45 +202,52 @@ if($_POST){
 
             $majestic->ad_setting->save();
             Ad_keyword_quantity_pricing_setting::where('ad_setting_id',$majestic->ad_setting->id)->delete();
-            foreach($keyword_quantity_price_infos as $key=>$single_info){
-                $single_info = explode('|||',$single_info);
-                $ad_keyword_quantity_pricing_setting = new Ad_keyword_quantity_pricing_setting;
-                $ad_keyword_quantity_pricing_setting->ad_setting_id = $majestic->ad_setting->id;
-                $ad_keyword_quantity_pricing_setting->quantity = $single_info[0];
-                $ad_keyword_quantity_pricing_setting->price = $single_info[1];
-                $ad_keyword_quantity_pricing_setting->save();
+            if(isset($keyword_quantity_price_infos) && count($keyword_quantity_price_infos) > 0){
+                foreach($keyword_quantity_price_infos as $key=>$single_info){
+                    $single_info = explode('|||',$single_info);
+                    $ad_keyword_quantity_pricing_setting = new Ad_keyword_quantity_pricing_setting;
+                    $ad_keyword_quantity_pricing_setting->ad_setting_id = $majestic->ad_setting->id;
+                    $ad_keyword_quantity_pricing_setting->quantity = $single_info[0];
+                    $ad_keyword_quantity_pricing_setting->price = $single_info[1];
+                    $ad_keyword_quantity_pricing_setting->save();
+                }
             }
 
             Ad_category_quantity_pricing_setting::where('ad_setting_id',$majestic->ad_setting->id)->delete();
-            foreach($category_quantity_price_infos as $key=>$single_info){
-                $single_info = explode('|||',$single_info);
-                $ad_category_quantity_pricing_setting = new Ad_category_quantity_pricing_setting;
-                $ad_category_quantity_pricing_setting->ad_setting_id = $majestic->ad_setting->id;
-                $ad_category_quantity_pricing_setting->quantity = $single_info[0];
-                $ad_category_quantity_pricing_setting->price = $single_info[1];
-                $ad_category_quantity_pricing_setting->save();
+            if(isset($category_quantity_price_infos) && count($category_quantity_price_infos) > 0){
+                foreach($category_quantity_price_infos as $key=>$single_info){
+                    $single_info = explode('|||',$single_info);
+                    $ad_category_quantity_pricing_setting = new Ad_category_quantity_pricing_setting;
+                    $ad_category_quantity_pricing_setting->ad_setting_id = $majestic->ad_setting->id;
+                    $ad_category_quantity_pricing_setting->quantity = $single_info[0];
+                    $ad_category_quantity_pricing_setting->price = $single_info[1];
+                    $ad_category_quantity_pricing_setting->save();
+                }
             }
 
             Ad_location_quantity_pricing_setting::where('ad_setting_id',$majestic->ad_setting->id)->delete();
-            foreach($location_quantity_price_infos as $key=>$single_info){
-                $single_info = explode('|||',$single_info);
-                $ad_location_quantity_pricing_setting = new Ad_location_quantity_pricing_setting;
-                $ad_location_quantity_pricing_setting->ad_setting_id = $majestic->ad_setting->id;
-                $ad_location_quantity_pricing_setting->quantity = $single_info[0];
-                $ad_location_quantity_pricing_setting->price = $single_info[1];
-                $ad_location_quantity_pricing_setting->save();
+            if(isset($location_quantity_price_infos) && count($location_quantity_price_infos) > 0){
+                foreach($location_quantity_price_infos as $key=>$single_info){
+                    $single_info = explode('|||',$single_info);
+                    $ad_location_quantity_pricing_setting = new Ad_location_quantity_pricing_setting;
+                    $ad_location_quantity_pricing_setting->ad_setting_id = $majestic->ad_setting->id;
+                    $ad_location_quantity_pricing_setting->quantity = $single_info[0];
+                    $ad_location_quantity_pricing_setting->price = $single_info[1];
+                    $ad_location_quantity_pricing_setting->save();
+                }
             }
 
             Ad_banner_quantity_pricing_setting::where('ad_setting_id',$majestic->ad_setting->id)->delete();
-            foreach($banner_quantity_price_infos as $key=>$single_info){
-                $single_info = explode('|||',$single_info);
-                $ad_banner_quantity_pricing_setting = new Ad_banner_quantity_pricing_setting;
-                $ad_banner_quantity_pricing_setting->ad_setting_id = $majestic->ad_setting->id;
-                $ad_banner_quantity_pricing_setting->quantity = $single_info[0];
-                $ad_banner_quantity_pricing_setting->price = $single_info[1];
-                $ad_banner_quantity_pricing_setting->save();
+            if(isset($banner_quantity_price_infos) && count($banner_quantity_price_infos) > 0){
+                foreach($banner_quantity_price_infos as $key=>$single_info){
+                    $single_info = explode('|||',$single_info);
+                    $ad_banner_quantity_pricing_setting = new Ad_banner_quantity_pricing_setting;
+                    $ad_banner_quantity_pricing_setting->ad_setting_id = $majestic->ad_setting->id;
+                    $ad_banner_quantity_pricing_setting->quantity = $single_info[0];
+                    $ad_banner_quantity_pricing_setting->price = $single_info[1];
+                    $ad_banner_quantity_pricing_setting->save();
+                }
             }
-            
         }
         $majestic = Majestic::where('login_token',$login_token)->with('ad_setting')->first();
         $show_ad_section = true;
@@ -472,7 +479,7 @@ foreach($vendor_membership_level_list as $single_level){
                                     <label for="client-ad-display" class="input-label">Set Client Ad Display Price&nbsp;&nbsp;&nbsp;&nbsp;<i>($0.00 will set to free)</i></label>
                                     <div class="spacer-10px"></div>
                                     <div class="flex-container">
-                                        <b>$</b>&nbsp;<input name="client_ad_display_price" value="<?php echo ($majestic->ad_setting != null) ? $majestic->ad_setting->client_ad_display_price : ''; ?>" type="number" id="client-ad-display" class="search-input" placeholder="example: 2.99">
+                                        <b>$</b>&nbsp;<input name="client_ad_display_price" value="<?php echo ($majestic->ad_setting != null) ? $majestic->ad_setting->client_ad_display_price : ''; ?>" type="number" step="0.01" id="client-ad-display" class="search-input" placeholder="example: 2.99">
                                     </div>
                                 </div>
                                 <div class="form-input-search">
@@ -499,7 +506,7 @@ foreach($vendor_membership_level_list as $single_level){
                                     <label for="campaign-price-1day" class="input-label">Set Campaign Length Price&nbsp;&nbsp;&nbsp;&nbsp;<i>($0.00 will set to free)</i></label>
                                     <div class="spacer-10px"></div>
                                     <div class="flex-container">
-                                        <b>$</b>&nbsp;<input name="vendor_one_day_ad_price" value="<?php echo ($majestic->ad_setting != null) ? $majestic->ad_setting->vendor_one_day_ad_price : ''; ?>" type="number" id="campaign-price-1day" class="search-input" placeholder="example: 2.99">
+                                        <b>$</b>&nbsp;<input name="vendor_one_day_ad_price" value="<?php echo ($majestic->ad_setting != null) ? $majestic->ad_setting->vendor_one_day_ad_price : ''; ?>" type="number" step="0.01" id="campaign-price-1day" class="search-input" placeholder="example: 2.99">
                                     </div>
                                 </div>
                                 <div class="form-input-search">
@@ -510,7 +517,7 @@ foreach($vendor_membership_level_list as $single_level){
                                     <label for="campaign-price-1week" class="input-label">Set Campaign Length Price&nbsp;&nbsp;&nbsp;&nbsp;<i>($0.00 will set to free)</i></label>
                                     <div class="spacer-10px"></div>
                                     <div class="flex-container">
-                                        <b>$</b>&nbsp;<input name="vendor_one_week_ad_price" value="<?php echo ($majestic->ad_setting != null) ? $majestic->ad_setting->vendor_one_week_ad_price : ''; ?>" type="number" id="campaign-price-1week" class="search-input" placeholder="example: 2.99">
+                                        <b>$</b>&nbsp;<input name="vendor_one_week_ad_price" value="<?php echo ($majestic->ad_setting != null) ? $majestic->ad_setting->vendor_one_week_ad_price : ''; ?>" type="number" step="0.01" id="campaign-price-1week" class="search-input" placeholder="example: 2.99">
                                     </div>
                                 </div>
                                 <div class="form-input-search">
@@ -521,7 +528,7 @@ foreach($vendor_membership_level_list as $single_level){
                                     <label for="campaign-price-1month" class="input-label">Set Campaign Length Price&nbsp;&nbsp;&nbsp;&nbsp;<i>($0.00 will set to free)</i></label>
                                     <div class="spacer-10px"></div>
                                     <div class="flex-container">
-                                        <b>$</b>&nbsp;<input name="vendor_one_month_ad_price" value="<?php echo ($majestic->ad_setting != null) ? $majestic->ad_setting->vendor_one_month_ad_price : ''; ?>" type="number" id="campaign-price-1month" class="search-input" placeholder="example: 2.99">
+                                        <b>$</b>&nbsp;<input name="vendor_one_month_ad_price" value="<?php echo ($majestic->ad_setting != null) ? $majestic->ad_setting->vendor_one_month_ad_price : ''; ?>" type="number" step="0.01" id="campaign-price-1month" class="search-input" placeholder="example: 2.99">
                                     </div>
                                 </div>
                             </div>
@@ -534,7 +541,7 @@ foreach($vendor_membership_level_list as $single_level){
                                     <label for="campaign-price-3months" class="input-label">Set Campaign Length Price&nbsp;&nbsp;&nbsp;&nbsp;<i>($0.00 will set to free)</i></label>
                                     <div class="spacer-10px"></div>
                                     <div class="flex-container">
-                                        <b>$</b>&nbsp;<input name="vendor_three_months_ad_price" value="<?php echo ($majestic->ad_setting != null) ? $majestic->ad_setting->vendor_three_months_ad_price : ''; ?>" type="number" id="campaign-price-3months" class="search-input" placeholder="example: 2.99">
+                                        <b>$</b>&nbsp;<input name="vendor_three_months_ad_price" value="<?php echo ($majestic->ad_setting != null) ? $majestic->ad_setting->vendor_three_months_ad_price : ''; ?>" type="number" step="0.01" id="campaign-price-3months" class="search-input" placeholder="example: 2.99">
                                     </div>
                                 </div>
                                 <div class="form-input-search">
@@ -545,7 +552,7 @@ foreach($vendor_membership_level_list as $single_level){
                                     <label for="campaign-price-6months" class="input-label">Set Campaign Length Price&nbsp;&nbsp;&nbsp;&nbsp;<i>($0.00 will set to free)</i></label>
                                     <div class="spacer-10px"></div>
                                     <div class="flex-container">
-                                        <b>$</b>&nbsp;<input name="vendor_six_months_ad_price" value="<?php echo ($majestic->ad_setting != null) ? $majestic->ad_setting->vendor_six_months_ad_price : ''; ?>" type="number" id="campaign-price-6months" class="search-input" placeholder="example: 2.99">
+                                        <b>$</b>&nbsp;<input name="vendor_six_months_ad_price" value="<?php echo ($majestic->ad_setting != null) ? $majestic->ad_setting->vendor_six_months_ad_price : ''; ?>" type="number" step="0.01" id="campaign-price-6months" class="search-input" placeholder="example: 2.99">
                                     </div>
                                 </div>
                                 <div class="form-input-search">
@@ -556,7 +563,7 @@ foreach($vendor_membership_level_list as $single_level){
                                     <label for="campaign-price-1year" class="input-label">Set Campaign Length Price&nbsp;&nbsp;&nbsp;&nbsp;<i>($0.00 will set to free)</i></label>
                                     <div class="spacer-10px"></div>
                                     <div class="flex-container">
-                                        <b>$</b>&nbsp;<input name="vendor_one_year_ad_price" value="<?php echo ($majestic->ad_setting != null) ? $majestic->ad_setting->vendor_one_year_ad_price : ''; ?>" type="number" id="campaign-price-1year" class="search-input" placeholder="example: 2.99">
+                                        <b>$</b>&nbsp;<input name="vendor_one_year_ad_price" value="<?php echo ($majestic->ad_setting != null) ? $majestic->ad_setting->vendor_one_year_ad_price : ''; ?>" type="number" step="0.01" id="campaign-price-1year" class="search-input" placeholder="example: 2.99">
                                     </div>
                                 </div>
                             </div>
@@ -566,7 +573,7 @@ foreach($vendor_membership_level_list as $single_level){
                                     <label for="Keyword-quantity" class="input-label">Set Keyword Quantity</label>
                                     <div class="spacer-10px"></div>
                                     <div>
-                                        <input name="keyword_qty" type="number" id="keyword_quantity" class="search-input" placeholder="example: 10">
+                                        <input name="keyword_qty" type="number" step="0.01" id="keyword_quantity" class="search-input" placeholder="example: 10">
                                     </div>
                                     <div class="spacer-10px"></div>
                                     <div id="hidden_keyword_quantity_price_input" class="display_none">
@@ -585,7 +592,7 @@ foreach($vendor_membership_level_list as $single_level){
                                     <label for="keyword-pricing" class="input-label">Set Keyword Pricing&nbsp;&nbsp;&nbsp;&nbsp;<i>($0.00 will set to free)</i></label>
                                     <div class="spacer-10px"></div>
                                     <div class="flex-container">
-                                        <b>$</b>&nbsp;<input name="keyword_qty_price" type="number" id="keyword_price" class="search-input" placeholder="example: 2.99">
+                                        <b>$</b>&nbsp;<input name="keyword_qty_price" type="number" step="0.01" id="keyword_price" class="search-input" placeholder="example: 2.99">
                                     </div>
                                 </div>
                                 <div class="form-input-search">
@@ -619,7 +626,7 @@ foreach($vendor_membership_level_list as $single_level){
                                     <label for="category-quantity" class="input-label">Set Category Quantity</label>
                                     <div class="spacer-10px"></div>
                                     <div>
-                                        <input name="category_qty" type="number" id="category_quantity" class="search-input" placeholder="example: 10">
+                                        <input name="category_qty" type="number" step="0.01" id="category_quantity" class="search-input" placeholder="example: 10">
                                     </div>
                                     <div class="spacer-10px"></div>
                                     <div id="hidden_category_quantity_price_input" class="display_none">
@@ -638,7 +645,7 @@ foreach($vendor_membership_level_list as $single_level){
                                     <label for="category-quantity-price" class="input-label">Set Category Pricing&nbsp;&nbsp;&nbsp;&nbsp;<i>($0.00 will set to free)</i></label>
                                     <div class="spacer-10px"></div>
                                     <div class="flex-container">
-                                        <b>$</b>&nbsp;<input name="category_qty_price" type="number" id="category_price" class="search-input" placeholder="example: 2.99">
+                                        <b>$</b>&nbsp;<input name="category_qty_price" type="number" step="0.01" id="category_price" class="search-input" placeholder="example: 2.99">
                                     </div>
                                 </div>
                                 <div class="form-input-search">
@@ -673,7 +680,7 @@ foreach($vendor_membership_level_list as $single_level){
                                     <label for="location-quantity" class="input-label">Set Location Quantity</label>
                                     <div class="spacer-10px"></div>
                                     <div>
-                                        <input name="location_qty" type="number" id="location_quantity" class="search-input" placeholder="example: 10">
+                                        <input name="location_qty" type="number" step="0.01" id="location_quantity" class="search-input" placeholder="example: 10">
                                     </div>
                                     <div class="spacer-10px"></div>
                                     <div id="hidden_location_quantity_price_input" class="display_none">
@@ -692,7 +699,7 @@ foreach($vendor_membership_level_list as $single_level){
                                     <label for="location-quantity-price" class="input-label">Set Location Pricing&nbsp;&nbsp;&nbsp;&nbsp;<i>($0.00 will set to free)</i></label>
                                     <div class="spacer-10px"></div>
                                     <div class="flex-container">
-                                        <b>$</b>&nbsp;<input name="location_qty_price" type="number" id="location_price" class="search-input" placeholder="example: 2.99">
+                                        <b>$</b>&nbsp;<input name="location_qty_price" type="number" step="0.01" id="location_price" class="search-input" placeholder="example: 2.99">
                                     </div>
                                 </div>
                                 <div class="form-input-search">
@@ -746,7 +753,7 @@ foreach($vendor_membership_level_list as $single_level){
                                     <label for="banner-quantity-price" class="input-label">Set Banner Pricing&nbsp;&nbsp;&nbsp;&nbsp;<i>($0.00 will set to free)</i></label>
                                     <div class="spacer-10px"></div>
                                     <div class="flex-container">
-                                        <b>$</b>&nbsp;<input name="banner_qty_price" type="number" id="banner_price" class="search-input" placeholder="example: 2.99">
+                                        <b>$</b>&nbsp;<input name="banner_qty_price" type="number" step="0.01" id="banner_price" class="search-input" placeholder="example: 2.99">
                                     </div>
                                 </div>
                                 <div class="form-input-search">
@@ -782,7 +789,7 @@ foreach($vendor_membership_level_list as $single_level){
                                     <label for="majestic-top-left-placement-price" class="input-label">Set Placement Pricing&nbsp;&nbsp;&nbsp;&nbsp;<i>($0.00 will set to free)</i></label>
                                     <div class="spacer-10px"></div>
                                     <div class="flex-container">
-                                        <b>$</b>&nbsp;<input name="banner_top_left_price" value="<?php echo ($majestic->ad_setting != null) ? $majestic->ad_setting->banner_top_left_price : ''; ?>" type="number" id="majestic-top-left-placement-price" class="search-input" placeholder="example: 2.99">
+                                        <b>$</b>&nbsp;<input name="banner_top_left_price" value="<?php echo ($majestic->ad_setting != null) ? $majestic->ad_setting->banner_top_left_price : ''; ?>" type="number" step="0.01" id="majestic-top-left-placement-price" class="search-input" placeholder="example: 2.99">
                                     </div>
                                 </div>
                                 <div class="form-input-search">
@@ -792,7 +799,7 @@ foreach($vendor_membership_level_list as $single_level){
                                     <label for="majestic-top-right-price" class="input-label">Set Placement Pricing&nbsp;&nbsp;&nbsp;&nbsp;<i>($0.00 will set to free)</i></label>
                                     <div class="spacer-10px"></div>
                                     <div class="flex-container">
-                                        <b>$</b>&nbsp;<input name="banner_top_right_price" value="<?php echo ($majestic->ad_setting != null) ? $majestic->ad_setting->banner_top_right_price : ''; ?>" type="number" id="majestic-top-right-price" class="search-input" placeholder="example: 2.99">
+                                        <b>$</b>&nbsp;<input name="banner_top_right_price" value="<?php echo ($majestic->ad_setting != null) ? $majestic->ad_setting->banner_top_right_price : ''; ?>" type="number" step="0.01" id="majestic-top-right-price" class="search-input" placeholder="example: 2.99">
                                     </div>
                                 </div>
                                 <div class="form-input-search">
@@ -802,7 +809,7 @@ foreach($vendor_membership_level_list as $single_level){
                                     <label for="majestic-bottom-left-price" class="input-label">Set Placement Pricing&nbsp;&nbsp;&nbsp;&nbsp;<i>($0.00 will set to free)</i></label>
                                     <div class="spacer-10px"></div>
                                     <div class="flex-container">
-                                        <b>$</b>&nbsp;<input name="banner_bottom_left_price" value="<?php echo ($majestic->ad_setting != null) ? $majestic->ad_setting->banner_bottom_left_price : ''; ?>" type="number" id="majestic-bottom-left-price" class="search-input" placeholder="example: 2.99">
+                                        <b>$</b>&nbsp;<input name="banner_bottom_left_price" value="<?php echo ($majestic->ad_setting != null) ? $majestic->ad_setting->banner_bottom_left_price : ''; ?>" type="number" step="0.01" id="majestic-bottom-left-price" class="search-input" placeholder="example: 2.99">
                                     </div>
                                 </div>
                             </div>
@@ -814,7 +821,7 @@ foreach($vendor_membership_level_list as $single_level){
                                     <label for="majestic-bottom-right-price" class="input-label">Set Placement Pricing&nbsp;&nbsp;&nbsp;&nbsp;<i>($0.00 will set to free)</i></label>
                                     <div class="spacer-10px"></div>
                                     <div class="flex-container">
-                                        <b>$</b>&nbsp;<input name="banner_bottom_right_price" value="<?php echo ($majestic->ad_setting != null) ? $majestic->ad_setting->banner_bottom_right_price : ''; ?>" type="number" id="majestic-bottom-right-price" class="search-input" placeholder="example: 2.99">
+                                        <b>$</b>&nbsp;<input name="banner_bottom_right_price" value="<?php echo ($majestic->ad_setting != null) ? $majestic->ad_setting->banner_bottom_right_price : ''; ?>" type="number" step="0.01" id="majestic-bottom-right-price" class="search-input" placeholder="example: 2.99">
                                     </div>
                                 </div>
                                 <div class="form-input-search">
@@ -824,7 +831,7 @@ foreach($vendor_membership_level_list as $single_level){
                                     <label for="majestic-two-top-price" class="input-label">Set Placement Pricing&nbsp;&nbsp;&nbsp;&nbsp;<i>($0.00 will set to free)</i></label>
                                     <div class="spacer-10px"></div>
                                     <div class="flex-container">
-                                        <b>$</b>&nbsp;<input name="banners_two_top_price" value="<?php echo ($majestic->ad_setting != null) ? $majestic->ad_setting->banners_two_top_price : ''; ?>" type="number" id="majestic-two-top-price" class="search-input" placeholder="example: 2.99">
+                                        <b>$</b>&nbsp;<input name="banners_two_top_price" value="<?php echo ($majestic->ad_setting != null) ? $majestic->ad_setting->banners_two_top_price : ''; ?>" type="number" step="0.01" id="majestic-two-top-price" class="search-input" placeholder="example: 2.99">
                                     </div>
                                 </div>
                                 <div class="form-input-search">
@@ -834,7 +841,7 @@ foreach($vendor_membership_level_list as $single_level){
                                     <label for="majestic-two-bottom-price" class="input-label">Set Placement Pricing&nbsp;&nbsp;&nbsp;&nbsp;<i>($0.00 will set to free)</i></label>
                                     <div class="spacer-10px"></div>
                                     <div class="flex-container">
-                                        <b>$</b>&nbsp;<input name="banners_two_bottom_price" value="<?php echo ($majestic->ad_setting != null) ? $majestic->ad_setting->banners_two_bottom_price : ''; ?>" type="number" id="majestic-two-bottom-price" class="search-input" placeholder="example: 2.99">
+                                        <b>$</b>&nbsp;<input name="banners_two_bottom_price" value="<?php echo ($majestic->ad_setting != null) ? $majestic->ad_setting->banners_two_bottom_price : ''; ?>" type="number" step="0.01" id="majestic-two-bottom-price" class="search-input" placeholder="example: 2.99">
                                     </div>
                                 </div>
                             </div>
@@ -846,7 +853,7 @@ foreach($vendor_membership_level_list as $single_level){
                                     <label for="majestic-all-banners-price" class="input-label">Set Placement Pricing&nbsp;&nbsp;&nbsp;&nbsp;<i>($0.00 will set to free)</i></label>
                                     <div class="spacer-10px"></div>
                                     <div class="flex-container">
-                                        <b>$</b>&nbsp;<input name="banners_all_four_price" value="<?php echo ($majestic->ad_setting != null) ? $majestic->ad_setting->banners_all_four_price : ''; ?>" type="number" id="majestic-all-banners-price" class="search-input" placeholder="example: 2.99">
+                                        <b>$</b>&nbsp;<input name="banners_all_four_price" value="<?php echo ($majestic->ad_setting != null) ? $majestic->ad_setting->banners_all_four_price : ''; ?>" type="number" step="0.01" id="majestic-all-banners-price" class="search-input" placeholder="example: 2.99">
                                     </div>
                                 </div>
                             </div>

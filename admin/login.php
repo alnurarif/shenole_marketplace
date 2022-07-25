@@ -111,7 +111,7 @@ if(isset($_POST['login'])){
 			<div class="fix fifty_percent div_mid">
 				<div class="fix full mt_160">
 					<div class="fix ninty_percent div_mid" id="client-signup-section">
-						<form action="login.php" method="post">
+						<form action="<?php echo SITE_LINK; ?>admin/login.php" method="post">
 							<div class="fix full mt_5 mb_5">
 								<input type="hidden" name="login" value="1"/>
 							</div>

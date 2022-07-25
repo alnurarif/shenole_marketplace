@@ -11,4 +11,6 @@
     <link rel="stylesheet" href="<?php echo SITE_LINK; ?>css/style.css">
     <link rel="stylesheet" href="<?php echo SITE_LINK; ?>css/modal.css">
     <link rel="stylesheet" href="<?php echo SITE_LINK; ?>css/main.css">
+    <link rel="stylesheet" href="<?php echo SITE_LINK; ?>css/loading.css">
+    <base href="<?php echo SITE_LINK; ?>">
 </head>

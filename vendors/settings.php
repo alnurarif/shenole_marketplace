@@ -1,14 +1,17 @@
 <?php
 session_start();
 require "../start.php";
-use Shenole_project\helpers\Validator;
+use Shenole_project\models\State;
 use Shenole_project\models\Vendor;
-use Shenole_project\models\Vendor_setting;
 use Shenole_project\models\Client;
-use Shenole_project\utils\RandomStringGenerator;
-use Shenole_project\helpers\UserHelper;
-use Shenole_project\repositories\VendorRepository;
+use Shenole_project\models\Category;
 use Shenole_project\helpers\MyHelpers;
+use Shenole_project\helpers\Validator;
+use Shenole_project\helpers\UserHelper;
+use Shenole_project\models\Vendor_setting;
+use Shenole_project\models\Majestic_ad_setting;
+use Shenole_project\utils\RandomStringGenerator;
+use Shenole_project\repositories\VendorRepository;
 
 $isVendorLoggedIn = UserHelper::isUserLoggedIn($_SESSION, 'vendor', new VendorRepository);
 $login_token = UserHelper::getLoginTokenByUserType($_SESSION, 'vendor');
@@ -131,6 +134,9 @@ if($_POST){
         $show_membership_section = true;
     }
 }
+$majestic_ad_setting = Majestic_ad_setting::find(1)->with('keyword_quantity_pricing_settings','category_quantity_pricing_settings','location_quantity_pricing_settings','banner_quantity_pricing_settings')->first();
+$categories = Category::get();
+$states = State::get();
 ?>
 
 <!DOCTYPE html>
@@ -388,6 +394,7 @@ if($_POST){
                     <div class="profile-section" id="ad_space">
                         <h2>Ad Space</h2>
                         <form action="" class="full-width-form">
+                            <input type="hidden" value="<?php echo $login_token; ?>" id="login_token"/>
                             <p>***NOTE*** Each setting will affect the ad campaign total cost listed below.</p>
                             <h3>Campaign Length Settings</h3>
                             <div class="spacer-10px"></div>
@@ -396,9 +403,14 @@ if($_POST){
                                 <div class="form-input-search">
                                     <label for="category" class="input-label">Select A Campaign Length</label>
                                     <div class="spacer-10px"></div>
-                                    <select name="state-01" class="search-input">
+                                    <select name="state-01" class="search-input" id="campaign_length_select">
                                         <option value="" class="select-option-01">Time Period</option>
-                                        <option value="" class="select-option-01"></option>
+                                        <?php echo (!empty($majestic_ad_setting) && $majestic_ad_setting->vendor_one_day_ad == 1) ? '<option value="one_day||'.$majestic_ad_setting->vendor_one_day_ad_price.'" class="select-option-01">One Day</option>' : ''; ?>
+                                        <?php echo (!empty($majestic_ad_setting) && $majestic_ad_setting->vendor_one_week_ad == 1) ? '<option value="one_week||'.$majestic_ad_setting->vendor_one_week_ad_price.'" class="select-option-01">One Week</option>' : ''; ?>
+                                        <?php echo (!empty($majestic_ad_setting) && $majestic_ad_setting->vendor_one_month_ad == 1) ? '<option value="one_month||'.$majestic_ad_setting->vendor_one_month_ad_price.'" class="select-option-01">One Month</option>' : ''; ?>
+                                        <?php echo (!empty($majestic_ad_setting) && $majestic_ad_setting->vendor_three_months_ad == 1) ? '<option value="three_months||'.$majestic_ad_setting->vendor_three_months_ad_price.'" class="select-option-01">Three Months</option>' : ''; ?>
+                                        <?php echo (!empty($majestic_ad_setting) && $majestic_ad_setting->vendor_six_months_ad == 1) ? '<option value="six_months||'.$majestic_ad_setting->vendor_six_months_ad_price.'" class="select-option-01">Six Months</option>' : ''; ?>
+                                        <?php echo (!empty($majestic_ad_setting) && $majestic_ad_setting->vendor_one_year_ad == 1) ? '<option value="one_year||'.$majestic_ad_setting->vendor_one_year_ad_price.'" class="select-option-01">One Year</option>' : ''; ?>
                                     </select>
                                 </div>
                             </div>
@@ -407,34 +419,36 @@ if($_POST){
                             <div class="spacer-10px"></div>
                             <div class="form-input-container">
                                 <div class="form-input-search">
-                                    <label for="category" class="input-label">Select Number Of Kewords To Appear Under</label>
+                                    <label for="category" class="input-label">Select Number Of Keywords To Appear Under</label>
                                     <div class="spacer-10px"></div>
-                                    <select name="state-01" class="search-input-mini">
-                                        <option value="0" class="select-option-01">---</option>
-                                        <option value="" class="select-option-01"></option>
+                                    <select name="state-01" class="search-input-mini" id="campaign_keyword_prices_select">
+                                        <option value="" class="select-option-01">Number of Keywords</option>
+                                        <?php 
+                                            foreach($majestic_ad_setting->keyword_quantity_pricing_settings as $single_keyword_quantity_pricing_setting){
+                                                echo '<option value="'.(int)$single_keyword_quantity_pricing_setting->quantity.'||'.$single_keyword_quantity_pricing_setting->price.'" class="select-option-01">'.(int)$single_keyword_quantity_pricing_setting->quantity.'</option>';
+                                            }
+                                        ?>
                                     </select>
                                 </div>
                             </div>
                             <div class="form-input-container">
                                 <div class="form-input-search">
-                                    <label for="keywords" class="input-label">Enter Comma Separated Keywords<br>(0 word max)</label>
+                                    <label for="keywords" class="input-label">Enter Comma Separated Keywords<br>(<span id="max_keyword_number_to_show">0</span> word max) <span id="keyword_error_message" style="color:red;display:none;">You exceeded the keywords limit!</span></label>
                                     <div class="spacer-10px"></div>
                                     <div>
-                                        <input type="text" id="keyword-vendor-search" class="search-input" placeholder="example: party band, caterer, photographer">
+                                        <input type="text" id="comma_separated_keywords" class="search-input" placeholder="example: party band, caterer, photographer">
                                     </div>
                                     <div class="spacer-10px"></div>
                                     <div class="form-submit-container">
-                                        <a href="" class="button-03 button-link-text white-text">Add Keywords</a>
+                                        <button type="button" class="button-03 button-link-text white-text" id="add_keywords">Add Keywords</button>
                                     </div>
                                 </div>
                                 <div class="form-input-search">
                                     <label for="location" class="input-label">Keyword List</label>
                                     <div class="spacer-10px"></div>
                                     <div class="list-container">
-                                        <ul class="category-ul">
-                                            <li class="category-li"><div>Jazz</div><br><div><button class="small-button primary white-text">Delete</button></div></li>
-                                            <li class="category-li"><div>Blues</div><br><div><button class="small-button primary white-text">Delete</button></div></li>
-                                            <li class="category-li"><div>Funk</div><br><div><button class="small-button primary white-text">Delete</button></div></li>
+                                        <ul class="category-ul" id="keywords_list_box">
+                                            
                                         </ul>
                                     </div>
                                 </div>
@@ -446,36 +460,41 @@ if($_POST){
                                 <div class="form-input-search">
                                     <label for="category" class="input-label">Select Number Of Categories To Appear Under</label>
                                     <div class="spacer-10px"></div>
-                                    <select name="state-01" class="search-input-mini">
-                                        <option value="0" class="select-option-01">---</option>
-                                        <option value="" class="select-option-01"></option>
+                                    <select name="state-01" class="search-input-mini" id="category_prices_select">
+                                        <option value="" class="select-option-01">Number of Categories</option>
+                                        <?php 
+                                            foreach($majestic_ad_setting->category_quantity_pricing_settings as $single_category_quantity_pricing_setting){
+                                                echo '<option value="'.(int)$single_category_quantity_pricing_setting->quantity.'||'.$single_category_quantity_pricing_setting->price.'" class="select-option-01">'.(int)$single_category_quantity_pricing_setting->quantity.'</option>';
+                                            }
+                                        ?>
                                     </select>
                                 </div>
                             </div>
                             <div class="form-input-container">
                                 <div class="form-input-search">
-                                    <label for="category" class="input-label">Category Choices</label>
+                                    <label for="category" class="input-label">Category Choices <span id="category_error_message" style="color:red;display:none;">You exceeded the categories limit!</span></label>
                                     <div class="spacer-10px"></div>
                                     <div>
-                                        <select name="category" id="category" class="search-input">
+                                        <select name="category" id="category_name" class="search-input">
                                             <option value="" class="select-option-01">Select Category</option>
-                                            <option value="" class="select-option-01"></option>
+                                            <?php 
+                                                foreach($categories as $category){
+                                                    echo '<option value="'.$category->name.'" class="select-option-01">'.$category->name.'</option>';
+                                                }
+                                            ?>
                                         </select>
                                     </div>
                                     <div class="spacer-10px"></div>
                                     <div class="spacer-10px"></div>
                                     <div class="form-submit-container">
-                                        <a href="" class="button-03 button-link-text white-text">Add Category</a>
+                                        <button type="button" class="button-03 button-link-text white-text" id="add_category">Add Category</button>
                                     </div>
                                 </div>
                                 <div class="form-input-search">
                                     <label for="location" class="input-label">Category List</label>
                                     <div class="spacer-10px"></div>
                                     <div class="list-container">
-                                        <ul class="category-ul">
-                                            <li class="category-li"><div>Cateror</div><br><div class="multi-button-container"><button class="small-button primary white-text">Delete</button></div></li>
-                                            <li class="category-li"><div>Musician</div><br><div class="multi-button-container"><button class="small-button primary white-text">Delete</button></div></li>
-                                            <li class="category-li"><div>Photographer</div><br><div class="multi-button-container"><button class="small-button primary white-text">Delete</button></div></li>
+                                        <ul class="category-ul" id="categories_list_box">
                                         </ul>
                                     </div>
                                 </div>
@@ -487,36 +506,41 @@ if($_POST){
                                 <div class="form-input-search">
                                     <label for="category" class="input-label">Select Number Of Locations To Appear Under</label>
                                     <div class="spacer-10px"></div>
-                                    <select name="state-01" class="search-input-mini">
-                                        <option value="0" class="select-option-01">---</option>
-                                        <option value="" class="select-option-01"></option>
+                                    <select name="state-01" class="search-input-mini" id="location_prices_select">
+                                        <option value="" class="select-option-01">Number of Locations</option>
+                                        <?php 
+                                            foreach($majestic_ad_setting->location_quantity_pricing_settings as $single_location_quantity_pricing_setting){
+                                                echo '<option value="'.(int)$single_location_quantity_pricing_setting->quantity.'||'.$single_location_quantity_pricing_setting->price.'" class="select-option-01">'.(int)$single_location_quantity_pricing_setting->quantity.'</option>';
+                                            }
+                                        ?>
                                     </select>
                                 </div>
                             </div>
                             <div class="form-input-container">
                                 <div class="form-input-search">
-                                    <label for="category" class="input-label">Location Choices</label>
+                                    <label for="category" class="input-label">Location Choices <span id="location_error_message" style="color:red;display:none;">You exceeded the locations limit!</span></label>
                                     <div class="spacer-10px"></div>
                                     <div>
-                                        <select name="category" id="category" class="search-input">
+                                        <select name="state"  id="location_name" class="search-input">
                                             <option value="" class="select-option-01">Select State</option>
-                                            <option value="" class="select-option-01"></option>
+                                            <?php 
+                                                foreach($states as $state){
+                                                    echo '<option value="'.$state->short_name.'" class="select-option-01">'.$state->short_name.'</option>';
+                                                }
+                                            ?>
                                         </select>
                                     </div>
                                     <div class="spacer-10px"></div>
                                     <div class="spacer-10px"></div>
                                     <div class="form-submit-container">
-                                        <a href="" class="button-03 button-link-text white-text">Add Location</a>
+                                        <button type="button" class="button-03 button-link-text white-text" id="add_location">Add Location</button>
                                     </div>
                                 </div>
                                 <div class="form-input-search">
                                     <label for="location" class="input-label">Location List</label>
                                     <div class="spacer-10px"></div>
                                     <div class="list-container">
-                                        <ul class="category-ul">
-                                            <li class="category-li"><div>Cateror</div><br><div class="multi-button-container"><button class="small-button primary white-text">Delete</button></div></li>
-                                            <li class="category-li"><div>Musician</div><br><div class="multi-button-container"><button class="small-button primary white-text">Delete</button></div></li>
-                                            <li class="category-li"><div>Photographer</div><br><div class="multi-button-container"><button class="small-button primary white-text">Delete</button></div></li>
+                                        <ul class="category-ul" id="locations_list_box">
                                         </ul>
                                     </div>
                                 </div>
@@ -526,20 +550,20 @@ if($_POST){
                             <div class="spacer-10px"></div>
                             <div class="form-input-container">
                                 <div class="form-input-search">
-                                    <label for="skyscraper-upload" class="input-label">Select Your 160px by 600px Banner</label>
-                                    <input type="file" id="skyscraper-upload" name="skyscraper-upload">
+                                    <label for="skyscraper_upload" class="input-label">Select Your 160px by 600px Banner</label>
+                                    <input type="file" id="skyscraper_upload" name="skyscraper_upload" accept="image/*">
                                     <div class="spacer-10px"></div>
                                     <img src="../images/main-images/skyscraper-demo-size.png" alt="" class="fluid-image">
                                 </div>
                                 <div class="form-input-search">
-                                    <label for="leader-board-upload" class="input-label">Select Your 728px by 90px Banner</label>
-                                    <input type="file" id="leader-board-upload" name="leader-board-upload">
+                                    <label for="leader_board_upload" class="input-label">Select Your 728px by 90px Banner</label>
+                                    <input type="file" id="leader_board_upload" name="leader_board_upload" accept="image/*">
                                     <div class="spacer-10px"></div>
                                     <img src="../images/main-images/leader-board-demo-size.png" alt="" class="fluid-image">
                                 </div>
                                 <div class="form-input-search">
-                                    <label for="banner-upload" class="input-label">Select Your 468px by 60px Banner</label>
-                                    <input type="file" id="banner-upload" name="banner-upload">
+                                    <label for="banner_upload" class="input-label">Select Your 468px by 60px Banner</label>
+                                    <input type="file" id="banner_upload" name="banner_upload" accept="image/*">
                                     <div class="spacer-10px"></div>
                                     <img src="../images/main-images/banner-demo-size.png" alt="" class="fluid-image">
                                 </div>
@@ -551,9 +575,13 @@ if($_POST){
                                 <div class="form-input-search">
                                     <label for="category" class="input-label">Select Number Of Banners To Appear In</label>
                                     <div class="spacer-10px"></div>
-                                    <select name="state-01" class="search-input-mini">
-                                        <option value="0" class="select-option-01">---</option>
-                                        <option value="" class="select-option-01"></option>
+                                    <select name="state-01" class="search-input-mini" id="banner_prices_select">
+                                        <option value="" class="select-option-01">Number of Banners</option>
+                                        <?php 
+                                            foreach($majestic_ad_setting->banner_quantity_pricing_settings as $single_banner_quantity_pricing_setting){
+                                                echo '<option value="'.(int)$single_banner_quantity_pricing_setting->quantity.'||'.$single_banner_quantity_pricing_setting->price.'" class="select-option-01">'.(int)$single_banner_quantity_pricing_setting->quantity.'</option>';
+                                            }
+                                        ?>
                                     </select>
                                 </div>
                             </div>
@@ -561,21 +589,21 @@ if($_POST){
                                 <div class="form-input-search">
                                     <label for="category" class="input-label">Place Ad In Top Left Banner</label>
                                     <div class="spacer-10px"></div>
-                                    <input type="checkbox" name="disable-ads" id="disable-ads">
+                                    <input type="checkbox" class="banner_position_price" value="<?php echo isset($majestic_ad_setting->banner_top_left_price) ? $majestic_ad_setting->banner_top_left_price : 0 ; ?>" name="banner_top_left" id="banner_top_left">
                                         <div class="spacer-10px"></div>
                                         <img src="../images/main-images/top-left.jpg" alt="Place ad in top left banner." class="fluid-image" id="top-left">
                                 </div>
                                 <div class="form-input-search">
                                     <label for="category" class="input-label">Place Ad In Top Right Banner</label>
                                     <div class="spacer-10px"></div>
-                                    <input type="checkbox" name="disable-ads" id="disable-ads">
+                                    <input type="checkbox" class="banner_position_price" value="<?php echo isset($majestic_ad_setting->banner_top_right_price) ? $majestic_ad_setting->banner_top_right_price : 0; ?>" name="banner_top_right" id="banner_top_right">
                                         <div class="spacer-10px"></div>
                                         <img src="../images/main-images/top-right.jpg" alt="Place ad in top right banner." class="fluid-image" id="top-right">
                                 </div>
                                 <div class="form-input-search">
                                     <label for="category" class="input-label">Place Ad In Bottom Left Banner</label>
                                     <div class="spacer-10px"></div>
-                                    <input type="checkbox" name="disable-ads" id="disable-ads">
+                                    <input type="checkbox" class="banner_position_price" value="<?php echo isset($majestic_ad_setting->banner_bottom_left_price) ? $majestic_ad_setting->banner_bottom_left_price : 0; ?>" name="banner_bottom_left" id="banner_bottom_left">
                                         <div class="spacer-10px"></div>
                                         <img src="../images/main-images/bottom-left.jpg" alt="Place ad in bottom left banner." class="fluid-image" id="bottom-left">
                                 </div>
@@ -584,21 +612,21 @@ if($_POST){
                                 <div class="form-input-search">
                                     <label for="category" class="input-label">Place Ad In Bottom Right Banner</label>
                                     <div class="spacer-10px"></div>
-                                    <input type="checkbox" name="disable-ads" id="disable-ads">
+                                    <input type="checkbox" class="banner_position_price" value="<?php echo isset($majestic_ad_setting->banner_bottom_right_price) ? $majestic_ad_setting->banner_bottom_right_price : 0; ?>" name="banner_bottom_right" id="banner_bottom_right">
                                         <div class="spacer-10px"></div>
                                         <img src="../images/main-images/bottom-right.jpg" alt="Place ad in bottom right banner." class="fluid-image" id="bottom-right">
                                 </div>
                                 <div class="form-input-search">
                                     <label for="category" class="input-label">Place Ad In Two Top Banners</label>
                                     <div class="spacer-10px"></div>
-                                    <input type="checkbox" name="disable-ads" id="disable-ads">
+                                    <input type="checkbox" class="banner_position_price" value="<?php echo isset($majestic_ad_setting->banners_two_top_price) ? $majestic_ad_setting->banners_two_top_price : 0; ?>" name="banners_two_top" id="banners_two_top">
                                         <div class="spacer-10px"></div>
                                         <img src="../images/main-images/two-top.jpg" alt="Place ad in two top banners." class="fluid-image" id="two-top">
                                 </div>
                                 <div class="form-input-search">
                                     <label for="category" class="input-label">Place Ad In Two Bottom Banners</label>
                                     <div class="spacer-10px"></div>
-                                    <input type="checkbox" name="disable-ads" id="disable-ads">
+                                    <input type="checkbox" class="banner_position_price" value="<?php echo isset($majestic_ad_setting->banners_two_bottom_price) ? $majestic_ad_setting->banners_two_bottom_price : 0; ?>" name="banners_two_bottom" id="banners_two_bottom">
                                         <div class="spacer-10px"></div>
                                         <img src="../images/main-images/two-bottom.jpg" alt="Place ad in two bottom banners." class="fluid-image" id="two-bottom">
                                 </div>
@@ -607,17 +635,17 @@ if($_POST){
                                 <div class="form-input-search">
                                     <label for="category" class="input-label">Place Ad In All Banners</label>
                                     <div class="spacer-10px"></div>
-                                    <input type="checkbox" name="disable-ads" id="disable-ads">
+                                    <input type="checkbox" class="banner_position_price" value="<?php echo isset($majestic_ad_setting->banners_all_four_price) ? $majestic_ad_setting->banners_all_four_price : 0; ?>" name="banners_all_four" id="banners_all_four">
                                         <div class="spacer-10px"></div>
                                         <img src="../images/main-images/all-banners.jpg" alt="Place ad in all banners." class="fluid-image" id="all-banners">
                                 </div>
                             </div>
                             <div>
-                                <h3>Ad Campaign Total<br><span class="heading-primary" id="membership-one-price">$0.00</span></h3>
+                                <h3>Ad Campaign Total<br><span class="heading-primary" id="membership-one-price">$<span id="ad_campaign_total">0.00</span></span></h3>
                                 <p>The ad campaign total is based on all of the settings that were chosen above.</p>
                             </div>
                             <div class="form-submit-container">
-                                <imput type="button" class="button-01 white-text" name="membership-settings-submit" id="membership-settings-submit">Submit</imput>
+                                <button type="button" class="button-01 white-text" name="membership-settings-submit" id="submit_ad">Submit</button>
                             </div>
                         </form>
                     </div>
@@ -737,13 +765,37 @@ if($_POST){
                     </div>
                 </div>
             </section>
+            <?php 
+            MyHelpers::includeWithVariables('../layouts/cart_modal.php', [], $pring = true);
+            MyHelpers::includeWithVariables('../layouts/footer.php', [], $print = true);
+            ?>
 		</div>
-		<?php 
-        MyHelpers::includeWithVariables('../layouts/footer.php', [], $print = true);
-        ?>
 	</div>
-	<script src="<?php echo SITE_LINK; ?>js/jquery.min.js"></script>
+    <div id="submission_message" class="modal" style="padding-top:150px;">
+		<div class="modal-content" id="submission_message_content">
+			<div class="close_modal_cross text_white">
+                <img src="<?php echo SITE_LINK; ?>images/close_icon.png"/>
+			</div>
+			<div class="header">
+				<h1>Message</h1>
+			</div>
+			<div class="body">
+				<div class="fix" id="submission_error_messages">
+				</div>
+			</div>
+		</div>
+	</div>
+    <div id="lds-dual-ring-container">
+        <div class="lds-dual-ring"></div>
+    </div>
+    <script src="<?php echo SITE_LINK; ?>js/jquery.min.js"></script>
     <script src="<?php echo SITE_LINK; ?>js/pages/vendors/settings.js"></script>
-    <script src="../js/custom.js"></script>
+    <script src="<?php echo SITE_LINK; ?>js/custom.js"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=AcDUiAh1B9BLRySZLBdjhuTdy8ASH24diR4pw5o22Ayc-Xg2FiyJs_A_MLxx-xgKL-8_l7jGVGxXQloK&currency=USD&intent=capture&enable-funding=venmo" data-namespace="paypal_sdk"></script>
+    <!-- <script src="https://www.paypal.com/sdk/js?client-id=AcDUiAh1B9BLRySZLBdjhuTdy8ASH24diR4pw5o22Ayc-Xg2FiyJs_A_MLxx-xgKL-8_l7jGVGxXQloK&currency=USD" data-namespace="paypal_sdk"></script> -->
+    <script src="<?php echo SITE_LINK; ?>js/cart_modal.js"></script>
+    <script src="<?php echo SITE_LINK; ?>js/pages/vendors/util/vendor_ad_campaign_paypal.js"></script>
+    
+    
 </body>
 </html>

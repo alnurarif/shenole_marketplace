@@ -13,12 +13,18 @@ class ImageUploader{
     private $root = '';
     private $path = '';
     private $level = '';
+    private $imageWidth = null;
+    private $imageHeight = null;
     public function __construct($imageFile,$imageObject){
         $this->imageFile = $imageFile;
         $this->imageObject = $imageObject;
     }
     public function setRoot($root = ''){
         $this->root = $root;
+    }
+    public function setImageSize($width = 1600, $height = 1200){
+        $this->imageWidth = $width;
+        $this->imageHeight = $height;
     }
     public function setPath($path = ''){
         $this->path = $path;
@@ -32,8 +38,10 @@ class ImageUploader{
 
         if ($this->imageFile['error'] != '0')
             return null;
-
-        // $image_name_object->resize(1600, 1200, $allow_enlarge = True);
+        
+        if($this->imageWidth != null && $this->imageHeight != null)
+            $this->imageObject->resize($this->imageWidth, $this->imageHeight, $allow_enlarge = True);
+        
         if(!file_exists($this->level.$this->path)){
             mkdir($this->level.$this->path);
         }

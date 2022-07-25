@@ -16,7 +16,7 @@
 .modal-content {
     background-color: #fefefe;
     margin: auto;
-    padding: 0px;
+    padding: 0px !important;
     /*border: 1px solid #888;*/
     width: 350px;
     border-radius:0px;
@@ -30,6 +30,8 @@
     padding: 0px;
     margin: 0px;
     font-size: 16px;
+    line-height: 30px !important;
+    color: #fff !important;
 }
 .modal-content .body{
     background: #ffffff;
@@ -41,6 +43,7 @@
 .modal-content .body p{
     font-weight: bold;
     font-size: 14px;
+    margin : 2px;
 }
 .modal-content .bottom{
     background: #ffffff;
@@ -64,4 +67,11 @@
     color: #fff;
     font-size: 20px;
     cursor:pointer;
+}
+.close_modal_cross img{
+    background-color: #fff;
+    width: 21px;
+    border-radius: 50%;
+    border: none;
+    padding: 2px;
 }
